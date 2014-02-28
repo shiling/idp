@@ -1,0 +1,124 @@
+[
+    {
+        "name": "Produces",
+        "subcategories": [
+            {
+                "name": "Vegetables",
+                "subcategories": []
+            },
+            {
+                "name": "Fruits",
+                "subcategories": []
+            }
+        ]
+    },
+    {
+        "name": "Meats",
+        "subcategories": [
+            {
+                "name": "Poultry",
+                "subcategories": []
+            },
+            {
+                "name": "Pork",
+                "subcategories": []
+            },
+            {
+                "name": "Beef",
+                "subcategories": []
+            },
+            {
+                "name": "Mutton",
+                "subcategories": []
+            },
+            {
+                "name": "Fish",
+                "subcategories": []
+            },
+            {
+                "name": "Seafood",
+                "subcategories": []
+            }
+        ]
+    },
+    {
+        "name": "Grains",
+        "subcategories": [
+            {
+                "name": "Rice",
+                "subcategories": []
+            },
+            {
+                "name": "Bread",
+                "subcategories": []
+            },
+            {
+                "name": "Cereal",
+                "subcategories": []
+            }
+        ]
+    },
+    {
+        "name": "Drinks",
+        "subcategories": [
+            {
+                "name": "Tea",
+                "subcategories": []
+            },
+            {
+                "name": "Coffee",
+                "subcategories": []
+            },
+            {
+                "name": "Juice",
+                "subcategories": []
+            },
+            {
+                "name": "Soda",
+                "subcategories": []
+            },
+            {
+                "name": "Dairy",
+                "subcategories": []
+            },
+            {
+                "name": "Alcohol",
+                "subcategories": []
+            }
+        ]
+    },
+    {
+        "name": "Snacks",
+        "subcategories": [
+            {
+                "name": "Biscuits",
+                "subcategories": []
+            },
+            {
+                "name": "Chocolate",
+                "subcategories": []
+            },
+            {
+                "name": "Sweets",
+                "subcategories": []
+            }
+        ]
+    },
+    {
+        "name": "Dairy",
+        "subcategories": [
+            {
+                "name": "Cheese",
+                "subcategories": []
+            },
+            {
+                "name": "Butter",
+                "subcategories": []
+            },
+            {
+                "name": "Yogurt",
+                "subcategories": []
+            }
+        ]
+    }
+]

@@ -1,0 +1,58 @@
+{
+    "Produce": [
+        "Vegetables",
+        "Fruits"
+    ],
+    "Meat": [
+        "Poultry",
+        "Pork",
+        "Beef",
+        "Fish",
+        "Seafood"
+    ],
+    "Drinks": [
+        "Tea",
+        "Coffee",
+        "Juice",
+        "Carbonated",
+        "Water",
+        "Sports and Energy",
+        "Alcohol",
+        "Dairy"
+    ],
+    "Grains": [
+        "Rice",
+        "Noodle",
+        "Pasta",
+        "Bread",
+        "Cereal"
+    ],
+    "Dairy": [
+        "Yoghurt",
+        "Ice Cream",
+        "Cheese",
+        "Butter"
+    ],
+    "Baby": [],
+    "Snacks": [
+        "Chocolate",
+        "Ice Cream",
+        "Desserts",
+        "Biscuits"
+    ],
+    "Dried food": [],
+    "Sauces": [],
+    "Canned": [],
+    "Personal Care": [
+        "Shampoo",
+        "Shower Gel",
+        "Feminine",
+        ""
+    ],
+    "Cleaning": [
+        "General",
+        "Laundry",
+        "Toilet",
+        "Floor"
+    ]
+}

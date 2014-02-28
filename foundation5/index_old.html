@@ -1,23 +1,40 @@
 <!doctype html>
-<html class="no-js" lang="en" ng-app="cmartApp">
+<html class="no-js" lang="en" ng-app>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
-        <link href="css/app.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/foundation.css" />
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
-        <script src="js/foundation.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
-        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
-        <script src="js/angular/app.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
         <script src="js/angular/controllers.js"></script>
+        <script src="js/foundation.min.js"></script>
         <script>
             $(function() {
                 $(document).foundation();
             });
         </script>
-        <title>CMart - Cart</title>
+        <title>CMart</title>
+        <style type="text/css">
+            .cat-bar-wrapper{
+                overflow: hidden;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .cat-bar{
+                display: table;
+            }
+            .cat-bar dd{
+                float: none;
+                display: table-cell;
+            }
+            .cat-bar dd a {
+                padding-top: .5rem;
+                padding-bottom: .5rem;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        </style>
     </head>
     <body>
         <div class="off-canvas-wrap">
@@ -30,7 +47,7 @@
                     </section>
 
                     <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Cart</h1>
+                        <h1 class="title" style="text-align:center;">CMart</h1>
                     </section>
 
                     <section class="right-small">
@@ -53,6 +70,70 @@
 
                 <!-- Content -->
                 <section class="main-section">
+
+                    <!--search-->
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <form>
+                                <div class="row collapse">
+                                    <div class="small-10 columns">
+                                        <input type="text" placeholder="Search for Product / Brand">
+                                    </div>
+                                    <div class="small-2 columns">
+                                        <a href="#" class="button postfix">Go</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--categories-->
+                    <div ng-controller="categoriesController" ng-init="init()">
+                        <!--categories tab-->
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <div class="cat-bar-wrapper">
+                                    <dl class="tabs cat-bar" data-tab>
+                                        <dd class="active"><a href="#tab-All">All</a></dd>
+                                        <dd ng-repeat="category in categories"><a href="#tab-{{category.name}}">{{category.name}}</a></dd>
+                                    </dl>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--categories content-->
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <div class="tabs-content">
+                                    <div class="content active" id="tab-All">All tab</div>
+                                    <div ng-repeat="category in categories" class="content" id="tab-{{category.name}}">
+                                        <!--subcategories tab-->
+                                        <div class="row">
+                                            <div class="small-12 column">
+                                                <div class="cat-bar-wrapper">
+                                                    <dl class="tabs cat-bar" data-tab>
+                                                        <dd class="active"><a href="#tab-{{category.name}}-All">All</a></dd>
+                                                        <dd ng-repeat="subcategory in category.subcategories"><a href="#tab-{{category.name}}-{{subcategory.name}}">{{subcategory.name}}</a></dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--subcategories content-->
+                                        <div class="row">
+                                            <div class="small-12 column">
+                                                <div class="tabs-content">
+                                                    <div class="content active" id="tab-{{category.name}}-All">All {{category.name}} tab</div>
+                                                    <div ng-repeat="subcategory in category.subcategories" class="content" id="tab-{{category.name}}-{{subcategory.name}}">
+                                                        {{subcategory.name}} tab
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--ng-controller: categoriesController-->
 
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque enim, ultricies nec iaculis eu, porttitor sed justo. Cras justo nisi, mattis id purus at, iaculis consequat dolor. Nam id molestie purus, sit amet blandit justo. Nunc iaculis nisl in porta congue. Aenean malesuada et nisl sed hendrerit. Donec eu lorem libero. Integer vel porttitor ligula. Nulla eleifend sem vitae vulputate faucibus. Curabitur quis semper felis. Donec vel purus neque.
