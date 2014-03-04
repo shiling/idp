@@ -1,0 +1,90 @@
+[
+    {
+        "name": "Pokka Jasmine Green Tea",
+        "brand": "Pokka",
+        "price": 1.40 ,
+        "unit": "500ml",
+        "categories": ["Drinks", "Tea"],
+        "description": "Pokka Jasmine Green Tea is brewed with carefully selected premium tea leaves, contains no preservatives and with 25% lower sugar level.",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["Pokka Lemon Tea", "Pokka No Sugar Oolong Tea"]
+    },
+    {
+        "name": "Pokka Lemon Tea",
+        "brand": "Pokka",
+        "price": 1.40,
+        "unit": "500ml",
+        "categories": ["Drinks", "Tea"],
+        "description": "Pokka Lemon Tea is a refreshing blend of authentic premium black tea with real lemon juice. This delicious thirst-quencher contains Vitamin C and natural antioxidants. Experience this delightful citrus blend today!",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["Pokka Jasmine Green Tea", "Pokka No Sugar Oolong Tea"]
+    },
+    {
+        "name": "Pokka No Sugar Oolong Tea",
+        "brand": "Pokka",
+        "price": 1.40,
+        "unit": "500ml",
+        "categories": ["Drinks", "Tea"],
+        "description": "Pokka No Sugar Oolong Tea is real brewed with selected premium tea leaves and contains absolutely no sugar, preservatives, or coloring, offering you ultimate healthy enjoyment. Indulge in its refreshing harmony every day!",
+        "image": "",
+        "filters": ["Halal", "Sugar-Free"],
+        "related": ["Pokka Jasmine Green Tea", "Pokka No Sugar Oolong Tea, Pokka Lemon Tea"]
+    },
+    {
+        "name": "F&N Seasons Barley Drink",
+        "brand": "F&N",
+        "price": 2.50,
+        "unit": "6 x 250ml",
+        "categories": ["Drinks", "Tea"],
+        "description": "F&N Seasons Barley Drink is made from selected barley that is brewed and lightly sweetened for a drink that is as familiar and comforting as that prepared by your mum. When the weather heats up, trust barley water to cool you down. Made with a reduced sugar recipe, it is also certified a 'Healthier Choice' beverage.",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["Yeo's Lychee Drink"]
+    },
+    {
+        "name": "Yeo's Lychee Drink",
+        "brand": "Yeo's",
+        "price": 2.90,
+        "unit": "6 x 250ml",
+        "categories": ["Drinks", "Tea"],
+        "description": "Yeo's Lychee Drink is the perfect drink for seasonal fruit lovers in Asia. Enjoy the delicately sweet luscious taste of lychee all year round. Drink it chilled, over crushed ice, or simply try mixing it in your cocktails!",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["F&N Seasons Barley Drink"]
+    },
+    {
+        "name": "F&N Seasons Ice Peach Tea",
+        "brand": "F&N",
+        "price": 2.50,
+        "unit": "6 x 250ml",
+        "categories": ["Drinks", "Tea"],
+        "description": "F&N Seasons Ice Peach Tea is a delectable combination of peach and tea brewed from real tea leaves. Quench your thirst and take a break from the hustle and bustle - one whiff and you'll be transported to a far away breezy summer day in a land full of ripening peach trees.",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["Pokka Jasmine Green Tea", " Pokka Lemon Tea,Pokka No Sugar Oolong Tea"]
+    },
+    {
+        "name": "Pokka Premium Milk Coffee",
+        "brand": "Pokka",
+        "price": 1.50,
+        "unit": "500ml",
+        "categories": ["Drinks", "Coffee"],
+        "description": "Pokka Premium Milk Coffee is made from specially selected gourmet coffee beans and high quality milk. Its rich taste and luscious coffee aroma linger on to delight the taste buds. This drink is real brewed for coffee aficionados and those who seek, enjoy and appreciate the highest quality and best taste. Come and indulge in the smooth and sensational taste today! With no added preservatives or coloring.",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["Starbucks Frappuccino Mocha Chilled Coffee Drink"]
+    },
+    {
+        "name": "Starbucks Frappuccino Mocha Chilled Coffee Drink",
+        "brand": "Starbucks",
+        "price": 3.00,
+        "unit": "281ml",
+        "categories": ["Drinks", "Coffee"],
+        "description": "A satisfying and smooth blend of Starbucks Coffee with creamy milk and rich chocolate taste; low fat",
+        "image": "",
+        "filters": ["Halal"],
+        "related": ["Pokka Premium Milk Coffee"]
+    }
+]

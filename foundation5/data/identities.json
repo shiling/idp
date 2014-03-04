@@ -1,0 +1,32 @@
+[
+    {
+        "email": "shiling.tai@outlook.com",
+        "username": "shiling", 
+        "password": "123456"
+    },
+    {
+        "email": "safi@outlook.com",
+        "username": "safi", 
+        "password": "123456"
+    },
+    {
+        "email": "cao.li@outlook.com",
+        "username": "cao li", 
+        "password": "123456"
+    },
+    {
+        "email": "sean@outlookcom",
+        "username": "sean", 
+        "password": "123456"
+    },
+    {
+        "email": "oliver.wang@outlook.com",
+        "username": "oliver wang", 
+        "password": "123456"
+    },
+    {
+        "email": "samuel@outlook.com",
+        "username": "samuel", 
+        "password": "123456"
+    }
+]
