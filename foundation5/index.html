@@ -12,7 +12,8 @@
         <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
         <script src="js/angular/angular-webstorage.js"></script>
         <script src="js/angular/app.js"></script>
-        <script src="js/angular/controllers.js"></script>
+        <script src="js/angular/models.js"></script>
+        <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
                 $(document).foundation();
@@ -101,7 +102,7 @@
                                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
                                     <li ng-repeat="product in products">
                                         <div class="panel">
-                                            <a href="/product?{{product.name}}">
+                                            <a href="/product?name={{product.name}}">
                                                 <div class="row">
                                                     <h5>{{product.name}}</h5>
                                                 </div>
