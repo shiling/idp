@@ -5,10 +5,10 @@ function categoriesController($scope, $http){
   $scope.init = function(){
       $http.get('./data/categories.json').success(function(data){
           $.each(data, function(i,e){
-              cat = $.extend(new Category, e);
+              cat = $.extend(new Category, e);  //convert object to Category
               cat.subcategories = [];
               $.each(e.subcategories, function(i,e2){
-                  sub_cat = $.extend(new Category, e2);
+                  sub_cat = $.extend(new Category, e2); //convert object to Category
                   cat.subcategories.push(sub_cat);
               });
             $scope.categories.push(cat);
@@ -20,82 +20,29 @@ function categoriesController($scope, $http){
 
 function productsController($scope, $http, webStorage){
     $scope.products = [];
+    $scope.cart;
     
     $scope.init = function(){
+        //get products from json data file
         $http.get('./data/products.json').success(function(data){
             $.each(data, function(i,e){
-                product = $.extend(new Product, e);
+                product = $.extend(new Product, e); //convert object to Product
                 $scope.products.push(product);
             });
         });
-    };
-    
-    $scope.updateQuantity = function(product, quantity){
+        //get cart from localstorage
         if(webStorage.get("cart") === null){
             webStorage.add("cart",new Cart());
         }
-        cart = $.extend(new Cart, webStorage.get("cart"));
+        cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
+    };
+    
+    $scope.updateQuantity = function(product, quantity){
         cart.updateQuantity(product, quantity);
-        webStorage.add("cart", cart);
+        webStorage.add("cart", cart);   //update localstorage
     };
     
     $scope.getQuantity = function(product){
-        if(webStorage.get("cart") === null){
-            return 0;
-        }else{
-            cart = $.extend(new Cart, webStorage.get("cart"));
-            return cart.getQuantity(product);
-        }
+        return cart.getQuantity(product);
     };
 }
-
-//MODELS
-function Category(name){
-  this.name = name;
-  this.subcategories = [];
-}
-
-function Filter(name){
-  this.name = name;
-}
-
-function Product(name, brand, price, unit, description, image){
-  this.name = name;
-  this.brand = brand;
-  this.price = price;
-  this.unit = unit;
-  this.description = description;
-  this.image = image;
-  this.categories = [];
-  this.filters = [];
-  this.related = [];
-}
-
-Product.prototype.inCategory = function(categoryName){
-  return this.categories.indexOf(categoryName) !== -1;
-};
-
-Product.prototype.inFilter = function(filterName){
-  return this.filters.indexOf(filterName) !== -1;
-};
-
-function Cart(username){
-  this.username = username;
-  this.items = {};
-}
-
-Cart.prototype.updateQuantity = function(product, quantity){
-  if (product instanceof Product){
-      this.items[product.name] = new OrderItem(product, quantity, null);
-  }
-};
-
-Cart.prototype.getQuantity = function(product){
-   if (product instanceof Product){
-       if (!this.items[product.name]){
-           return 0;
-       }else{
-           return this.items[product.name].quantity;
-       }
-  } 
-};
