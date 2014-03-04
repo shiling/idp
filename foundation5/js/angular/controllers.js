@@ -4,7 +4,6 @@ function categoriesController($scope, $http){
   
   $scope.init = function(){
       $http.get('./data/categories.json').success(function(data){
-          //$scope.categories = data;
           $.each(data, function(i,e){
               cat = $.extend(new Category, e);
               cat.subcategories = [];
@@ -16,8 +15,38 @@ function categoriesController($scope, $http){
             
           });
       });
-  }
+  };
+}
 
+function productsController($scope, $http, webStorage){
+    $scope.products = [];
+    
+    $scope.init = function(){
+        $http.get('./data/products.json').success(function(data){
+            $.each(data, function(i,e){
+                product = $.extend(new Product, e);
+                $scope.products.push(product);
+            });
+        });
+    };
+    
+    $scope.updateQuantity = function(product, quantity){
+        if(webStorage.get("cart") === null){
+            webStorage.add("cart",new Cart());
+        }
+        cart = $.extend(new Cart, webStorage.get("cart"));
+        cart.updateQuantity(product, quantity);
+        webStorage.add("cart", cart);
+    };
+    
+    $scope.getQuantity = function(product){
+        if(webStorage.get("cart") === null){
+            return 0;
+        }else{
+            cart = $.extend(new Cart, webStorage.get("cart"));
+            return cart.getQuantity(product);
+        }
+    };
 }
 
 //MODELS
@@ -42,45 +71,34 @@ function Product(name, brand, price, unit, description, image){
   this.related = [];
 }
 
-Product.prototype.addCategory = function(categoryName){
-  this.categories.push(category);
-}
-
 Product.prototype.inCategory = function(categoryName){
   return this.categories.indexOf(categoryName) !== -1;
-}
-
-Product.prototype.addFilter = function(filterName){
-  this.filters.push(filterName);
-}
+};
 
 Product.prototype.inFilter = function(filterName){
   return this.filters.indexOf(filterName) !== -1;
-}
-
-Product.prototype.addRelated = function(product){
-  if (product instanceof Product){
-    this.related.push(product);
-  }
-}
+};
 
 function Cart(username){
   this.username = username;
-  this.items = [];
+  this.items = {};
 }
 
-Cart.prototype.addItem = function(item){
-  if (item instanceof OrderItem){
-    this.items.push(item);
+Cart.prototype.updateQuantity = function(product, quantity){
+  if (product instanceof Product){
+      this.items[product.name] = new OrderItem(product, quantity, null);
   }
-}
+};
 
-Cart.prototype.removeItem = function(item){
-  if (item instanceof OrderItem){
-    var i = this.items.indexOf(item);
-    this.items.splice(i,1);
-  }
-}
+Cart.prototype.getQuantity = function(product){
+   if (product instanceof Product){
+       if (!this.items[product.name]){
+           return 0;
+       }else{
+           return this.items[product.name].quantity;
+       }
+  } 
+};
 
 function OrderItem(product, quantity, subscription){
   this.product = product;
