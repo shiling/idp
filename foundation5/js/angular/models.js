@@ -1,7 +1,7 @@
 //MODELS
 function Category(name) {
     this.name = name;
-    this.subcategories = [];
+    this.subcategories = [];    //class Category
 }
 
 function Filter(name) {
@@ -15,9 +15,9 @@ function Product(name, brand, price, unit, description, image) {
     this.unit = unit;
     this.description = description;
     this.image = image;
-    this.categories = [];
-    this.filters = [];
-    this.related = [];
+    this.categories = [];   //class Category
+    this.filters = [];  //class Filter
+    this.related = [];  //class Product
 }
 
 Product.prototype.inCategory = function(categoryName) {
@@ -30,11 +30,11 @@ Product.prototype.inFilter = function(filterName) {
 
 function Cart(username) {
     this.username = username;
-    this.items = {};
-    this.subscriptions = {};
+    this.items = {};    //class OrderItem
+    this.subscriptions = {};    //class Subscript
 }
 
-Cart.prototype.updateQuantity = function(product, quantity) {
+Cart.prototype.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
     if (product instanceof Product) {
         var intRegex = /^\d+$/;
         if (intRegex.test(quantity)) { //make sure is integer
@@ -50,7 +50,7 @@ Cart.prototype.updateQuantity = function(product, quantity) {
     }
 };
 
-Cart.prototype.getQuantity = function(product) {
+Cart.prototype.getQuantity = function(product) {    //args[0] must be class Product
     if (product instanceof Product) {
         if (!this.items[product.name]) {    //item not in cart
             return 0;
@@ -60,13 +60,13 @@ Cart.prototype.getQuantity = function(product) {
     }
 };
 
-Cart.prototype.removeItem = function(product) {
+Cart.prototype.removeItem = function(product) { //args[0] must be class Product
     delete this.items[product.name];
 };
 
-function OrderItem(product, quantity) {
-    this.product = product;
-    this.quantity = quantity;
+function OrderItem(product, quantity) { //args[0] must be class Product, args[1] must be integer
+    this.product = product; //class Product
+    this.quantity = quantity;   //integer
 }
 
 function Subscription(username, product, quantity, frequency, num_times, num_times_delivered) {

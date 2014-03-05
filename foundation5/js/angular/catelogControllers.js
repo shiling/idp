@@ -11,8 +11,8 @@ function categoriesController($scope, $http, categoriesService) {
 }
 
 function productsController($scope, $http, webStorage, productsService) {
-    $scope.products = [];
-    $scope.cart;
+    $scope.products = [];   //array of class Product
+    $scope.cart;    //class Cart
 
     $scope.init = function() {
         //get product data
@@ -26,7 +26,7 @@ function productsController($scope, $http, webStorage, productsService) {
         $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
     };
 
-    $scope.updateQuantity = function(product, quantity) {
+    $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product
         $scope.cart.updateQuantity(product, parseInt(quantity));
         webStorage.add("cart", $scope.cart);   //update localstorage
     };

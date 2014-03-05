@@ -13,6 +13,7 @@
         <script src="js/angular/angular-webstorage.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
+        <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
                 $(document).foundation();
@@ -55,30 +56,60 @@
                 <!-- Content -->
                 <section class="main-section">
 
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque enim, ultricies nec iaculis eu, porttitor sed justo. Cras justo nisi, mattis id purus at, iaculis consequat dolor. Nam id molestie purus, sit amet blandit justo. Nunc iaculis nisl in porta congue. Aenean malesuada et nisl sed hendrerit. Donec eu lorem libero. Integer vel porttitor ligula. Nulla eleifend sem vitae vulputate faucibus. Curabitur quis semper felis. Donec vel purus neque.
+                    <div class="row">
+                        <div class="small-12 columns">
 
-                        Morbi mi odio, pulvinar in commodo vel, rutrum at nibh. Nullam sagittis sagittis tellus, porttitor consequat elit vehicula ac. Vivamus leo nisi, molestie nec imperdiet eu, lobortis at risus. Vivamus vitae congue dui. Duis ut risus a nisi venenatis mollis vel a nisi. Donec blandit gravida scelerisque. Cras vel sapien lectus. Sed dignissim arcu ac enim scelerisque, sit amet blandit ligula convallis. Praesent sed elit quam. Nulla facilisi. Nunc vestibulum mauris quam, et auctor erat vehicula vitae. Nullam egestas metus sem, eget commodo turpis convallis vitae. Nam nibh elit, ornare eu sagittis sed, accumsan ut justo. Pellentesque eu quam diam.
-
-                        In leo nisi, placerat in dapibus ac, rutrum vel sapien. Aenean eu convallis erat, ac scelerisque odio. Nullam laoreet convallis nunc, et pellentesque lectus commodo et. Phasellus sed dui ac metus fringilla eleifend. Quisque pharetra neque erat, in fringilla lacus placerat convallis. Nunc molestie mollis posuere. Maecenas eleifend augue enim, sed condimentum leo varius id. Donec et congue nibh.
-
-                        Phasellus nulla dui, fermentum id accumsan ac, adipiscing vel tortor. In semper et mi sed condimentum. Duis sit amet leo congue, malesuada augue aliquet, mattis nisi. Duis ultrices ipsum eget nisi feugiat, id convallis urna facilisis. In hac habitasse platea dictumst. Nunc quis purus quis quam dictum congue. Maecenas laoreet libero eu felis posuere, non scelerisque leo tincidunt. Donec gravida risus quis magna imperdiet imperdiet. Nullam sed tellus nisi. Donec mi dolor, blandit nec tellus eu, commodo mollis ligula. Praesent vel semper dui. Praesent lorem quam, suscipit non erat vel, tincidunt facilisis sem. Ut sit amet purus quis urna adipiscing fermentum. Praesent vehicula ornare vestibulum. Sed eleifend cursus mauris, vitae accumsan ipsum. Nullam eget tortor sit amet augue egestas volutpat.
-
-                        Vestibulum non est eget sapien molestie egestas quis at ipsum. Vestibulum at risus neque. Donec rhoncus mattis augue. Duis dui mi, condimentum ut gravida in, lacinia at sem. Nam scelerisque gravida ante sit amet porta. Donec tortor mauris, malesuada id tellus quis, mollis eleifend massa. Proin a odio non lorem commodo egestas. Maecenas ac eros sed diam ullamcorper auctor. Quisque volutpat interdum eros at bibendum. Curabitur nisl velit, ultrices in fringilla eget, pulvinar vel massa. Aliquam lorem leo, posuere vel congue vel, aliquam quis lacus. Quisque aliquam mollis ipsum, ac sollicitudin eros facilisis vitae. Donec feugiat urna non sem commodo malesuada. Donec elit lorem, gravida quis augue vel, fringilla eleifend lectus.
-                    </p>
-
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque enim, ultricies nec iaculis eu, porttitor sed justo. Cras justo nisi, mattis id purus at, iaculis consequat dolor. Nam id molestie purus, sit amet blandit justo. Nunc iaculis nisl in porta congue. Aenean malesuada et nisl sed hendrerit. Donec eu lorem libero. Integer vel porttitor ligula. Nulla eleifend sem vitae vulputate faucibus. Curabitur quis semper felis. Donec vel purus neque.
-
-                        Morbi mi odio, pulvinar in commodo vel, rutrum at nibh. Nullam sagittis sagittis tellus, porttitor consequat elit vehicula ac. Vivamus leo nisi, molestie nec imperdiet eu, lobortis at risus. Vivamus vitae congue dui. Duis ut risus a nisi venenatis mollis vel a nisi. Donec blandit gravida scelerisque. Cras vel sapien lectus. Sed dignissim arcu ac enim scelerisque, sit amet blandit ligula convallis. Praesent sed elit quam. Nulla facilisi. Nunc vestibulum mauris quam, et auctor erat vehicula vitae. Nullam egestas metus sem, eget commodo turpis convallis vitae. Nam nibh elit, ornare eu sagittis sed, accumsan ut justo. Pellentesque eu quam diam.
-
-                        In leo nisi, placerat in dapibus ac, rutrum vel sapien. Aenean eu convallis erat, ac scelerisque odio. Nullam laoreet convallis nunc, et pellentesque lectus commodo et. Phasellus sed dui ac metus fringilla eleifend. Quisque pharetra neque erat, in fringilla lacus placerat convallis. Nunc molestie mollis posuere. Maecenas eleifend augue enim, sed condimentum leo varius id. Donec et congue nibh.
-
-                        Phasellus nulla dui, fermentum id accumsan ac, adipiscing vel tortor. In semper et mi sed condimentum. Duis sit amet leo congue, malesuada augue aliquet, mattis nisi. Duis ultrices ipsum eget nisi feugiat, id convallis urna facilisis. In hac habitasse platea dictumst. Nunc quis purus quis quam dictum congue. Maecenas laoreet libero eu felis posuere, non scelerisque leo tincidunt. Donec gravida risus quis magna imperdiet imperdiet. Nullam sed tellus nisi. Donec mi dolor, blandit nec tellus eu, commodo mollis ligula. Praesent vel semper dui. Praesent lorem quam, suscipit non erat vel, tincidunt facilisis sem. Ut sit amet purus quis urna adipiscing fermentum. Praesent vehicula ornare vestibulum. Sed eleifend cursus mauris, vitae accumsan ipsum. Nullam eget tortor sit amet augue egestas volutpat.
-
-                        Vestibulum non est eget sapien molestie egestas quis at ipsum. Vestibulum at risus neque. Donec rhoncus mattis augue. Duis dui mi, condimentum ut gravida in, lacinia at sem. Nam scelerisque gravida ante sit amet porta. Donec tortor mauris, malesuada id tellus quis, mollis eleifend massa. Proin a odio non lorem commodo egestas. Maecenas ac eros sed diam ullamcorper auctor. Quisque volutpat interdum eros at bibendum. Curabitur nisl velit, ultrices in fringilla eget, pulvinar vel massa. Aliquam lorem leo, posuere vel congue vel, aliquam quis lacus. Quisque aliquam mollis ipsum, ac sollicitudin eros facilisis vitae. Donec feugiat urna non sem commodo malesuada. Donec elit lorem, gravida quis augue vel, fringilla eleifend lectus.
-                    </p>
-
+                            <table style="width:100%;" ng-controller="productsController" ng-init="init()">
+                                <tbody>
+                                    <tr ng-repeat="item in cart.items">
+                                        <td><img height="100" width="100" src="#"/></td>
+                                        <td>
+                                            <div class="row">
+                                                <h3>{{item.product.name}}</h3>
+                                            </div>
+                                            <div class="row">
+                                                <h6>{{item.product.price| currency}}</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="small-3 columns">
+                                                    <a href="#" class="tiny button" ng-click="updateQuantity(item.product, getQuantity(item.product) - 1)">-</a>
+                                                </div>
+                                                <div class="small-6 columns">
+                                                    <input type="text" ng-model="item.quantity" ng-model-onblur ng-change="validateQuantity(item.product)"/>
+                                                </div>
+                                                <div class="small-3 columns">
+                                                    <a href="#" class="tiny button" ng-click="updateQuantity(item.product, getQuantity(item.product) + 1)">+</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="tiny button">x</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="small-10 small-centered columns">
+                                                <div class="row">
+                                                    <div class="small-9 columns"><h5>Subtotal</h5></div>
+                                                    <div class="small-3 columns"><h5>$x.xx</h5></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-9 columns"><h5>Delivery Fee</h5></div>
+                                                    <div class="small-3 columns"><h5>$x.xx</h5></div>
+                                                </div>
+                                                <div class="row">
+                                                    <a href="#" class="button expand round text-left">
+                                                        <div class="small-9 columns"><h3>Checkout</h3></div>
+                                                        <div class="small-3 columns"><h3>$x.xx</h3></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                 </section><!--content-->
 
