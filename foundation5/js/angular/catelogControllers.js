@@ -34,15 +34,24 @@ function productsController($scope, $http, webStorage){
         if(webStorage.get("cart") === null){
             webStorage.add("cart",new Cart());
         }
-        cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
+        $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
     };
     
     $scope.updateQuantity = function(product, quantity){
-        cart.updateQuantity(product, quantity);
-        webStorage.add("cart", cart);   //update localstorage
+        $scope.cart.updateQuantity(product, parseInt(quantity));
+        webStorage.add("cart", $scope.cart);   //update localstorage
+    };
+    
+    $scope.validateQuantity = function(product){
+        var intRegex = /^\d+$/;
+        quantity = $scope.cart.getQuantity(product);
+        if(!intRegex.test(quantity)){   //not an integer, set to zero
+            $scope.updateQuantity(product,0);
+        }
+        webStorage.add("cart", $scope.cart);   //update localstorage
     };
     
     $scope.getQuantity = function(product){
-        return cart.getQuantity(product);
+        return $scope.cart.getQuantity(product);
     };
 }

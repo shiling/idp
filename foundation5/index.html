@@ -114,7 +114,7 @@
                                                 </div>
                                             </a>
                                             <form>
-                                                <div class="row" ng-show="getQuantity(product)==0">
+                                                <div class="row" ng-show="getQuantity(product)===0">
                                                     <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
                                                 </div>
                                                 <div class="row" ng-show="getQuantity(product)>0">
@@ -122,7 +122,7 @@
                                                         <a href="#" class="tiny button" ng-click="updateQuantity(product, getQuantity(product)-1)">-</a>
                                                     </div>
                                                     <div class="small-6 columns">
-                                                        <input type="text" value="{{getQuantity(product)}}"/>
+                                                        <input type="text" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
                                                     </div>
                                                     <div class="small-3 columns">
                                                         <a href="#" class="tiny button" ng-click="updateQuantity(product, getQuantity(product)+1)">+</a>
