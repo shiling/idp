@@ -1,6 +1,8 @@
 //CONTROLLERS
-function categoriesController($scope, $http, categoriesService) {
-    $scope.categories = [];
+function categoriesController($scope, $http, categoriesService, searchService) {
+    $scope.categories = []; //array of class Category
+    $scope.subcategories = [];
+    $scope.searchService = searchService;
 
     $scope.init = function() {
         //get categories data
@@ -8,11 +10,37 @@ function categoriesController($scope, $http, categoriesService) {
             $scope.categories = data;
         });
     };
+    
+    $scope.selectCategory = function(category){
+        $scope.searchService.activeCategory = category;
+        $scope.searchService.activeSubcategory = null;
+        $scope.subcategories = $scope.searchService.activeCategory.subcategories;
+    };
+    
+    $scope.isActiveCategory = function(category){
+        if($scope.searchService.activeCategory === category){
+            return true;
+        }
+        return false;
+    };
+    
+    $scope.selectSubcategory = function(subcategory){
+        $scope.searchService.activeSubcategory = subcategory;
+    };
+    
+    $scope.isActiveSubcategory = function(subcategory){
+        if($scope.searchService.activeSubcategory === subcategory){
+            return true;
+        }
+        return false;
+    };
+
 }
 
-function productsController($scope, $http, webStorage, productsService) {
+function productsController($scope, $http, webStorage, productsService, searchService) {
     $scope.products = [];   //array of class Product
     $scope.cart;    //class Cart
+    $scope.searchService = searchService;
 
     $scope.init = function() {
         //get product data
@@ -43,5 +71,18 @@ function productsController($scope, $http, webStorage, productsService) {
     
     $scope.getNumOfItemsInCart = function(){
         return $scope.cart.getNumOfItems();
+    };
+    
+    $scope.productFilter = function(){
+        var productFilter = {
+            categories: []
+        };
+        if(searchService.activeCategory){
+            productFilter.categories.push(searchService.activeCategory.name);
+        }
+        if(searchService.activeSubcategory){
+            productFilter.categories.push(searchService.activeSubcategory.name);
+        }
+        return productFilter;
     };
 }

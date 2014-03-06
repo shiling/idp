@@ -77,19 +77,21 @@
                         <div class="row">
                             <div class="small-12 columns">
                                 <div class="cat-bar">
-                                    <tabset>
-                                        <tab heading="All">
-                                            All tab content
-                                        </tab>
-                                        <tab ng-repeat="category in categories" heading="{{category.name}}">
-                                            <tabset>
-                                                <tab heading="All">All {{category.name}} tab content</tab>
-                                                <tab ng-repeat="subcategory in category.subcategories" heading="{{subcategory.name}}">
-                                                    {{subcategory.name}} tab content
-                                                </tab>
-                                            </tabset>
-                                        </tab>
-                                    </tabset>
+                                    <ul class='button-group'>
+                                        <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
+                                        <li ng-repeat="category in categories">
+                                            <a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <div class="cat-bar">
+                                    <ul class='button-group' ng-hide="isActiveCategory(null) || subcategories.length === 0">
+                                        <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}">All</a></li>
+                                        <li ng-repeat="subcategory in subcategories">
+                                            <a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -100,35 +102,35 @@
                         <div class="row">
                             <div class="small-12 columns">
                                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
-                                    <li ng-repeat="product in products">
-                                        <div class="panel">
-                                            <a href="/product?name={{product.name}}">
+                                    <li ng-repeat="product in products | filter: productFilter()">
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns product-tile">
                                                 <div class="row">
-                                                    <h5>{{product.name}}</h5>
+                                                    <div class="small-11 small-centered columns">
+                                                        <a href="/product?name={{product.name}}">
+                                                            <h5>{{product.name}}</h5>
+                                                            <div class="row">
+                                                                <img src=""/>
+                                                            </div>
+                                                            <h5>{{product.price| currency}}</h5>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div class="row">
-                                                    <img src=""/>
+                                                <div class="row" ng-show="getQuantity(product) === 0">
+                                                    <a href="#" class="button expand buttom" ng-click="updateQuantity(product, 1)">Add To Cart</a>
                                                 </div>
-                                                <div class="row">
-                                                    <h5>{{product.price| currency}}</h5>
-                                                </div>
-                                            </a>
-                                            <form>
-                                                <div class="row" ng-show="getQuantity(product)===0">
-                                                    <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
-                                                </div>
-                                                <div class="row" ng-show="getQuantity(product)>0">
+                                                <div class="row collapse" ng-show="getQuantity(product) > 0">
                                                     <div class="small-3 columns">
-                                                        <a href="#" class="tiny button" ng-click="updateQuantity(product, getQuantity(product)-1)">-</a>
+                                                        <a href="#" class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
                                                     </div>
                                                     <div class="small-6 columns">
-                                                        <input type="text" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                                        <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
                                                     </div>
                                                     <div class="small-3 columns">
-                                                        <a href="#" class="tiny button" ng-click="updateQuantity(product, getQuantity(product)+1)">+</a>
+                                                        <a href="#" class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>

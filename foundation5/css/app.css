@@ -7,19 +7,37 @@ and open the template in the editor.
     Created on : Feb 28, 2014, 5:39:09 PM
     Author     : shilingtaiÏ
 */
-
-.cat-bar dl{
+.cat-bar{
     overflow: hidden;
     overflow-x: auto;
     white-space: nowrap;
 }
-.cat-bar dd{
-    float: none;
-    display: inline-block;
+.cat-bar ul{
+    display: table;
 }
-.cat-bar dd a {
+.cat-bar li{
+    float: none;
+    display: table-cell;
+}
+.cat-bar li a {
     padding-top: .5rem;
     padding-bottom: .5rem;
     padding-left: 2rem;
     padding-right: 2rem;
+}
+.cat-btn-active{
+    background-color: #008cba;
+}
+
+.cat-btn-inactive{
+    background-color: #c0c0c0;
+}
+
+.product-tile{
+    border: thin solid gainsboro;
+    background-color: #eeeeee;
+}
+
+.buttom{
+    margin-bottom: 0 !important;
 }

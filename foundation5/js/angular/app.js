@@ -52,6 +52,15 @@ app.factory('productsService', function($http) {
     return productsService;
 });
 
+//retrieves categories from json file
+app.factory('searchService', function() {
+    var searchService = {
+        'activeCategory': null,
+        'activeSubcategory': null
+    };
+    return searchService;
+});
+
 app.directive('ngModelOnblur', function() {
     return {
         restrict: 'A',
