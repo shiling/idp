@@ -26,12 +26,12 @@ function productsController($scope, $http, webStorage, productsService) {
         $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
     };
 
-    $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product
+    $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
         $scope.cart.updateQuantity(product, parseInt(quantity));
         webStorage.add("cart", $scope.cart);   //update localstorage
     };
 
-    $scope.validateQuantity = function(product) {
+    $scope.validateQuantity = function(product) {   //args[0] must be class Product
         var intRegex = /^\d+$/;
         quantity = $scope.cart.getQuantity(product);
         if (!intRegex.test(quantity)) {   //not an integer, set to zero
@@ -40,7 +40,7 @@ function productsController($scope, $http, webStorage, productsService) {
         webStorage.add("cart", $scope.cart);   //update localstorage
     };
 
-    $scope.getQuantity = function(product) {
+    $scope.getQuantity = function(product) {    //args[0] must be class Product
         return $scope.cart.getQuantity(product);
     };
 }

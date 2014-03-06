@@ -30,8 +30,8 @@ Product.prototype.inFilter = function(filterName) {
 
 function Cart(username) {
     this.username = username;
-    this.items = {};    //class OrderItem
-    this.subscriptions = {};    //class Subscript
+    this.items = {};    //hashmap of class OrderItem
+    this.subscriptions = {};    //hashmap of class Subscription
 }
 
 Cart.prototype.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
@@ -70,28 +70,28 @@ function OrderItem(product, quantity) { //args[0] must be class Product, args[1]
 }
 
 function Subscription(username, product, quantity, frequency, num_times, num_times_delivered) {
-    this.username = username;
-    this.product = product;
-    this.quantity = quantity;
-    this.frequency = frequency;
-    this.num_times = num_times;
-    this.num_times_delivered = num_times_delivered;
+    this.username = username;   //string
+    this.product = product; //class Product
+    this.quantity = quantity;   //integer
+    this.frequency = frequency; //integer
+    this.num_times = num_times; //integer
+    this.num_times_delivered = num_times_delivered; //integer
 }
 
 function Order(username, address, creditCard, date, status) {
     this.username = username;
-    this.address = address;
-    this.creditCard = creditCard;
-    this.date = date;
-    this.status = status;
-    this.items = [];
+    this.address = address; //class Address
+    this.creditCard = creditCard;   //class CreditCate
+    this.date = date;   //datetime
+    this.status = status;   //string - 'processing','shipped','delivered'
+    this.items = [];    //array of class OrderItem
 }
 
 function User(identity) {
-    this.identity = identity;
-    this.favourites = [];
-    this.addresses = [];
-    this.creditCards = [];
+    this.identity = identity;   //class Identity
+    this.favourites = [];   //array of class Product
+    this.addresses = [];    //array of class Address
+    this.creditCards = [];  //array of class CreditCard
 }
 
 function Identity(username, email, password) {
@@ -101,7 +101,7 @@ function Identity(username, email, password) {
 }
 
 function Address(username, addresseeName, address, postalCode) {
-    this.username = username;
+    this.username = username;   
     this.addresseeName = addresseeName;
     this.address = address;
     this.postalCode = postalCode;
