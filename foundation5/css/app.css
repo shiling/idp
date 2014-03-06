@@ -23,3 +23,14 @@ and open the template in the editor.
     padding-left: 2rem;
     padding-right: 2rem;
 }
+
+.shopping-cart-icon {
+    background-image:url("/img/Shopping-Cart-icon.png");
+    background-size:35px 35px;
+    background-repeat:no-repeat;
+    background-position:center;
+    width:2.18125rem;
+    height:2.8125rem;
+    display: block;
+    position:relative;
+}
