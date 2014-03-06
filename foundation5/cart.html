@@ -61,6 +61,9 @@
 
                             <table style="width:100%;" ng-controller="productsController" ng-init="init()">
                                 <tbody>
+                                    <tr ng-show="getNumOfItemsInCart()==0" colspan="3">
+                                        <td class='text-center'><h3>There's nothing in your cart!</h3></td>
+                                    </tr>
                                     <tr ng-repeat="item in cart.items">
                                         <td><img height="100" width="100" src="#"/></td>
                                         <td>

@@ -27,20 +27,21 @@ function productsController($scope, $http, webStorage, productsService) {
     };
 
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
-        $scope.cart.updateQuantity(product, parseInt(quantity));
+        $scope.cart.updateQuantity(product, quantity);
         webStorage.add("cart", $scope.cart);   //update localstorage
     };
 
     $scope.validateQuantity = function(product) {   //args[0] must be class Product
-        var intRegex = /^\d+$/;
-        quantity = $scope.cart.getQuantity(product);
-        if (!intRegex.test(quantity)) {   //not an integer, set to zero
-            $scope.updateQuantity(product, 0);
-        }
+        quantity = $scope.getQuantity(product); //may not be an non-zero integer
+        $scope.updateQuantity(product, quantity);   //pass to updateQuantity function for validation
         webStorage.add("cart", $scope.cart);   //update localstorage
     };
 
     $scope.getQuantity = function(product) {    //args[0] must be class Product
         return $scope.cart.getQuantity(product);
+    };
+    
+    $scope.getNumOfItemsInCart = function(){
+        return $scope.cart.getNumOfItems();
     };
 }

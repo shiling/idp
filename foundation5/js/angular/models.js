@@ -35,34 +35,38 @@ function Cart(username) {
 }
 
 Cart.prototype.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
-    if (product instanceof Product) {
-        var intRegex = /^\d+$/;
-        if (intRegex.test(quantity)) { //make sure is integer
-            quantity = parseInt(quantity);
-            if(quantity === 0){ //remove if quantity is 0
-                this.removeItem(product);
-            }else{  //update if quantity is not zero
-                this.items[product.name] = new OrderItem(product, quantity);
-            }
-        }else{  //remove if not integer
+    var intRegex = /^\d+$/;
+    if (intRegex.test(quantity)) { //make sure is integer
+        quantity = parseInt(quantity);
+        if(quantity === 0){ //remove if quantity is 0
             this.removeItem(product);
+        }else{  //update if quantity is not zero
+            this.items[product.name] = new OrderItem(product, quantity);
         }
+    }else{  //remove if not integer
+        this.removeItem(product);
     }
 };
 
 Cart.prototype.getQuantity = function(product) {    //args[0] must be class Product
-    if (product instanceof Product) {
-        if (!this.items[product.name]) {    //item not in cart
-            return 0;
-        } else {    //item in cart
-            return this.items[product.name].quantity;
-        }
+    if (!this.items[product.name]) {    //item not in cart
+        return 0;
+    } else {    //item in cart
+        return this.items[product.name].quantity;
     }
 };
 
 Cart.prototype.removeItem = function(product) { //args[0] must be class Product
     delete this.items[product.name];
 };
+
+Cart.prototype.getNumOfItems = function(){
+    var length = 0;
+    $.each(this.items, function(i, e){
+        length++;
+    });
+    return length;
+}
 
 function OrderItem(product, quantity) { //args[0] must be class Product, args[1] must be integer
     this.product = product; //class Product
