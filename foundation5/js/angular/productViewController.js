@@ -1,5 +1,6 @@
 function retrieveProduct($scope, $http){
     $scope.products = [];
+    $scope.product = null;
     
     $scope.init = function(){
         $http.get('./data/products.json').success(function(data){
@@ -9,12 +10,7 @@ function retrieveProduct($scope, $http){
                 console.log(decodeURI(window.location.search.replace( "?", "" )));
                 console.log( product.name === decodeURI(window.location.search.replace( "?", "" )));
                 if ( product.name === decodeURI(window.location.search.replace( "?", "" ))){
-                    $scope.pname = product.name;
-                    $scope.brand = product.brand;
-                    $scope.price = product.price;
-                    $scope.unit = product.unit;
-                    $scope.description = product.description;
-                    $scope.image = product.image;
+                    $scope.product = product;
                     return false;
                 } else {
                     $scope.pname = decodeURI(window.location.search.replace( "?", "" )) + ' not found!'

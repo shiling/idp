@@ -61,12 +61,12 @@
                     <div ng-controller="retrieveProduct" ng-init="init()" class="content">
                         
                         <br/><br/>
-                        <div id="product-name">{{pname}}</div>
-                        <div id="brand-name">by {{brand}}</div>
-                        <div id="product-image"><img src="img/{{image}}" alt="{{pname}}" style='height: 250px'></div><br/>
-                        <div id="product-price">${{price}} </div>per {{unit}}<br/>
+                        <div id="product-name">{{product.name}}</div>
+                        <div id="brand-name">by {{product.brand}}</div>
+                        <div id="product-image"><img src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'></div><br/>
+                        <div id="product-price">${{product.price}} </div>per {{product.unit}}<br/>
                         
-                        <div class="panel">{{description}}</div><br/>
+                        <div class="panel">{{product.description}}</div><br/>
                     </div>
                         
                     <div class="row">
@@ -83,7 +83,7 @@
                     <ul class="small-block-grid-6" ng-controller="retrieveRelated" ng-init="init()">
                         <li ng-repeat="product in products">
                             <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}">
-                                <img src="img/{{product.image}}" alt="{{product.name}}" style='height: 100px'>
+                                <img src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'>
                             </a>
                         </li> 
                     </ul>
