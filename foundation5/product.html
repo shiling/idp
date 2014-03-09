@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
@@ -61,7 +62,7 @@
                     <div ng-controller="retrieveProduct" ng-init="init()" class="content">
                         
                         <br/><br/>
-                        <div id="product-name">{{product.name}}</div>
+                        <div id="product-name"><a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a href="javascript:alert('eh..!! donno what to do bro!!??')"><i class="fa fa-heart-o"></i></a></div>
                         <div id="brand-name">by {{product.brand}}</div>
                         <div id="product-image"><img src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'></div><br/>
                         <div id="product-price">${{product.price}} </div>per {{product.unit}}<br/>
