@@ -41,6 +41,7 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     $scope.products = [];   //array of class Product
     $scope.cart;    //class Cart
     $scope.searchService = searchService;
+    $scope.fav = [];
 
     $scope.init = function() {
         //get product data
@@ -52,8 +53,14 @@ function productsController($scope, $http, webStorage, productsService, searchSe
             webStorage.add("cart", new Cart());
         }
         $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
+        
+        //get fav from localstorage
+        if (webStorage.get("fav") === null) {
+            webStorage.add("fav", []);
+        }
+        $scope.fav = JSON.parse(webStorage.get("fav"));  //get fav from local storage
     };
-
+    
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
         $scope.cart.updateQuantity(product, quantity);
         webStorage.add("cart", $scope.cart);   //update localstorage
@@ -85,4 +92,11 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         }
         return productFilter;
     };
+    
+    $scope.addToFav = function(productName) {
+    	console.log('add '+productName+' to fav');
+    	$scope.fav.push(productName);
+    	webStorage.add('fav', $scope.fav);
+    };
+    
 }
