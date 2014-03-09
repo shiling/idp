@@ -10,26 +10,26 @@ function categoriesController($scope, $http, categoriesService, searchService) {
             $scope.categories = data;
         });
     };
-    
-    $scope.selectCategory = function(category){
+
+    $scope.selectCategory = function(category) {
         $scope.searchService.activeCategory = category;
         $scope.searchService.activeSubcategory = null;
         $scope.subcategories = $scope.searchService.activeCategory.subcategories;
     };
-    
-    $scope.isActiveCategory = function(category){
-        if($scope.searchService.activeCategory === category){
+
+    $scope.isActiveCategory = function(category) {
+        if ($scope.searchService.activeCategory === category) {
             return true;
         }
         return false;
     };
-    
-    $scope.selectSubcategory = function(subcategory){
+
+    $scope.selectSubcategory = function(subcategory) {
         $scope.searchService.activeSubcategory = subcategory;
     };
-    
-    $scope.isActiveSubcategory = function(subcategory){
-        if($scope.searchService.activeSubcategory === subcategory){
+
+    $scope.isActiveSubcategory = function(subcategory) {
+        if ($scope.searchService.activeSubcategory === subcategory) {
             return true;
         }
         return false;
@@ -75,19 +75,19 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     $scope.getQuantity = function(product) {    //args[0] must be class Product
         return $scope.cart.getQuantity(product);
     };
-    
-    $scope.getNumOfItemsInCart = function(){
+
+    $scope.getNumOfItemsInCart = function() {
         return $scope.cart.getNumOfItems();
     };
-    
-    $scope.productFilter = function(){
+
+    $scope.productFilter = function() {
         var productFilter = {
             categories: []
         };
-        if(searchService.activeCategory){
+        if (searchService.activeCategory) {
             productFilter.categories.push(searchService.activeCategory.name);
         }
-        if(searchService.activeSubcategory){
+        if (searchService.activeSubcategory) {
             productFilter.categories.push(searchService.activeSubcategory.name);
         }
         return productFilter;
@@ -100,3 +100,40 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     };
     
 }
+function addressesController($scope) {
+    $scope.addresses = []; //array of class address
+
+    $scope.init = function() {
+        //get addresses data
+        $scope.addresses = [
+            {
+                "username": "shiling",
+                "name": "Tai Shi Ling",
+                "address": "North Bridge Road #01-10",
+                "postalcode": "(S)621111"
+            },
+            {
+                "username": "shiling",
+                "name": "Tai Shi Ling",
+                "address": "Clementi Road #08-08",
+                "postalcode": "(S)688111"
+            },
+            {
+                "username": "cao li",
+                "name": "Cao Li",
+                "address": "Lakeside Drive #18-18",
+                "postalcode": "(S)688000"
+            }
+        ];
+    };
+    
+    $scope.getUserAddresses = function(username){
+        userAddress = [];
+        $.each($scope.addresses, function(index, address){
+            if(address.username === username){
+                userAddress.push(address);
+            }
+        });
+        return userAddress;
+    };
+};

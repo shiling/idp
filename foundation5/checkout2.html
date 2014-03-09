@@ -1,0 +1,152 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="cmartApp">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
+        <script src="js/vendor/modernizr.js"></script>
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
+        <script src="js/angular/angular-webstorage.js"></script>
+        <script src="js/angular/app.js"></script>
+        <script src="js/angular/models.js"></script>
+        <script src="js/angular/catelogControllers.js"></script>
+        <script>
+            $(function() {
+                $(document).foundation();
+            });
+        </script>
+        <title>CMart - Cart</title>
+    </head>
+    <body>
+        <div class="off-canvas-wrap">
+            <div class="inner-wrap">
+
+                <!-- Nav Bar -->
+                <nav class="tab-bar" data-magellan-expedition="fixed">
+                    <section class="left-small">
+                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
+
+                    <section class="middle tab-bar-section">
+                        <h1 class="title" style="text-align:center;">Checkout</h1>
+                    </section>
+
+                    <section class="right-small">
+                        <a class="menu-icon" ><span></span></a>
+                    </section>
+                </nav><!-- nav bar -->
+
+                <!-- Off Canvas Menu -->
+                <aside class="left-off-canvas-menu">
+                    <ul class="off-canvas-list">
+                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
+                        <li><a href="index.html">Store</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="favourites.html">Favourites</a></li>
+                        <li><a href="purchases.html">Purchases</a></li>
+                        <li><a href="statistics.html">Statistics</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                    </ul>
+                </aside><!--off canvas menu-->
+
+                <!-- Content -->
+                <section class="main-section">
+
+                    <div class="row">
+                        <div class="small-12 columns">
+
+                            <table style="width:100%;" ng-controller="addressesController" ng-init="init()">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="small-10 small-centered columns">
+                                                <img height="100%" width="100%" src="./img/checkout2.png"/>
+                                            </div>
+                                        </td>
+                                    </tr>    
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="small-12 small-centered columns">
+                                                <h5>Select Delivery Address</h5>
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                    <tr ng-repeat="address in getUserAddresses('shiling')">
+                                        <td>
+                                            <div class="small-10 small-centered columns">
+                                                <div class="row">
+                                                    <div class="small-12 columns"><h5><b>{{address.username}}'s Address:</b></h5></div>
+                                                </div>
+                                             <div class="row">
+                                                    <div class="small-12 columns"><h5>{{address.address}}</h5></div>
+                                                </div>
+                                             <div class="row">
+                                                    <div class="small-12 columns"><h5>{{address.postalcode}}</h5></div>
+                                                </div>
+                                        </td>
+                                        <td>
+                                          <a href="#" class="tiny button">x</a>  
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="small-10 small-centered columns">
+                                                <div class="row">
+                                                    <div class="small-12 columns"><h5><b>New Address</b></h5></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-3 columns"><h5>Name</h5></div>
+                                                    <div class="small-9 columns"><input type="text"/></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-3 columns"><h5>Building's Name</h5></div>
+                                                    <div class="small-9 columns"><input type="text"/></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-2 columns text-right"><h5>#</h5></div>
+                                                    <div class="small-4 columns"><input type="text"/></div>
+                                                    <div class="small-2 columns text-right"><h5>-</h5></div>
+                                                    <div class="small-4 columns"><input type="text"/></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-3 columns"><h5>Post Code</h5></div>
+                                                    <div class="small-9 columns"><input type="text"/></div>
+                                                </div>
+                                        </td>
+                                        <td>
+                                            <div class="small-12 small-centered columns">
+                                                <div class="row">
+                                                    <a href="#" class="tiny button">+</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="small-12 small-centered columns">
+                                                <div class="row">
+                                                    <a href="checkout3.html" class="button expand round text-center">
+                                                        <div class="small-12 columns"><h3>Next</h3></div>
+                                                    </a>
+                                                </div>
+                                            </div>   
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section><!--content-->
+
+                <!-- close the off-canvas menu -->
+                <a class="exit-off-canvas"></a>
+
+            </div><!--inner-wrap-->
+        </div><!--off-canvas-wrap-->
+    </body>
+</html>
