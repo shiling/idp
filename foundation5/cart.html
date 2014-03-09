@@ -19,6 +19,14 @@
 				$(document).foundation();
 			});
 		</script>
+		
+		<style>
+		.item-description .row  {
+			margin-left:5px;
+			margin-right:3px;
+		}
+		</style>
+		
 		<title>CMart - Cart</title>
 	</head>
 	<body>
@@ -80,22 +88,22 @@
 									</tr>
 									<tr ng-repeat="item in cart.items" class="ng-scope">
 										<td style="text-align: center"> <div class="th" style="background:#FFFFFF"><img height="100" width="100" src="img/{{item.product.image}}" alt="{{item.product.name}}" /></td>
-										</div><td>
+										</div><td class="item-description">
 										<div class="row">
 											<h3>{{item.product.name}}</h3>
 										</div>
 										<div class="row">
 											<h6>{{item.product.price| currency}}</h6>
 										</div>
-										<div class="row">
+										<div class="row collapse">
 											<div class="small-3 columns">
-												<a href="#" class="tiny button" ng-click="updateQuantity(item.product, getQuantity(item.product) - 1)">-</a>
+												<a href="#" class="tiny button prefix" ng-click="updateQuantity(item.product, getQuantity(item.product) - 1)">-</a>
 											</div>
 											<div class="small-6 columns">
 												<input type="text" ng-model="item.quantity" ng-model-onblur ng-change="validateQuantity(item.product)"/>
 											</div>
 											<div class="small-3 columns">
-												<a href="#" class="tiny button" ng-click="updateQuantity(item.product, getQuantity(item.product) + 1)">+</a>
+												<a href="#" class="tiny button postfix" ng-click="updateQuantity(item.product, getQuantity(item.product) + 1)">+</a>
 											</div>
 										</div></td>
 										<td><a href="#" class="tiny button">x</a></td>
