@@ -17,6 +17,7 @@
         <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
+                Foundation.set_namespace = function () {};
                 $(document).foundation();
                 $("#addFilter-btn").click(function(){
                     $("#filterModal").foundation('reveal','close');

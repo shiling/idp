@@ -62,6 +62,7 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     $scope.products = [];   //array of class Product
     $scope.cart;    //class Cart
     $scope.searchService = searchService;
+    $scope.fav = [];
 
     $scope.init = function() {
         //get product data
@@ -73,6 +74,12 @@ function productsController($scope, $http, webStorage, productsService, searchSe
             webStorage.add("cart", new Cart());
         }
         $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
+        
+        //get fav from localstorage
+        if (webStorage.get("fav") === null) {
+            webStorage.add("fav", []);
+        }
+        $scope.fav = JSON.parse(webStorage.get("fav"));  //get fav from local storage
     };
 
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
@@ -135,4 +142,47 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         return productFilter;
     };
     
+    $scope.addToFav = function(productName) {
+    	console.log('add '+productName+' to fav');
+    	$scope.fav.push(productName);
+    	webStorage.add('fav', $scope.fav);
+    };
+    
 }
+function addressesController($scope) {
+    $scope.addresses = []; //array of class address
+
+    $scope.init = function() {
+        //get addresses data
+        $scope.addresses = [
+            {
+                "username": "shiling",
+                "name": "Tai Shi Ling",
+                "address": "North Bridge Road #01-10",
+                "postalcode": "(S)621111"
+            },
+            {
+                "username": "shiling",
+                "name": "Tai Shi Ling",
+                "address": "Clementi Road #08-08",
+                "postalcode": "(S)688111"
+            },
+            {
+                "username": "cao li",
+                "name": "Cao Li",
+                "address": "Lakeside Drive #18-18",
+                "postalcode": "(S)688000"
+            }
+        ];
+    };
+    
+    $scope.getUserAddresses = function(username){
+        userAddress = [];
+        $.each($scope.addresses, function(index, address){
+            if(address.username === username){
+                userAddress.push(address);
+            }
+        });
+        return userAddress;
+    };
+};
