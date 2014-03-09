@@ -1,4 +1,25 @@
 //CONTROLLERS
+function searchController($scope, filtersService, searchService) {
+    $scope.filters = [];
+    $scope.searchService = searchService;
+
+    $scope.init = function() {
+        //get filters data
+        filtersService.async().then(function(data) {
+            $scope.filters = data;
+        });
+    };
+    
+    $scope.getAppliedFilters = function(){
+        return $scope.searchService.filters;
+    };
+    
+    $scope.addFilter = function(filter){    //args[0] must be of class Filter
+        $scope.searchService.filters.push(filter.name);
+        
+    };
+}
+
 function categoriesController($scope, $http, categoriesService, searchService) {
     $scope.categories = []; //array of class Category
     $scope.subcategories = [];
@@ -10,26 +31,26 @@ function categoriesController($scope, $http, categoriesService, searchService) {
             $scope.categories = data;
         });
     };
-    
-    $scope.selectCategory = function(category){
+
+    $scope.selectCategory = function(category) {
         $scope.searchService.activeCategory = category;
         $scope.searchService.activeSubcategory = null;
         $scope.subcategories = $scope.searchService.activeCategory.subcategories;
     };
-    
-    $scope.isActiveCategory = function(category){
-        if($scope.searchService.activeCategory === category){
+
+    $scope.isActiveCategory = function(category) {
+        if ($scope.searchService.activeCategory === category) {
             return true;
         }
         return false;
     };
-    
-    $scope.selectSubcategory = function(subcategory){
+
+    $scope.selectSubcategory = function(subcategory) {
         $scope.searchService.activeSubcategory = subcategory;
     };
-    
-    $scope.isActiveSubcategory = function(subcategory){
-        if($scope.searchService.activeSubcategory === subcategory){
+
+    $scope.isActiveSubcategory = function(subcategory) {
+        if ($scope.searchService.activeSubcategory === subcategory) {
             return true;
         }
         return false;
@@ -68,21 +89,50 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     $scope.getQuantity = function(product) {    //args[0] must be class Product
         return $scope.cart.getQuantity(product);
     };
-    
-    $scope.getNumOfItemsInCart = function(){
+
+    $scope.getNumOfItemsInCart = function() {
         return $scope.cart.getNumOfItems();
     };
+
+    $scope.productFilter = function(product) {
+        //not in applied category
+        if(searchService.activeCategory && product.categories.indexOf(searchService.activeCategory.name) === -1){
+            return false;
+        }
+        //not in applied subcategory
+        if(searchService.activeSubcategory && product.categories.indexOf(searchService.activeSubcategory.name) === -1){
+            return false;
+        }
+        //not in applied filter
+        $.each(searchService.filters, function(index, filter){
+            if(product.filters.indexOf(filter) === -1){
+                console.log("false");
+                return false;
+            }
+        });
+        return true;
+    };
     
-    $scope.productFilter = function(){
+    $scope.productFilter2 = function() {
         var productFilter = {
-            categories: []
+            name: '',
+            categories: [],
+            filters: []
         };
-        if(searchService.activeCategory){
+        if (searchService.name) {
+            productFilter.name = searchService.name;
+        }
+        if (searchService.activeCategory) {
             productFilter.categories.push(searchService.activeCategory.name);
         }
-        if(searchService.activeSubcategory){
+        if (searchService.activeSubcategory) {
             productFilter.categories.push(searchService.activeSubcategory.name);
         }
+        /*
+        if(searchService.filters){
+            productFilter.filters = searchService.filters;
+        }*/
         return productFilter;
     };
+    
 }
