@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
@@ -31,12 +32,12 @@
                         <a class="left-off-canvas-toggle menu-icon"><span></span></a>
                     </section>
 
-                    <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Store</h1>
+                    <section class="middle tab-bar-section text-center">
+                        <h1 class="title">Store</h1>
                     </section>
 
-                    <section class="right-small">
-                        <a class="menu-icon" ><span></span></a>
+                    <section class="right-small text-center">
+                        <i class="fa fa-shopping-cart fa-lg"></i>
                     </section>
                 </nav><!-- nav bar -->
 
@@ -55,10 +56,10 @@
 
                 <!-- Content -->
                 <section class="main-section">
-
-                    <!--search-->
                     <div class="row">
                         <div class="small-12 columns">
+
+                            <!--search-->
                             <form>
                                 <div class="row collapse">
                                     <div class="small-10 columns">
@@ -68,43 +69,38 @@
                                         <a href="#" class="button postfix">Go</a>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
+                            </form><!--search-->
 
-                    <!--categories-->
-                    <div ng-controller="categoriesController" ng-init="init()">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <div class="cat-bar">
-                                    <ul class='button-group'>
-                                        <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
-                                        <li ng-repeat="category in categories">
-                                            <a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
-                                        </li>
-                                    </ul>
-
+                            <!--categories-->
+                            <div ng-controller="categoriesController" ng-init="init()">
+                                <div class="row">
+                                    <div class="cat-bar">
+                                        <ul class='button-group'>
+                                            <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
+                                            <li ng-repeat="category in categories">
+                                                <a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="cat-bar">
-                                    <ul class='button-group' ng-hide="isActiveCategory(null) || subcategories.length === 0">
-                                        <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}">All</a></li>
-                                        <li ng-repeat="subcategory in subcategories">
-                                            <a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
-                                        </li>
-                                    </ul>
+                                <div class="row">
+                                    <div class="cat-bar">
+                                        <ul class='button-group' ng-hide="isActiveCategory(null) || subcategories.length === 0">
+                                            <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}">All</a></li>
+                                            <li ng-repeat="subcategory in subcategories">
+                                                <a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div> <!--ng-controller: categoriesController-->
+                            </div> <!--categories-->
 
-                    <!--products-->
-                    <div ng-controller="productsController" ng-init="init()">
-                        <div class="row">
-                            <div class="small-12 columns">
+                            <!--products-->
+                            <div ng-controller="productsController" ng-init="init()">
                                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
                                     <li ng-repeat="product in products | filter: productFilter()">
                                         <div class="row">
-                                            <div class="small-10 small-centered columns product-tile">
+                                            <div class="small-11 small-centered columns product-tile">
                                                 <div class="row">
                                                     <div class="small-11 small-centered columns">
                                                         <a href="/product?name={{product.name}}">
@@ -134,11 +130,10 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </div><!--products-->
+
                         </div>
-
                     </div>
-
                 </section><!--content-->
 
                 <!-- close the off-canvas menu -->
