@@ -7,6 +7,11 @@ and open the template in the editor.
     Created on : Feb 28, 2014, 5:39:09 PM
     Author     : shilingtaiÏ
 */
+
+a{
+    cursor: pointer;
+}
+
 .cat-bar{
     overflow: hidden;
     overflow-x: auto;
