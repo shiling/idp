@@ -52,11 +52,34 @@ app.factory('productsService', function($http) {
     return productsService;
 });
 
+//retrieves filters from json file
+app.factory('filtersService', function($http) {
+    var promise;
+    var filtersService = {
+        async: function() {
+            if (!promise) {
+                promise = $http.get('./data/filters.json').then(function(response) {
+                    filters = [];
+                    $.each(response.data, function(i, e) {
+                        filter = $.extend(new Filter, e); //convert object to Product
+                        filters.push(filter);
+                    });
+                    return filters;
+                });
+            }
+            return promise;
+        }
+    };
+    return filtersService;
+});
+
 //retrieves categories from json file
 app.factory('searchService', function() {
     var searchService = {
         'activeCategory': null,
-        'activeSubcategory': null
+        'activeSubcategory': null,
+        'name': null,
+        'filters': []
     };
     return searchService;
 });
