@@ -68,26 +68,25 @@
                         <div id="product-price">${{product.price}} </div>per {{product.unit}}<br/>
                         
                         <div class="panel">{{product.description}}</div><br/>
-                    </div>
                         
-                    <div class="row">
-                        <div class="small-3 small-offset-3 columns">
-                            <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                        
+                        <div class="row">
+                            <div class="small-3 small-offset-3 columns">
+                                <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                            </div>
+                            <div class="small-3 columns end">
+                                <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Subscribe</a>
+                            </div>
                         </div>
-                        <div class="small-3 columns end">
-                            <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Subscribe</a>
-                        </div>
-                    </div>
                     
-                    <div class="content">
                         <div>Related products:</div><br/>
-                    <ul class="small-block-grid-6" ng-controller="retrieveRelated" ng-init="init()">
-                        <li ng-repeat="product in products">
-                            <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}">
-                                <img src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'>
-                            </a>
-                        </li> 
-                    </ul>
+                        <ul class="small-block-grid-6">
+                            <li ng-repeat="product in related(products,product)">
+                                <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}">
+                                    <img src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'>
+                                </a>
+                            </li> 
+                        </ul>
                     </div>
                         
 
