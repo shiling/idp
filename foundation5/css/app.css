@@ -41,3 +41,33 @@ and open the template in the editor.
 .buttom{
     margin-bottom: 0 !important;
 }
+
+.content {
+    margin-left:auto;
+    margin-right:auto;
+    width:70%;
+}
+
+#product-name  {
+    text-transform:capitalize;
+    font-family: tahoma;
+    font-weight: bold; 
+    font-size: 30px;
+}
+
+#brand-name  {
+    font-weight:bold;
+    font:italic bold 12px/30px Georgia, serif;
+    
+}
+
+#product-image{
+    text-align: center;
+}
+
+#product-price  {
+    font-style: italic;
+    font-family: tahoma;
+    font-size: 20px;
+    display: inline
+}
