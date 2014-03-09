@@ -70,12 +70,23 @@
                         <div class="panel">{{product.description}}</div><br/>
                         
                         
-                        <div class="row">
+                        <div class="row" ng-controller="productsController" ng-init="init()">
                             <div class="small-3 small-offset-3 columns">
-                                <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                <a class="button expand" ng-show="getQuantity(product) === 0" ng-click="updateQuantity(product, 1)">Add To Cart</a>
                             </div>
+
+                            <div class="small-1 small-offset-3 columns" ng-show="getQuantity(product) > 0">
+                                <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                            </div>
+                            <div class="small-1 columns" ng-show="getQuantity(product) > 0">
+                                <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                            </div>
+                            <div class="small-1 columns" ng-show="getQuantity(product) > 0">
+                                <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                            </div>
+
                             <div class="small-3 columns end">
-                                <a href="#" class="button expand" ng-click="updateQuantity(product, 1)">Subscribe</a>
+                                <a class="button expand" ng-click="subscribe()">Subscribe</a>
                             </div>
                         </div>
                     

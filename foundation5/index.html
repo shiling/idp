@@ -17,6 +17,7 @@
         <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
+                Foundation.set_namespace = function () {};
                 $(document).foundation();
             });
         </script>
@@ -66,7 +67,7 @@
                                         <input type="text" placeholder="Search for Product / Brand">
                                     </div>
                                     <div class="small-2 columns">
-                                        <a href="#" class="button postfix">Go</a>
+                                        <a class="button postfix">Go</a>
                                     </div>
                                 </div>
                             </form><!--search-->
@@ -76,9 +77,9 @@
                                 <div class="row">
                                     <div class="cat-bar">
                                         <ul class='button-group'>
-                                            <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
+                                            <li><a class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
                                             <li ng-repeat="category in categories">
-                                                <a href='#' class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
+                                                <a class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -86,9 +87,9 @@
                                 <div class="row">
                                     <div class="cat-bar">
                                         <ul class='button-group' ng-hide="isActiveCategory(null) || subcategories.length === 0">
-                                            <li><a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}">All</a></li>
+                                            <li><a class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}">All</a></li>
                                             <li ng-repeat="subcategory in subcategories">
-                                                <a href='#' class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
+                                                <a class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -113,17 +114,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="row" ng-show="getQuantity(product) === 0">
-                                                    <a href="#" class="button expand buttom" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                                    <a class="button expand buttom" ng-click="updateQuantity(product, 1)">Add To Cart</a>
                                                 </div>
                                                 <div class="row collapse" ng-show="getQuantity(product) > 0">
                                                     <div class="small-3 columns">
-                                                        <a href="#" class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                                        <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
                                                     </div>
                                                     <div class="small-6 columns">
                                                         <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
                                                     </div>
                                                     <div class="small-3 columns">
-                                                        <a href="#" class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                                                        <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
                                                     </div>
                                                 </div>
                                             </div>
