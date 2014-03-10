@@ -15,12 +15,15 @@ a{
     color: white;
 }
 .headroom{
-    z-index: 100;
+    z-index: 50;
     background-color: white;
 }
 .headroom--not-top{
     position: fixed;
     top: 2.8125rem;
+    left: 0;
+    right: 0;
+    width: 100%;
 }
 .headroom--unpinned{
     top: -500px;

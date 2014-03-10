@@ -75,7 +75,7 @@
                         <div id="searchControls" ng-controller="searchController" ng-init="init()">
                             <div class="row collapse">
                                 <div class="small-3 large-2 columns">
-                                    <a class="button prefix radius" data-reveal-id="filterModal" data-reveal>
+                                    <a class="button prefix radius" data-reveal-id="filterModal" data-reveal ng-class="{alert: getAppliedFilters().length > 0}">
                                         <span class="show-for-small-only" ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}} <i class="fa fa-filter"></i></span>
                                         <div class="show-for-medium-up">
                                             <i class="fa fa-filter"></i>
