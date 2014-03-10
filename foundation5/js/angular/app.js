@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var app = angular.module('cmartApp', ['mm.foundation', 'webStorageModule']);
+var app = angular.module('cmartApp', ['mm.foundation', 'webStorageModule', 'truncate']);
 
 //retrieves categories from json file
 app.factory('categoriesService', function($http) {

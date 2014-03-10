@@ -11,11 +11,28 @@ and open the template in the editor.
 a{
     cursor: pointer;
 }
-
+.white {
+    color: white;
+}
+.headroom{
+    z-index: 100;
+    background-color: white;
+}
+.headroom--not-top{
+    position: fixed;
+    top: 2.8125rem;
+}
+.headroom--unpinned{
+    top: -500px;
+}
+.headroom-pinned{
+    top: 2.8125rem;
+}
 .cat-bar{
     overflow: hidden;
     overflow-x: auto;
     white-space: nowrap;
+    background-color: #c0c0c0;
 }
 .cat-bar ul{
     display: table;
@@ -29,18 +46,40 @@ a{
     padding-bottom: .5rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    margin-bottom: 0rem;
 }
-.cat-btn-active{
+.cat-bar .cat-btn-active{
     background-color: #008cba;
 }
 
-.cat-btn-inactive{
+.cat-bar .cat-btn-inactive{
     background-color: #c0c0c0;
 }
-
+.sub-cat-bar{
+    background-color: #008cba;
+}
+.sub-cat-bar .cat-btn-active{
+    background-color: #008cba;
+    border-bottom: thick solid darkslategray !important;
+}
+.sub-cat-bar .cat-btn-inactive{
+    background-color: #008cba;
+}
 .product-tile{
     border: thin solid gainsboro;
     background-color: #eeeeee;
+    padding: 0;
+}
+
+.product-tile img{
+    width: 100%;
+    height: 12rem;
+}
+
+.product-title{
+    line-height: 1.5rem;
+    min-height: 6rem;
+    max-height: 4.5rem;
 }
 
 .buttom{
@@ -75,8 +114,4 @@ a{
     font-family: tahoma;
     font-size: 20px;
     display: inline
-}
-
-.white {
-    color: white;
 }
