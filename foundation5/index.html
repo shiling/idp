@@ -19,18 +19,16 @@
         <script src="js/headroom/headroom.min.js"></script>
         <script>
             $(function() {
-                Foundation.set_namespace = function() {
-                };
+                //foundation
+                Foundation.set_namespace = function() {};
                 $(document).foundation();
                 $("#addFilter-btn").click(function() {
                     $("#filterModal").foundation('reveal', 'close');
                 });
 
-                // grab an element
-                var myElement = document.querySelector("header");
-                // construct an instance of Headroom, passing the element
-                var headroom = new Headroom(myElement);
-                // initialise
+                //initialise headroom
+                var header = document.querySelector("header");
+                var headroom = new Headroom(header);
                 headroom.init();
             });
         </script>
@@ -69,7 +67,7 @@
 
                 <!-- Content -->
                 <section class="main-section">
-                    <header id="cat-nav" class="headroom">
+                    <header class="headroom">
                         <br/>
                         <!--search-->
                         <div id="searchControls" ng-controller="searchController" ng-init="init()">
