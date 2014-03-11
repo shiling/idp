@@ -38,12 +38,12 @@ app.factory('productsService', function($http) {
         async: function() {
             if (!promise) {
                 promise = $http.get('./data/products.json').then(function(response) {
-                    products = [];
+                    productsMap = {};
                     $.each(response.data, function(i, e) {
                         product = $.extend(new Product, e); //convert object to Product
-                        products.push(product);
+                        productsMap[product.name] = product;
                     });
-                    return products;
+                    return productsMap;
                 });
             }
             return promise;

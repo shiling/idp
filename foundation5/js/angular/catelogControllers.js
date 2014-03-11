@@ -63,15 +63,19 @@ function categoriesController($scope, $http, categoriesService, searchService) {
 }
 
 function productsController($scope, $http, webStorage, productsService, searchService) {
+    $scope.productsMap;    //hashmap of class product
     $scope.products = [];   //array of class Product
     $scope.cart;    //class Cart
     $scope.searchService = searchService;
-    $scope.fav = [];
+    $scope.favourites = []; //array of product names
 
     $scope.init = function() {
         //get product data
         productsService.async().then(function(data) {
-            $scope.products = data;
+            $scope.productsMap = data;
+            $.each($scope.productsMap, function(productName, product){
+               $scope.products.push(product); 
+            });
         });
         //get cart from localstorage
         if (webStorage.get("cart") === null) {
@@ -79,10 +83,10 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         }
         $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
         //get fav from localstorage
-        if (webStorage.get("fav") === null) {
-            webStorage.add("fav", []);
+        if (webStorage.get("favourites") === null) {
+            webStorage.add("favourites", []);
         }
-        $scope.fav = JSON.parse(webStorage.get("fav"));  //get fav from local storage
+        $scope.favourites = webStorage.get("favourites");  //get fav from local storage
     };
 
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
@@ -132,9 +136,16 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     };
 
     $scope.addToFav = function(productName) {
-        console.log('add ' + productName + ' to fav');
-        $scope.fav.push(productName);
-        webStorage.add('fav', $scope.fav);
+        $scope.favourites.push(productName);
+        webStorage.add('favourites', $scope.favourites);
+    };
+    
+    $scope.getFavProducts = function(){ //TODO: make more efficient
+        var favProducts = [];
+        $.each($scope.favourites, function(index, productName){
+            favProducts.push($scope.productsMap[productName]);
+        });
+        return favProducts;
     };
 
 }

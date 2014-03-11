@@ -1,0 +1,184 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="cmartApp">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
+        <script src="js/vendor/modernizr.js"></script>
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/angular/angular.min.js"></script>
+        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
+        <script src="js/angular/angular-webstorage.js"></script>
+        <script src="js/angular/angular-truncate.js"></script>
+        <script src="js/angular/app.js"></script>
+        <script src="js/angular/models.js"></script>
+        <!--THIS PAGE ONLY-->
+        <script src="js/angular/catelogControllers.js"></script>
+        <script src="js/headroom/headroom.min.js"></script>
+        <script>
+            $(function() {
+                //foundation
+                Foundation.set_namespace = function() {
+                };
+                $(document).foundation();
+                $("#addFilter-btn").click(function() {
+                    $("#filterModal").foundation('reveal', 'close');
+                });
+
+                //initialise headroom
+                var header = document.querySelector("header");
+                var headroom = new Headroom(header);
+                headroom.init();
+            });
+        </script>
+        <title>CMart</title>
+    </head>
+    <body>
+        <div class="off-canvas-wrap">
+            <div class="inner-wrap">
+
+                <!-- Nav Bar -->
+                <nav class="tab-bar" data-magellan-expedition="fixed">
+                    <section class="left-small">
+                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
+
+                    <section class="middle tab-bar-section">
+                        <h1 class="title" style="text-align:center;">CMart</h1>
+                    </section>
+
+                    <section class="right-small text-center">
+                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
+                    </section>
+                </nav><!-- nav bar -->
+
+                <!-- Off Canvas Menu -->
+                <aside class="left-off-canvas-menu">
+                    <ul class="off-canvas-list">
+                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
+                        <li><a href="index.html">Store</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="favourites.html">Favourites</a></li>
+                        <li><a href="purchases.html">Purchases</a></li>
+                        <li><a href="statistics.html">Statistics</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                    </ul>
+                </aside><!--off canvas menu-->
+
+                <!-- Content -->
+                <section class="main-section">
+                    <header class="headroom">
+                        <br/>
+                        <!--search-->
+                        <div id="searchControls" ng-controller="searchController" ng-init="init()">
+                            <div class="row collapse">
+                                <div class="small-3 large-2 columns">
+                                    <a class="button prefix radius" data-reveal-id="filterModal" data-reveal ng-class="{alert: getAppliedFilters().length > 0}">
+                                        <span class="show-for-small-only" ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}} <i class="fa fa-filter"></i></span>
+                                        <div class="show-for-medium-up">
+                                            <i class="fa fa-filter"></i>
+                                            <span ng-show="getAppliedFilters().length === 0">Add</span>
+                                            <span ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}}</span>
+                                            Filter(s) 
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="small-9 large-10 columns">
+                                    <input ng-model="searchService.name" type="text" placeholder="Search for Product / Brand">
+                                </div>
+                            </div>
+                            <div id="filterModal" class="reveal-modal tiny text-center" data-reveal>
+                                <h4>Add Filters:</h4>
+                                <div class="panel">
+                                    <ul class="small-block-grid-2">
+                                        <li ng-repeat="filter in filters" class="text-left">
+                                            <input type="checkbox" value="{{filter.name}}" ng-model="filter.selected"/><label>{{filter.name}}</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a id="addFilter-btn" class="button expand" ng-click="saveFilters()"/>Save</a>
+                            </div>
+                        </div><!--search-->
+
+                        <!--categories-->
+                        <div ng-controller="categoriesController" ng-init="init()">
+                            <div class="cat-bar">
+                                <ul class='button-group'>
+                                    <li><a class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
+                                    <li ng-repeat="category in categories">
+                                        <a class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="cat-bar sub-cat-bar">
+                                <ul class='button-group' ng-hide="isActiveCategory(null) || subcategories.length === 0">
+                                    <li><a class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}" ng-click="selectSubcategory(null)">All</a></li>
+                                    <li ng-repeat="subcategory in subcategories">
+                                        <a class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> <!--categories-->
+                    </header>
+
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <br/>
+                            <h1>My Favourites</h1>
+                            <br/>
+                            <!--products-->
+                            <div ng-controller="productsController" ng-init="init()">
+                                <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
+                                    <li ng-repeat="product in getFavProducts() | filter: productFilter">
+                                        <div class="row">
+                                            <div class="small-11 small-centered columns product-tile">
+                                                <div class="row">
+                                                    <div class="small-12 columns">
+                                                        <a href="product.html?{{product.name}}">
+                                                            <img src="img/{{product.image}}" alt="{{product.name}}"/>
+                                                            <div class="small-11 small-centered columns">
+                                                                <h5 class="product-title">{{product.name| characters:45}}<br/><small>{{product.unit}}</small></h5>
+                                                                <h6>{{product.price| currency}}</h6>
+                                                            </div>
+                                                        </a>
+                                                        <div ng-show="getQuantity(product) === 0">
+                                                            <a class="button expand prefix buttom" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                                        </div>
+                                                        <div class="row collapse" style="width:100%" ng-show="getQuantity(product) > 0">
+                                                            <div class="small-3 columns">
+                                                                <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">
+                                                                    <i class="fa fa-minus fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="small-6 columns">
+                                                                <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                                            </div>
+                                                            <div class="small-3 columns">
+                                                                <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">
+                                                                    <i class="fa fa-plus fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--products-->
+
+                        </div>
+                    </div>
+                </section><!--content-->
+
+                <!-- close the off-canvas menu -->
+                <a class="exit-off-canvas"></a>
+
+            </div><!--inner-wrap-->
+        </div><!--off-canvas-wrap-->
+    </body>
+</html>
