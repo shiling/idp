@@ -22,7 +22,8 @@
         <script>
             $(function() {
                 //foundation
-                Foundation.set_namespace = function() {};
+                Foundation.set_namespace = function() {
+                };
                 $(document).foundation();
                 $("#addFilter-btn").click(function() {
                     $("#filterModal").foundation('reveal', 'close');
@@ -45,8 +46,9 @@
                     <section class="left-small">
                         <a class="left-off-canvas-toggle menu-icon"><span></span></a>
                     </section>
-                    <section class="middle tab-bar-section text-center">
-                        <h1 class="title">CMart</h1>
+
+                    <section class="middle tab-bar-section">
+                        <h1 class="title" style="text-align:center;">CMart</h1>
                     </section>
 
                     <section class="right-small text-center">
@@ -57,7 +59,7 @@
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
                     <ul class="off-canvas-list">
-                        <li><a ><img src="#" height="80" width="80"/>Guest</a></li>
+                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
                         <li><a href="index.html">Store</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
@@ -126,10 +128,12 @@
                     <div class="row">
                         <div class="small-12 columns">
                             <br/>
+                            <h1>My Favourites</h1>
+                            <br/>
                             <!--products-->
                             <div ng-controller="productsController" ng-init="init()">
                                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
-                                    <li ng-repeat="product in products | filter: productFilter">
+                                    <li ng-repeat="product in getFavProducts() | filter: productFilter">
                                         <div class="row">
                                             <div class="small-11 small-centered columns product-tile">
                                                 <div class="row">

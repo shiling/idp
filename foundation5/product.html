@@ -1,157 +1,159 @@
 <!doctype html>
 <html class="no-js" lang="en" ng-app="cmartApp">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
-		<link href="css/app.css" rel="stylesheet">
-		<link href="css/font-awesome.min.css" rel="stylesheet">
-		<script src="js/vendor/modernizr.js"></script>
-		<script src="js/vendor/jquery.js"></script>
-		<script src="js/foundation.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
-		<script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
-		<script src="js/angular/angular-webstorage.js"></script>
-		<script src="js/angular/app.js"></script>
-		<script src="js/angular/models.js"></script>
-		<script src="js/angular/catelogControllers.js"></script>
-		<script src="js/angular/productViewController.js"></script>
-		<script>
-			$(function() {
-				Foundation.set_namespace = function() {
-				};
-				$(document).foundation();
-			});
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
+        <script src="js/vendor/modernizr.js"></script>
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/angular/angular.min.js"></script>
+        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
+        <script src="js/angular/angular-webstorage.js"></script>
+        <script src="js/angular/angular-truncate.js"></script>
+        <script src="js/angular/app.js"></script>
+        <script src="js/angular/models.js"></script>
+        <script src="js/angular/catelogControllers.js"></script>
+        <!--THIS PAGE ONLY-->
+        <script src="js/angular/productViewController.js"></script>
+        <script>
+            $(function() {
+                Foundation.set_namespace = function() {};
+                $(document).foundation();
+            });
 
-			function toggleFavBtn(btn) {
-				if ($(btn).hasClass('fa-heart')) {// is currently added to fav
-					$(btn).removeClass('fa-heart');
-					$(btn).addClass('fa-heart-o');
-				} else {
-					$(btn).removeClass('fa-heart-o');
-					$(btn).addClass('fa-heart');
-				}
+            function toggleFavBtn(btn) {
+                if ($(btn).hasClass('fa-heart')) {// is currently added to fav
+                    $(btn).removeClass('fa-heart');
+                    $(btn).addClass('fa-heart-o');
+                } else {
+                    $(btn).removeClass('fa-heart-o');
+                    $(btn).addClass('fa-heart');
+                }
 
-			}
+            }
 
-		</script>
+        </script>
 
-		<title>CMart - Store</title>
-	</head>
-	<body>
-		<div class="off-canvas-wrap">
-			<div class="inner-wrap">
+        <title>CMart - Store</title>
+    </head>
+    <body>
+        <div class="off-canvas-wrap">
+            <div class="inner-wrap">
 
-				<!-- Nav Bar -->
-				<nav class="tab-bar" data-magellan-expedition="fixed">
-					<section class="left-small">
-						<a class="left-off-canvas-toggle menu-icon"><span></span></a>
-					</section>
+                <!-- Nav Bar -->
+                <nav class="tab-bar" data-magellan-expedition="fixed">
+                    <section class="left-small">
+                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
 
-					<section class="middle tab-bar-section">
-						<h1 class="title" style="text-align:center;">Store</h1>
-					</section>
+                    <section class="middle tab-bar-section">
+                        <h1 class="title" style="text-align:center;">Store</h1>
+                    </section>
 
-					<section class="right-small">
-						<a class="menu-icon" ><span></span></a>
-					</section>
-				</nav><!-- nav bar -->
+                    <section class="right-small">
+                        <a class="menu-icon" ><span></span></a>
+                    </section>
+                </nav><!-- nav bar -->
 
-				<!-- Off Canvas Menu -->
-				<aside class="left-off-canvas-menu">
-					<ul class="off-canvas-list">
-						<li>
-							<a href="#"><img src="#" height="80" width="80"/>Guest</a>
-						</li>
-						<li>
-							<a href="index.html">Store</a>
-						</li>
-						<li>
-							<a href="cart.html">Cart</a>
-						</li>
-						<li>
-							<a href="favourites.html">Favourites</a>
-						</li>
-						<li>
-							<a href="purchases.html">Purchases</a>
-						</li>
-						<li>
-							<a href="statistics.html">Statistics</a>
-						</li>
-						<li>
-							<a href="settings.html">Settings</a>
-						</li>
-					</ul>
-				</aside><!--off canvas menu-->
+                <!-- Off Canvas Menu -->
+                <aside class="left-off-canvas-menu">
+                    <ul class="off-canvas-list">
+                        <li>
+                            <a href="#"><img src="#" height="80" width="80"/>Guest</a>
+                        </li>
+                        <li>
+                            <a href="index.html">Store</a>
+                        </li>
+                        <li>
+                            <a href="cart.html">Cart</a>
+                        </li>
+                        <li>
+                            <a href="favourites.html">Favourites</a>
+                        </li>
+                        <li>
+                            <a href="purchases.html">Purchases</a>
+                        </li>
+                        <li>
+                            <a href="statistics.html">Statistics</a>
+                        </li>
+                        <li>
+                            <a href="settings.html">Settings</a>
+                        </li>
+                    </ul>
+                </aside><!--off canvas menu-->
 
-				<!-- Content -->
-				<section class="main-section">
+                <!-- Content -->
+                <section class="main-section">
 
-					<div ng-controller="retrieveProduct" ng-init="init()" class="content">
+                    <div ng-controller="retrieveProduct" ng-init="init()" class="content">
 
-						<div ng-controller="productsController" ng-init="init()">
+                        <div ng-controller="productsController" ng-init="init()">
 
-							<br/>
-							<br/>
-							<div id="product-name">
-								<a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="addToFav(product.name)"><i class="fa fa-heart-o" onclick="toggleFavBtn(this)"></i></a>
-							</div>
-							<div id="brand-name">
-								by {{product.brand}}
-							</div>
-							<div id="product-image"><img src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
-							</div>
-							<br/>
-							<div id="product-price">
-								${{product.price}}
-							</div>
-							per {{product.unit}}
-							<br/>
+                            <br/>
+                            <br/>
+                            <div id="product-name">
+                                <a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="addToFav(product.name)"><i class="fa fa-heart-o" onclick="toggleFavBtn(this)"></i></a>
+                            </div>
+                            <div id="brand-name">
+                                by {{product.brand}}
+                            </div>
+                            <div id="product-image"><img src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
+                            </div>
+                            <br/>
+                            <div id="product-price">
+                                ${{product.price}}
+                            </div>
+                            per {{product.unit}}
+                            <br/>
 
-							<div class="panel">
-								{{product.description}}
-							</div>
-							<br/>
+                            <div class="panel">
+                                {{product.description}}
+                            </div>
+                            <br/>
 
-							<div class="row">
-								<div class="small-3 small-offset-3 columns">
-									<a class="button expand" ng-show="getQuantity(product) === 0" ng-click="updateQuantity(product, 1)">Add To Cart</a>
-								</div>
+                            <div class="row">
+                                <div class="small-3 small-offset-3 columns">
+                                    <a class="button expand" ng-show="getQuantity(product) === 0" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                </div>
 
-								<div class="small-1 small-offset-3 columns" ng-show="getQuantity(product) > 0">
-									<a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
-								</div>
-								<div class="small-1 columns" ng-show="getQuantity(product) > 0">
-									<input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
-								</div>
-								<div class="small-1 columns" ng-show="getQuantity(product) > 0">
-									<a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
-								</div>
+                                <div class="small-1 small-offset-3 columns" ng-show="getQuantity(product) > 0">
+                                    <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                </div>
+                                <div class="small-1 columns" ng-show="getQuantity(product) > 0">
+                                    <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                </div>
+                                <div class="small-1 columns" ng-show="getQuantity(product) > 0">
+                                    <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                                </div>
 
-								<div class="small-3 columns end">
-									<a class="button expand" ng-click="subscribe()">Subscribe</a>
-								</div>
-							</div>
+                                <div class="small-3 columns end">
+                                    <a class="button expand" ng-click="subscribe()">Subscribe</a>
+                                </div>
+                            </div>
 
-							<div>
-								Related products:
-							</div>
-							<br/>
-							<ul class="small-block-grid-6">
-								<li ng-repeat="product in related(products,product)">
-									<a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}"> <img src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'> </a>
-								</li>
-							</ul>
-						</div>
+                            <div>
+                                Related products:
+                            </div>
+                            <br/>
+                            <ul class="small-block-grid-6">
+                                <li ng-repeat="product in related(products, product)">
+                                    <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}"> <img src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'> </a>
+                                </li>
+                            </ul>
+                        </div>
 
-					</div>
+                    </div>
 
-				</section><!--content-->
+                </section><!--content-->
 
-				<!-- close the off-canvas menu -->
-				<a class="exit-off-canvas"></a>
+                <!-- close the off-canvas menu -->
+                <a class="exit-off-canvas"></a>
 
-			</div><!--inner-wrap-->
-		</div><!--off-canvas-wrap-->
-	</body>
+            </div><!--inner-wrap-->
+        </div><!--off-canvas-wrap-->
+    </body>
 </html>

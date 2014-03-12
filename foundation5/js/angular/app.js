@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var app = angular.module('cmartApp', ['mm.foundation', 'webStorageModule']);
+var app = angular.module('cmartApp', ['mm.foundation', 'webStorageModule', 'truncate']);
 
 //retrieves categories from json file
 app.factory('categoriesService', function($http) {
@@ -38,12 +38,12 @@ app.factory('productsService', function($http) {
         async: function() {
             if (!promise) {
                 promise = $http.get('./data/products.json').then(function(response) {
-                    products = [];
+                    productsMap = {};
                     $.each(response.data, function(i, e) {
                         product = $.extend(new Product, e); //convert object to Product
-                        products.push(product);
+                        productsMap[product.name] = product;
                     });
-                    return products;
+                    return productsMap;
                 });
             }
             return promise;

@@ -9,14 +9,18 @@ function searchController($scope, filtersService, searchService) {
             $scope.filters = data;
         });
     };
-    
-    $scope.getAppliedFilters = function(){
+
+    $scope.getAppliedFilters = function() {
         return $scope.searchService.filters;
     };
-    
-    $scope.addFilter = function(filter){    //args[0] must be of class Filter
-        $scope.searchService.filters.push(filter.name);
-        
+
+    $scope.saveFilters = function() {
+        $scope.searchService.filters = [];
+        $.each($scope.filters, function(index, filter) {
+            if (filter.selected) {
+                $scope.searchService.filters.push(filter.name);
+            }
+        });
     };
 }
 
@@ -59,27 +63,30 @@ function categoriesController($scope, $http, categoriesService, searchService) {
 }
 
 function productsController($scope, $http, webStorage, productsService, searchService) {
+    $scope.productsMap;    //hashmap of class product
     $scope.products = [];   //array of class Product
     $scope.cart;    //class Cart
     $scope.searchService = searchService;
-    $scope.fav = [];
+    $scope.favourites = []; //array of product names
 
     $scope.init = function() {
         //get product data
         productsService.async().then(function(data) {
-            $scope.products = data;
+            $scope.productsMap = data;
+            $.each($scope.productsMap, function(productName, product){
+               $scope.products.push(product); 
+            });
         });
         //get cart from localstorage
         if (webStorage.get("cart") === null) {
             webStorage.add("cart", new Cart());
         }
         $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
-        
         //get fav from localstorage
-        if (webStorage.get("fav") === null) {
-            webStorage.add("fav", []);
+        if (webStorage.get("favourites") === null) {
+            webStorage.add("favourites", []);
         }
-        $scope.fav = JSON.parse(webStorage.get("fav"));  //get fav from local storage
+        $scope.favourites = webStorage.get("favourites");  //get fav from local storage
     };
 
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
@@ -103,51 +110,44 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 
     $scope.productFilter = function(product) {
         //not in applied category
-        if(searchService.activeCategory && product.categories.indexOf(searchService.activeCategory.name) === -1){
+        if (searchService.activeCategory && product.categories.indexOf(searchService.activeCategory.name) === -1) {
             return false;
         }
         //not in applied subcategory
-        if(searchService.activeSubcategory && product.categories.indexOf(searchService.activeSubcategory.name) === -1){
+        if (searchService.activeSubcategory && product.categories.indexOf(searchService.activeSubcategory.name) === -1) {
             return false;
         }
         //not in applied filter
-        $.each(searchService.filters, function(index, filter){
-            if(product.filters.indexOf(filter) === -1){
-                console.log("false");
-                return false;
+        var include = true;
+        $.each(searchService.filters, function(index, filter) {
+            if (product.filters.indexOf(filter) === -1) {
+                include = false;
             }
         });
+        if (!include) {
+            return false;
+        }
+
+        //name does not match
+        if(searchService.name && !product.name.toLowerCase().match(searchService.name.toLowerCase())){
+            return false;
+        }
         return true;
     };
-    
-    $scope.productFilter2 = function() {
-        var productFilter = {
-            name: '',
-            categories: [],
-            filters: []
-        };
-        if (searchService.name) {
-            productFilter.name = searchService.name;
-        }
-        if (searchService.activeCategory) {
-            productFilter.categories.push(searchService.activeCategory.name);
-        }
-        if (searchService.activeSubcategory) {
-            productFilter.categories.push(searchService.activeSubcategory.name);
-        }
-        /*
-        if(searchService.filters){
-            productFilter.filters = searchService.filters;
-        }*/
-        return productFilter;
-    };
-    
+
     $scope.addToFav = function(productName) {
-    	console.log('add '+productName+' to fav');
-    	$scope.fav.push(productName);
-    	webStorage.add('fav', $scope.fav);
+        $scope.favourites.push(productName);
+        webStorage.add('favourites', $scope.favourites);
     };
     
+    $scope.getFavProducts = function(){ //TODO: make more efficient
+        var favProducts = [];
+        $.each($scope.favourites, function(index, productName){
+            favProducts.push($scope.productsMap[productName]);
+        });
+        return favProducts;
+    };
+
 }
 function addressesController($scope) {
     $scope.addresses = []; //array of class address
@@ -175,14 +175,15 @@ function addressesController($scope) {
             }
         ];
     };
-    
-    $scope.getUserAddresses = function(username){
+
+    $scope.getUserAddresses = function(username) {
         userAddress = [];
-        $.each($scope.addresses, function(index, address){
-            if(address.username === username){
+        $.each($scope.addresses, function(index, address) {
+            if (address.username === username) {
                 userAddress.push(address);
             }
         });
         return userAddress;
     };
-};
+}
+;
