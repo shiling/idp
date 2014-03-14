@@ -30,10 +30,10 @@
                 cursor: pointer;
             }
             .address :hover{
-                background-color: #008cba;
+                background-color: #c5e8f3;
             }
             .selected-address{
-                background-color: #008cba;
+                background-color: #c5e8f3;
             }
         </style>
         <title>CMart</title>
@@ -75,75 +75,77 @@
 
                     <div class="row">
                         <div class="small-12 columns">
+                            <div class="row">
+                                <img height="100%" width="100%" src="./img/checkout1.png"/>
+                            </div>
 
                             <table style="width:100%;" ng-controller="addressesController" ng-init="init('shiling')">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <h3 class="text-center"><b>Select Delivery Address</b></h3>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="small-12 columns">
-                                                <img height="100%" width="100%" src="./img/checkout1.png"/>
-                                            </div>
-                                        </td>
-                                    </tr>    
-                                    <tr>
-                                        <td>
-                                            <div class="small-12 columns">
-                                                <h3>Select Delivery Address</h3>
-                                            </div>
-                                        </td>
-                                    </tr> 
                                     <tr ng-repeat="address in addresses"  ng-click="selectAddress(address)">
                                         <td class="pointer address" ng-class="{'selected-address': address.selected}">
                                             <div class="row">
-                                                <div class="small-10 small-offset-2 columns">
-                                                    <h5>{{address.address}}</h5>
-                                                    <h5>{{address.postalCode}}</h5>
+                                                <div class="small-2 columns text-center">
+                                                    <i class="fa fa-circle-o" ng-class="{'fa-circle': address.selected}"></i>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-click="selectAddress(null)">
-                                        <td>
-                                            <div class="small-12 small-centered columns">
-                                                <h4><b>New Address</b></h4>
-                                                <div class="row">
-                                                    <div class="small-10 small-offset-2 columns">
-                                                        <div class="row">
-                                                            <div class="small-3 columns"><h5>Building's Name</h5></div>
-                                                            <div class="small-9 columns"><input type="text" ng-model="newAddress.building" ng-blur="validate()"/></div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="small-2 columns text-right"><h5>#</h5></div>
-                                                            <div class="small-4 columns"><input type="text" ng-model="newAddress.level"/></div>
-                                                            <div class="small-2 columns text-right"><h5>-</h5></div>
-                                                            <div class="small-4 columns"><input type="text" ng-model="newAddress.unit"/></div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="small-3 columns"><h5>Postal Code</h5></div>
-                                                            <div class="small-9 columns"><input type="text" ng-model="newAddress.postalCode" ng-blur="validate()"/></div>
-                                                        </div>
-                                                    </div>
-                                                </div>   
+                                                <div class="small-10 columns">
+                                                    <h5>{{address.address}}</h5>
+                                                    <h5>Singapore {{address.postalCode}}</h5>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td ng-class="{'selected-address': newAddress.selected}">
                                             <div class="row">
-                                                <div class="small-4 columns">
-                                                    <a href="cart.html" class="button expand round text-center">
-                                                        Back
-                                                    </a>
+                                                <div class="small-2 columns text-center">
+                                                    <i class="fa fa-circle-o" ng-class="{'fa-circle': newAddress.selected}"></i>
                                                 </div>
-                                                <div class="small-4 small-offset-4 columns">
-                                                    <a href="checkout2.html" class="button expand round text-center" ng-click="validate()" ng-disabled="!valid">
-                                                        Next
-                                                    </a>
+                                                <div class="small-8 columns end">
+                                                    <h4><b>New Address</b></h4>
+                                                    <div class="row">
+                                                        <div class="small-3 columns"><h5>Building's Name</h5></div>
+                                                        <div class="small-9 columns"><input type="text" placeholder="81 Victoria Street" ng-model="newAddress.building" ng-blur="validate()"/></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-1 small-offset-2 columns text-right"><h5>#</h5></div>
+                                                        <div class="small-2 columns"><input type="text" placeholder="2" ng-model="newAddress.level"/></div>
+                                                        <div class="small-1 columns text-center"><h5>-</h5></div>
+                                                        <div class="small-2 columns end"><input type="text" placeholder="18" ng-model="newAddress.unit"/></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-3 columns"><h5>Postal Code</h5></div>
+                                                        <div class="small-9 columns"><input type="text" placeholder="271632" ng-model="newAddress.postalCode" ng-blur="validate()"/></div>
+                                                    </div>
                                                 </div>
-                                            </div>    
+                                            </div>
+
+
                                         </td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <a href="cart.html" class="button secondary text-center buttom left">
+                                                <i class="fa fa-arrow-circle-o-left fa-lg"></i>
+                                                Back
+                                            </a>
+                                            <a class="button text-center buttom right" ng-click="submit('checkout2.html')" ng-disabled="!valid" ng-class="{'success': valid}">
+                                                Next
+                                                <i class="fa fa-arrow-circle-o-right fa-lg"></i>
+                                            </a>  
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

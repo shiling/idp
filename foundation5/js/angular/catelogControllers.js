@@ -146,51 +146,105 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 
 }
 
-function addressesController($scope) {
+function addressesController($scope, webStorage) {
+    $scope.username;
+    $scope.currentOrder;
     $scope.addresses = []; //array of class address
     $scope.newAddress;
     $scope.selectedAddress;
     $scope.valid = false;
 
     $scope.init = function(username) {
+        
+        $scope.username = username;
+        
         //get addresses data
         var addresses = [
-            new Address('shiling', 'North Bridge Road #01-10', '(S)621111'),
-            new Address('shiling', 'Clementi Road #08-08', '(S)688111'),
-            new Address('cao li', 'Lakeside Drive #18-18', '(S)688000')
+            new Address('shiling', 'North Bridge Road #01-10', '621111'),
+            new Address('shiling', 'Clementi Road #08-08', '688111'),
+            new Address('cao li', 'Lakeside Drive #18-18', '688000')
         ];
         $.each(addresses, function(index, address) {
             if (address.username === username) {
                 $scope.addresses.push(address);
             }
         });
-        //get selectedAddress from localstorage
-        if (webStorage.get("address") === null) {
-            webStorage.add("address", new Address());
+        
+        //get currentOrder from localstorage
+        if (webStorage.get("currentOrder") === null) {
+            webStorage.add("currentOrder", new Order());
         }
-        $scope.selectedAddress = $.extend(new Address, webStorage.get("address"));  //convert object to Address
+        $scope.currentOrder = $.extend(new Order, webStorage.get("currentOrder"));  //convert object to Order
+        
+        //TODO: check if address alr selected
+        $scope.selectedAddress = $.extend(new Order, $scope.currentOrder.address);
     };
     
     $scope.selectAddress = function(selectedAddress){
+        //reset
+        $scope.selectedAddress = null;
         $scope.valid = false;
+        if($scope.newAddress){
+            $scope.newAddress.selected = false;
+        }
+        
+        //find selected address
         $.each($scope.addresses, function(index, address) {
             if (address === selectedAddress) {
-                address.selected = true;
-                webStorage.add("address", selectedAddress);
-                $scope.valid = true;
+                $scope.selectedAddress = selectedAddress;
             }else{
                 address.selected = false;
             }
         });
-    };
-    
-    $scope.validate = function(){
-        //check for new address
-        if(!$scope.valid && $scope.newAddress.building && $scope.newAddress.postalCode){
+        if($scope.newAddress && selectedAddress === $scope.newAddress){
+                $scope.selectedAddress = selectedAddress;
+        }
+        
+        //mark selected addresses
+        if($scope.selectedAddress){
+            $scope.selectedAddress.selected = true;
             $scope.valid = true;
         }
+        saveAddress();
     };
-
+    
+    saveAddress = function(){
+        $scope.currentOrder.address = $scope.selectedAddress;
+        webStorage.add("currentOrder", $scope.currentOrder);
+    };
+    
+    //validate new address
+    $scope.validate = function(){
+        if($scope.newAddress && $scope.newAddress.building && $scope.newAddress.postalCode){    //valid new address
+            $scope.valid = true;
+            $scope.selectAddress($scope.newAddress);
+        }else{
+            $scope.valid = false;
+            $scope.selectAddress(null);
+        }
+    };
+    
+    formatNewAddress = function(){
+        if($scope.newAddress.level && $scope.newAddress.unit){
+            return "{0}, #{1}-{2}".format($scope.newAddress.building, $scope.newAddress.level, $scope.newAddress.unit)
+        }else{
+            return $scope.newAddress.building;
+        }
+    };
+    
+    $scope.submit = function(location){
+        //if new address is selected, convert to Address object
+        if($scope.selectedAddress === $scope.newAddress){
+            $scope.selectedAddress = new Address($scope.username,
+                formatNewAddress(), 
+                $scope.newAddress.postalCode);
+                saveAddress();
+        }
+        if($scope.valid){
+            window.location.href = location;
+        }
+    };
+    
 };
 
 function creditCardController($scope, webStorage) {
