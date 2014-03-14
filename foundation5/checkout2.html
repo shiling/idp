@@ -1,37 +1,26 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="en" ng-app="cmartApp">
     <head>
-        <meta charset="utf-8">
-
-        <meta name="author" content="Amsul - http://amsul.ca">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-
-
-        <title>CMart - Cart</title>
-
-
-
-        <link rel="stylesheet" href="css/default.css" id="theme_base">
-        <link rel="stylesheet" href="css/default.date.css" id="theme_date">
-        <link rel="stylesheet" href="css/default.time.css" id="theme_time">
-
-
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+        <script src="js/angular/angular.min.js"></script>
         <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
         <script src="js/angular/angular-webstorage.js"></script>
+        <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
-        <script src="js/angular/catelogControllers.js"></script>
-
-
-
+        <!--THIS PAGE ONLY-->
+        <!--add more scripts here-->
+        <link rel="stylesheet" href="css/default.css" id="theme_base">
+        <link rel="stylesheet" href="css/default.date.css" id="theme_date">
+        <link rel="stylesheet" href="css/default.time.css" id="theme_time">
         <script>
             $(function() {
                 Foundation.set_namespace = function() {
@@ -39,7 +28,7 @@
                 $(document).foundation();
             });
         </script>
-
+        <title>CMart</title>
     </head>
 
     <body>
@@ -54,11 +43,11 @@
                     </section>
 
                     <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Checkout</h1>
+                        <h1 class="title" style="text-align:center;">CMart</h1>
                     </section>
 
-                    <section class="right-small">
-                        <a class="shopping-cart-icon" href="cart.html" ><span></span></a>
+                    <section class="right-small text-center">
+                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
                     </section>
                 </nav><!-- nav bar -->
 
@@ -79,81 +68,69 @@
 
                     <div class="row">
                         <div class="small-12 columns">
+                            <div class="row">
+                                <img height="100%" width="100%" src="./img/checkout2.png"/></td>
+                            </div>
 
-                            <table style="width:100%;" ng-controller="productsController" ng-init="init()">
+                            <table style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <h3 class="text-center"><b>Delivery Notes</b></h3>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
-                                <div class="small-10 small-centered columns">
-                                    <img height="100%" width="100%" src="/img/checkout2.png"/>
-                                </div>
-
-                                </tr>
-                                <tr>
-                                <div class="small-12 columns">
-                                    <h3><b>Delivery Note</b></h3>
-                                </div>
-                                </tr>
-                                
-                                <tr>
-                                    <td>
-                                        <div class="small-12 columns">
-                                            
-                                                <div class="small-2 columns"><h5>Date</h5></div>
-                                                <div class="small-10 columns">
-                                                    <input class="fieldset__input js__datepicker" type="text" placeholder="choose date &hellip;">
-
+                                        <td>
+                                            <div class="small-11 small-centered medium-8 columns">
+                                                <div class="row">
+                                                    <div class="small-3 medium-4 columns"><h5>Date</h5></div>
+                                                    <div class="small-9 medium-8 large-5 columns end">
+                                                        <input class="fieldset__input js__datepicker" type="text" placeholder="choose date &hellip;">
+                                                    </div>
                                                 </div>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="small-12 columns">
-                                                <div class="small-2 columns"><h5>Time</h5></div>
-                                                <div class="small-10 columns">
-                                                    <input class="fieldset__input js__timepicker" type="text" placeholder="choose time&hellip;">
+                                                <div class="row">
+                                                    <div class="small-3 medium-4 columns"><h5>Time</h5></div>
+                                                    <div class="small-9 medium-8 large-5 columns end">
+                                                        <input class="fieldset__input js__timepicker" type="text" placeholder="choose time&hellip;">
+                                                    </div>
                                                 </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <div class="small-12 columns">
-                                    
-                                        <h5>Contact Number</h5>
-                                        
-                                        <input type="text">
-                                    </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                   <td>
-                                       
-                                       <div class="small-12 columns">
-                                            <h5>Any Special Instruction</h5>
-                                        
-                                            <textarea height="100"></textarea>
-                                             
-                                       </div>
-                                   </td>
-                                </tr>
-                                <tr>
-                                        <td colspan="3">
-                                            <div class="small-10 small-centered columns">
-                                                    <a href="checkout3.html" class="button expand round text-center">
-                                                        <div class="small-12 columns"><h3>Next</h3></div>  
-                                                    </a>
+                                                <div class="row">
+                                                    <div class="small-3 medium-4 columns"><h5>Contact Number</h5></div>
+                                                    <div class="small-9 medium-8 large-5 columns end">
+                                                        <input type="text" placeholder="91234567">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <h5>Any Special Instruction</h5>
+                                                    <textarea></textarea>
+                                                </div>
                                             </div>
-                                        </td> 
+                                        </td>
                                     </tr>
                                 </tbody>
-
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <a href="checkout1.html" class="button secondary text-center buttom left">
+                                                <i class="fa fa-arrow-circle-o-left fa-lg"></i>
+                                                Back
+                                            </a>
+                                            <a href="checkout3.html" class="button text-center buttom right">
+                                                Next
+                                                <i class="fa fa-arrow-circle-o-right fa-lg"></i>
+                                            </a>  
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
-                    
-                    
+
+
                 </section><!--content-->
 
                 <a class="exit-off-canvas"></a>
