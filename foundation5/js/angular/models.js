@@ -98,11 +98,14 @@ function Subscription(username, product, quantity, frequency, num_times, num_tim
     this.num_times_delivered = num_times_delivered; //integer
 }
 
-function Order(username, address, creditCard, date, status) {
+function Order(username, address, creditCard, date, time, contactNum, specialInstruction, status) {
     this.username = username;
     this.address = address; //class Address
-    this.creditCard = creditCard;   //class CreditCate
-    this.date = date;   //datetime
+    this.creditCard = creditCard;   //class CreditCard
+    this.deliveryDate = date;   //date
+    this.deliveryTime = time;   //time
+    this.contactNum = contactNum;
+    this.specialInstructions = specialInstruction;  
     this.status = status;   //string - 'processing','shipped','delivered'
     this.items = [];    //array of class OrderItem
 }

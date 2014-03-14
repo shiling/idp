@@ -7,8 +7,22 @@ and open the template in the editor.
     Created on : Feb 28, 2014, 5:39:09 PM
     Author     : shilingtaiÏ
 */
-
+html, body, .off-canvas-wrap, .inner-wrap, .left-off-canvas-menu{
+    height: 100%;
+}
 a{
+    cursor: pointer;
+}
+a[disabled]{
+    background-color: #ccc !important;
+}
+a.back-btn{
+    background-color: black;
+}
+a.back-btn:hover{
+    background-color: #222222;
+}
+.clickable{
     cursor: pointer;
 }
 .white {
@@ -90,12 +104,40 @@ a{
     margin-bottom: 0 !important;
 }
 
+table{
+    width: 100%;
+    margin-bottom: 0;
+    border: none;
+    border-spacing: 0;
+}
+thead tr{
+    background-color: #ccc;
+}
+tfoot tr{
+    background-color: #ccc;
+}
+tbody tr.secondary{
+    background-color: #eee;
+}
+thead tr td, tfoot tr td{
+    padding: 0 !important;
+}
+tbody tr td{
+    padding: 0.5rem;
+}
+.selectable-tr :hover{
+    background-color: #c5e8f3;
+}
+.selected-tr{
+    background-color: #c5e8f3;
+}
+
+
 .content {
     margin-left:auto;
     margin-right:auto;
     width:70%;
 }
-
 #product-name  {
     text-transform:capitalize;
     font-family: tahoma;
@@ -106,7 +148,7 @@ a{
 #brand-name  {
     font-weight:bold;
     font:italic bold 12px/30px Georgia, serif;
-    
+
 }
 
 #product-image{

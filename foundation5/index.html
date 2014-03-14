@@ -16,7 +16,7 @@
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
-        <!--THIS PAGE ONLY-->
+        <script src="js/angular/identityController.js"></script><!--THIS PAGE ONLY-->
         <script src="js/angular/catelogControllers.js"></script>
         <script src="js/headroom/headroom.min.js"></script>
         <script>
@@ -56,8 +56,9 @@
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list">
-                        <li><a ><img src="#" height="80" width="80"/>Guest</a></li>
+                    <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
+                        <li>
+                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a></li>
                         <li><a href="index.html">Store</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
@@ -81,7 +82,7 @@
                                             <i class="fa fa-filter"></i>
                                             <span ng-show="getAppliedFilters().length === 0">Add</span>
                                             <span ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}}</span>
-                                            Filter(s) 
+                                            Filter(s)
                                         </div>
                                     </a>
                                 </div>
@@ -135,7 +136,7 @@
                                                 <div class="row">
                                                     <div class="small-12 columns">
                                                         <a href="product.html?{{product.name}}">
-                                                            <img src="img/{{product.image}}" alt="{{product.name}}"/>
+                                                            <img ng-src="img/{{product.image}}" alt="{{product.name}}"/>
                                                             <div class="small-11 small-centered columns">
                                                                 <h5 class="product-title">{{product.name| characters:45}}<br/><small>{{product.unit}}</small></h5>
                                                                 <h6>{{product.price| currency}}</h6>

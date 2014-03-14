@@ -18,6 +18,7 @@
         <script src="js/angular/models.js"></script>
         <!--THIS PAGE ONLY-->
         <!--add more scripts here-->
+        <script src="js/angular/catelogControllers.js"></script>
         <link rel="stylesheet" href="css/default.css" id="theme_base">
         <link rel="stylesheet" href="css/default.date.css" id="theme_date">
         <link rel="stylesheet" href="css/default.time.css" id="theme_time">
@@ -65,14 +66,14 @@
                 </aside><!--off canvas menu-->
                 <section class="main-section">
 
-
                     <div class="row">
                         <div class="small-12 columns">
-                            <div class="row">
-                                <img height="100%" width="100%" src="./img/checkout2.png"/></td>
+
+                            <div class="row text-center">
+                                <img src="./img/checkout2.png" style="width: 65%"/>
                             </div>
 
-                            <table style="width:100%;">
+                            <table style="width:100%;" ng-controller="deliveryNotesController" ng-init="init()">
                                 <thead>
                                     <tr>
                                         <td>
@@ -87,26 +88,29 @@
                                         <td>
                                             <div class="small-11 small-centered medium-8 columns">
                                                 <div class="row">
-                                                    <div class="small-3 medium-4 columns"><h5>Date</h5></div>
-                                                    <div class="small-9 medium-8 large-5 columns end">
-                                                        <input class="fieldset__input js__datepicker" type="text" placeholder="choose date &hellip;">
+                                                    <div class="small-4 medium-4 columns"><h5>Date</h5></div>
+                                                    <div class="small-8 medium-8 large-5 columns end">
+                                                        <input ng-model="date" class="fieldset__input js__datepicker" type="text" placeholder="Select date" ng-change="validate()">
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="small-3 medium-4 columns"><h5>Time</h5></div>
-                                                    <div class="small-9 medium-8 large-5 columns end">
-                                                        <input class="fieldset__input js__timepicker" type="text" placeholder="choose time&hellip;">
+                                                    <div class="small-4 medium-4 columns"><h5>Time</h5></div>
+                                                    <div class="small-8 medium-8 large-5 columns end">
+                                                        <input ng-model="time" class="fieldset__input js__timepicker" type="text" placeholder="Select time" ng-change="validate()">
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="small-3 medium-4 columns"><h5>Contact Number</h5></div>
-                                                    <div class="small-9 medium-8 large-5 columns end">
-                                                        <input type="text" placeholder="91234567">
+                                                    <div class="small-4 medium-4 columns"><h5>Contact Number</h5></div>
+                                                    <div class="small-8 medium-8 large-5 columns end error">
+                                                        <label>
+                                                            <input ng-model="contactNum" type="text" placeholder="91234567" ng-change="validate()">
+                                                        </label>
+                                                        <small class="error" ng-show="!!errors['contactNum']">{{errors['contactNum']}}</small>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <h5>Any Special Instruction</h5>
-                                                    <textarea></textarea>
+                                                    <textarea ng-model="specialInstructions"></textarea>
                                                 </div>
                                             </div>
                                         </td>
@@ -115,11 +119,11 @@
                                 <tfoot>
                                     <tr>
                                         <td>
-                                            <a href="checkout1.html" class="button secondary text-center buttom left">
+                                            <a href="checkout1.html" class="button back-btn text-center buttom left">
                                                 <i class="fa fa-arrow-circle-o-left fa-lg"></i>
                                                 Back
                                             </a>
-                                            <a href="checkout3.html" class="button text-center buttom right">
+                                            <a class="button text-center buttom right" ng-click="submit('checkout3.html')" ng-disabled="!valid" ng-class="{'success': valid}">
                                                 Next
                                                 <i class="fa fa-arrow-circle-o-right fa-lg"></i>
                                             </a>  
@@ -129,8 +133,6 @@
                             </table>
                         </div>
                     </div>
-
-
                 </section><!--content-->
 
                 <a class="exit-off-canvas"></a>

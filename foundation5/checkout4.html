@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!doctype html>
 <html class="no-js" lang="en" ng-app="cmartApp">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
@@ -19,6 +16,8 @@ and open the template in the editor.
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
+        <!--THIS PAGE ONLY-->
+        <!--add more scripts here-->
         <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
@@ -27,7 +26,7 @@ and open the template in the editor.
                 $(document).foundation();
             });
         </script>
-        <title>CMart - Cart</title>
+        <title>CMart</title>
     </head>
     <body>
         <div class="off-canvas-wrap">
@@ -40,11 +39,11 @@ and open the template in the editor.
                     </section>
 
                     <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Checkout</h1>
+                        <h1 class="title" style="text-align:center;">CMart</h1>
                     </section>
 
-                    <section class="right-small">
-                        <a class="shopping-cart-icon" href="cart.html" ><span></span></a>
+                    <section class="right-small text-center">
+                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
                     </section>
                 </nav><!-- nav bar -->
 
@@ -66,112 +65,110 @@ and open the template in the editor.
                     <div class="row">
                         <div class="small-12 columns">
 
-                            <table style="width:100%;">
-                                <tbody ng-controller="productsController" ng-init="init()">
-                                    <tr>
-                                <div class="small-10 small-centered columns">
-                                    <img height="100%" width="100%" src="./img/checkout4.png"/></td>
-                                </div>
+                            <div class="row text-center">
+                                <img src="./img/checkout4.png" style="width: 65%"/>
+                            </div>
 
-                                </tr>
-                                <tr>
-                                    <td colspan="3"> 
-                                        <div class="small-12 small-centered columns">
-                                            <h5><b>Items</b></h5>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr ng-repeat="item in cart.items">
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6>{{item.product.name}}</h6>
-                                            </div>
-                                        </div>
+                            <div ng-controller="confirmCheckoutController" ng-init="init()">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <div class="row">
+                                                    <h3 class="text-center"><b>Confirm Order</b></h3>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table>
+                                    <tbody>
+                                        <tr class="secondary">
+                                            <td>
+                                                <div class="small-12 large-10 large-centered columns">
+                                                    <div class="small-7 medium-8 columns text-left">
+                                                        <h5><b>Name</b></h5>
+                                                    </div>
+                                                    <div class="small-2 medium-2 columns text-right">
+                                                        <h5><b>Qty</b></h5>
+                                                    </div>
+                                                    <div class="small-3 medium-2 columns text-right">
+                                                        <h5><b>Amt</b></h5>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in currentOrder.items">
+                                            <td>
+                                                <div class="small-12 large-10 large-centered columns">
+                                                    <div class="small-7 medium-8 columns">
+                                                        <h6>{{item.product.name}} <br/><small>@ {{item.product.price| currency}} each</small></h6>
+                                                    </div>
+                                                    <div class="small-2 medium-2 columns text-right">
+                                                        <h6 class="label radius secondary"><b>{{item.quantity}}</b></h6>
+                                                    </div>
+                                                    <div class="small-3 medium-2 columns text-right">
+                                                        <span class="">{{item.product.price * item.quantity| currency}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="secondary">
+                                            <td>
+                                                <div class="small-12 large-10 large-centered columns">
+                                                    <div class="row">
+                                                        <div class="small-9 medium-10 columns">
+                                                            <h6>Subtotal</h6>
+                                                        </div>
+                                                        <div class="small-3 medium-2 columns text-right">
+                                                            <h6>{{0| currency}}</h6>
+                                                        </div>
+                                                        <div class="small-9 medium-10 columns">
+                                                            <h6>Delivery</h6>
+                                                        </div>
+                                                        <div class="small-3 medium-2 columns text-right">
+                                                            <h6>{{0| currency}}</h6>
+                                                        </div>
+                                                        <div class="small-9 medium-10 columns">
+                                                            <h5><b>Grand Total</b></h5>
+                                                        </div>
+                                                        <div class="small-3 medium-2 columns text-right">
+                                                            <h6><b>{{12| currency}}</b></h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-12 medium-6 large-4 columns">
+                                                            <h5><b>Address</b></h5>
+                                                            <p>{{currentOrder.address.address}}<br/>Singapore {{currentOrder.address.postalCode}}</p>
 
-                                    </td>
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6>1</h6>
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6>{{item.product.price| currency}}</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6>Delivery</h6>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6>$xx.xx</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6><b>Total</b></h3>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td>   
-                                    </td>
-                                    <td>
-                                        <div class="row">
-                                            <div class="small-10 small-centered columns">
-                                                <h6><b>$xx.xx</h6></h3>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>   
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="small-10 small-centered columns">
-                                            <div class="row">
-                                                <div class="small-12 columns" ng-controller="addressesController" ng-init="init()"><h5><b>Address: </b> {{selectedAddress.address}}</h5></div>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="small-12 columns" ng-controller="creditCardController" ng-init="init()"><h5><b>Billing information: </b>will be paid by {{selectedCard.cardholderName}}'s {{selectedCard.cardType}} card with card number {{selectedCard.cardNumber}}</h5></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="small-10 small-centered columns">
-                                                <a href="index.html" class="button expand round text-center">
-                                                    <div class="small-12 columns"><h3>OK, send me my stuff</h3></div>  
+                                                        </div>
+                                                        <div class="small-12 medium-6 large-4 columns end">
+                                                            <h5><b>Billing</b></h5>
+                                                            <p>{{currentOrder.creditCard.cardholderName}}<br/>{{currentOrder.creditCard.cardNumber}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <a href="checkout1.html" class="button back-btn text-center buttom left">
+                                                    <i class="fa fa-arrow-circle-o-left fa-lg"></i> Back
                                                 </a>
-                                            </div>
-                                        </td> 
-                                    </tr>
-                                 </tbody>
-                                
-                            </table>
+                                                <a class="button success text-center buttom right" ng-click="submit('checkout4.html')">
+                                                    Confirm <i class="fa fa-thumbs-o-up fa-lg"></i>
+                                                </a>  
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
 
                 </section><!--content-->
 

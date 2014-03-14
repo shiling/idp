@@ -27,6 +27,27 @@ app.factory('categoriesService', function($http) {
     return categoriesService;
 });
 
+//retrieves identities from json file
+app.factory('identityServices', function($http) {
+    var promise;
+    var identityServices = {
+        async: function() {
+            if (!promise) {
+                promise = $http.get('./data/identities.json').then(function(response) {
+                    hashMap = {};
+                    $.each(response.data, function(i, e) {
+                        identity = $.extend(new Identity, e);
+                        hashMap[identity.username] = identity;
+                    });
+                    return hashMap;
+                });
+            }
+            return promise;
+        }
+    };
+    return identityServices;
+});
+
 //retrieves products from json file
 app.factory('productsService', function($http) {
     var promise;
