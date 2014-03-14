@@ -29,11 +29,13 @@
                 if ($(btn).hasClass('fa-heart')) {// is currently added to fav
                     $(btn).removeClass('fa-heart');
                     $(btn).addClass('fa-heart-o');
+                    $("#favModalAction").html("removed");
                 } else {
                     $(btn).removeClass('fa-heart-o');
                     $(btn).addClass('fa-heart');
+                    $("#favModalAction").html("added");
                 }
-
+                $('#favModal').foundation('reveal', 'open');
             }
 
         </script>
@@ -41,6 +43,7 @@
         <title>CMart - Store</title>
     </head>
     <body>
+
         <div class="off-canvas-wrap">
             <div class="inner-wrap">
 
@@ -93,15 +96,22 @@
 
                         <div ng-controller="productsController" ng-init="init()">
 
+							<div id="favModal" class="reveal-modal" data-reveal>
+					    		<b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
+					    	</div>
+
                             <br/>
                             <br/>
                             <div id="product-name">
-                                <a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="addToFav(product.name)"><i class="fa fa-heart-o" onclick="toggleFavBtn(this)"></i></a>
+                                <a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="toggleFav(product.name)">
+                                	<i class="fa fa-heart" ng-show="isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i>
+                                	<i class="fa fa-heart-o" ng-show="!isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i>
+                                	</a>
                             </div>
                             <div id="brand-name">
                                 by {{product.brand}}
                             </div>
-                            <div id="product-image"><img src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
+                            <div id="product-image"><img ng-src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
                             </div>
                             <br/>
                             <div id="product-price">
@@ -141,7 +151,7 @@
                             <br/>
                             <ul class="small-block-grid-6">
                                 <li ng-repeat="product in related(products, product)">
-                                    <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}"> <img src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'> </a>
+                                    <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}"> <img ng-src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'> </a>
                                 </li>
                             </ul>
                         </div>

@@ -131,10 +131,16 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         return true;
     };
 
-    $scope.addToFav = function(productName) {
-        $scope.favourites.push(productName);
+     $scope.toggleFav = function(productName) {
+        var index = $scope.favourites.indexOf(productName);
+        if(index === -1) {
+            $scope.favourites.push(productName);
+        } else {
+            $scope.favourites.splice(index, 1);
+        }
         webStorage.add('favourites', $scope.favourites);
     };
+
 
     $scope.getFavProducts = function() { //TODO: make more efficient
         var favProducts = [];
@@ -142,6 +148,16 @@ function productsController($scope, $http, webStorage, productsService, searchSe
             favProducts.push($scope.productsMap[productName]);
         });
         return favProducts;
+    };
+
+    $scope.isProductInFav = function (productName) {
+        var products = $scope.getFavProducts();
+        for(var i=0; i<products.length; i++) {
+            if(products[i].name === productName) {
+                return true;
+            }
+        }
+        return false;
     };
 
 }
