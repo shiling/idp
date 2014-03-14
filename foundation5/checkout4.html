@@ -22,7 +22,8 @@ and open the template in the editor.
         <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
-                Foundation.set_namespace = function () {};
+                Foundation.set_namespace = function() {
+                };
                 $(document).foundation();
             });
         </script>
@@ -65,115 +66,107 @@ and open the template in the editor.
                     <div class="row">
                         <div class="small-12 columns">
 
-                            <table style="width:100%;" ng-controller="productsController" ng-init="init()">
-                                <tbody>
+                            <table style="width:100%;">
+                                <tbody ng-controller="productsController" ng-init="init()">
                                     <tr>
-                                    <div class="small-10 small-centered columns">
-                                        <img height="100%" width="100%" src="./img/checkout4.png"/>
-                                    </div>
-                                            
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3"> 
-                                            <div class="small-12 small-centered columns">
-                                                <h5><b>Items</b></h5>
+                                <div class="small-10 small-centered columns">
+                                    <img height="100%" width="100%" src="./img/checkout4.png"/></td>
+                                </div>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3"> 
+                                        <div class="small-12 small-centered columns">
+                                            <h5><b>Items</b></h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in cart.items">
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6>{{item.product.name}}</h6>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="item in cart.items">
-                                        <td>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6>1</h6>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6>{{item.product.price| currency}}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6>Delivery</h6>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6>$xx.xx</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6><b>Total</b></h3>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td>   
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="small-10 small-centered columns">
+                                                <h6><b>$xx.xx</h6></h3>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>   
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="small-10 small-centered columns">
                                             <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>{{item.product.name}}</h6>
-                                                </div>
+                                                <div class="small-12 columns" ng-controller="addressesController" ng-init="init()"><h5><b>Address: </b> {{selectedAddress.address}}</h5></div>
+
                                             </div>
-                                            
-                                        </td>
-                                        <td>
                                             <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>1</h6>
-                                                </div>
-                                                
+                                                <div class="small-12 columns" ng-controller="creditCardController" ng-init="init()"><h5><b>Billing information: </b>will be paid by {{selectedCard.cardholderName}}'s {{selectedCard.cardType}} card with card number {{selectedCard.cardNumber}}</h5></div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>{{item.product.price| currency}}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>Delivery</h6>
-                                                </div>
-                                            </div>
-                                            
-                                        </td>
-                                        <td>
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>$xx.xx</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6><b>Total</b></h3>
-                                                </div>
-                                            </div>
-                                            
-                                        </td>
-                                        <td>   
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6><b>$xx.xx</h6></h3>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                </tr>
                                     <tr>
                                         <td colspan="3">
                                             <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5>Address</h5></div>
-                                                    
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-12 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5>Billing Information</h5></div>
-                                                    
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-12 columns"><input type="text"/></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="small-10 small-centered columns">
-                                                    <a href="index.html" class="button expand round text-center">
-                                                        <div class="small-12 columns"><h3>OK, send me my stuff</h3></div>  
-                                                    </a>
+                                                <a href="index.html" class="button expand round text-center">
+                                                    <div class="small-12 columns"><h3>OK, send me my stuff</h3></div>  
+                                                </a>
                                             </div>
                                         </td> 
                                     </tr>
-                                    
-                                </tbody>
+                                 </tbody>
                                 
                             </table>
                         </div>

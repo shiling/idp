@@ -125,7 +125,7 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         }
 
         //name does not match
-        if(searchService.name && !product.name.toLowerCase().match(searchService.name.toLowerCase())){
+        if (searchService.name && !product.name.toLowerCase().match(searchService.name.toLowerCase())) {
             return false;
         }
         return true;
@@ -145,12 +145,14 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     };
 
 }
-function addressesController($scope) {
-    $scope.addresses = []; //array of class address
+function addressesController($scope, webStorage) {
+    $scope.userAddresses = [];
+    $scope.selectedAddress;
 
-    $scope.init = function() {
+    $scope.init = function(username) {
         //get addresses data
-        $scope.addresses = [
+        
+        addresses = [
             {
                 "username": "shiling",
                 "name": "Tai Shi Ling",
@@ -170,16 +172,79 @@ function addressesController($scope) {
                 "postalcode": "(S)688000"
             }
         ];
-    };
-
-    $scope.getUserAddresses = function(username) {
-        userAddress = [];
-        $.each($scope.addresses, function(index, address) {
+        $.each(addresses, function(index, address) {
             if (address.username === username) {
-                userAddress.push(address);
+                $scope.userAddresses.push(address);
             }
         });
-        return userAddress;
+        //get selectedAddress from localstorage
+        if (webStorage.get("address") === null) {
+            webStorage.add("address", new Address());
+        }
+        $scope.selectedAddress = $.extend(new Address, webStorage.get("address"));  //convert object to Cart
+
+    };
+
+    $scope.selectAddress = function(selectedAddress) {
+        //reset all address's selected to false;
+        $.each($scope.userAddresses, function(index, address) {
+            address.selected = false;
+
+        });
+        selectedAddress.selected = true;
+        $scope.selectedAddress = selectedAddress;
+        webStorage.add("address", selectedAddress);
     };
 }
-;
+
+function creditCardController($scope, webStorage) {
+    $scope.userCreditcards = [];
+    $scope.selectedCard;
+
+    $scope.init = function(username) {
+        //get creditcards data
+        cards=[
+            {
+                "username": "shiling",
+                "cardholderName": "Tai Shi Ling",
+                "cardType": "Visa",
+                "cardNumber": "100999888777",
+                "CCV":"008",
+                "expiryMonth":"09",
+                "expiryYear":"2018"
+            },
+             {
+                "username": "caoli",
+                "cardholderName": "Cao Li",
+                "cardType": "Visa",
+                "cardNumber": "09999988811",
+                "CCV":"012",
+                "expiryMonth":"06",
+                "expiryYear":"2020"
+            }
+        ];
+        $.each(cards, function(index, card) {
+            if (card.username === username) {
+                $scope.userCreditcards.push(card);
+            }
+        });
+        //get selectedCard from localstorage
+        if (webStorage.get("card") === null) {
+            webStorage.add("card", new CreditCard());
+        }
+        $scope.selectedCard = $.extend(new CreditCard, webStorage.get("card"));  
+
+    };
+
+    $scope.selectCard = function(selectedCard) {
+        //reset all card's selected to false;
+        $.each($scope.userCreditcards, function(index, card) {
+            card.selected = false;
+
+        });
+        selectedCard.selected = true;
+        $scope.selectedCard = selectedCard;
+        webStorage.add("card", selectedCard);
+    };
+}
+

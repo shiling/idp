@@ -60,7 +60,7 @@
                     <div class="row">
                         <div class="small-12 columns">
 
-                            <table style="width:100%;" ng-controller="addressesController" ng-init="init()">
+                            <table style="width:100%;" ng-controller="addressesController" ng-init="init('shiling')">
                                 <tbody>
                                     <tr>
                                         <td colspan="2">
@@ -76,22 +76,27 @@
                                             </div>
                                         </td>
                                     </tr> 
-                                    <tr ng-repeat="address in getUserAddresses('shiling')">
-                                        <td>
-                                            <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5><b>{{address.username}}'s Address:</b></h5></div>
-                                                </div>
-                                             <div class="row">
-                                                    <div class="small-12 columns"><h5>{{address.address}}</h5></div>
-                                                </div>
-                                             <div class="row">
-                                                    <div class="small-12 columns"><h5>{{address.postalcode}}</h5></div>
-                                                </div>
+                                    <tr ng-repeat="address in userAddresses">
+
+                                        <td ng-class="{'selectedAddress': address.selected}">
+                                            <a ng-click="selectAddress(address)">
+                                                <div class="small-10 small-centered columns">
+                                                    <div class="row">
+                                                        <div class="small-12 columns"><h5><b>{{address.username}}'s Address:</b></h5></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-12 columns"><h5>{{address.address}}</h5></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-12 columns"><h5>{{address.postalcode}}</h5></div>
+                                                    </div>
+                                            </a>
                                         </td>
+
                                         <td>
-                                          <a href="#" class="tiny button">x</a>  
+                                            <a href="#" class="tiny button">x</a>  
                                         </td>
+
                                     </tr>
                                     <tr>
                                         <td>
