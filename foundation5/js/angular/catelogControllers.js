@@ -268,17 +268,17 @@ function deliveryNotesController($scope, webStorage) {
 
     $scope.validate = function() {
         $scope.valid = false;
-        if ($scope.date && $scope.time && $scope.contactNum) {
+        $scope.errors = {};
+        var patt_contactNum = /^[689]\d{7}$/;
+        if ($scope.date && $scope.time && $scope.contactNum && patt_contactNum.test($scope.contactNum)) {
             $scope.valid = true;
         }else{
-            $scope.errors = {};
             if($scope.date === undefined){
                 $scope.errors['date'] = "Required";
             }
             if($scope.time === undefined){
                 $scope.errors['time'] = "Required";
             }
-            var patt_contactNum = /[689]\d{7}/;
             if($scope.contactNum === undefined){
                 $scope.errors['contactNum'] = "Required";
             }
