@@ -25,17 +25,6 @@
                 $(document).foundation();
             });
         </script>
-        <style>
-            .address{
-                cursor: pointer;
-            }
-            .address :hover{
-                background-color: #c5e8f3;
-            }
-            .selected-address{
-                background-color: #c5e8f3;
-            }
-        </style>
         <title>CMart</title>
     </head>
     <body>
@@ -75,8 +64,9 @@
 
                     <div class="row">
                         <div class="small-12 columns">
-                            <div class="row">
-                                <img src="./img/checkout1.png"/>
+                            
+                            <div class="row text-center">
+                                <img src="./img/checkout1.png" style="width: 65%"/>
                             </div>
 
                             <table style="width:100%;" ng-controller="addressesController" ng-init="init('shiling')">
@@ -91,7 +81,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="address in addresses"  ng-click="selectAddress(address)">
-                                        <td class="pointer address" ng-class="{'selected-address': address.selected}">
+                                        <td class="selectable-tr" ng-class="{'selected-tr': address.selected}">
                                             <div class="row">
                                                 <div class="small-2 columns text-center">
                                                     <i class="fa fa-circle-o" ng-class="{'fa-circle': address.selected}"></i>
@@ -104,7 +94,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td ng-class="{'selected-address': newAddress.selected}">
+                                        <td ng-class="{'selected-tr': newAddress.selected}">
                                             <div class="row">
                                                 <div class="small-2 columns text-center">
                                                     <i class="fa fa-circle-o" ng-class="{'fa-circle': newAddress.selected}"></i>
@@ -116,13 +106,13 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="small-1 columns text-right"><h5>#</h5></div>
-                                                        <div class="small-3 medium-2 columns"><input type="text" placeholder="2" ng-model="newAddress.level"/></div>
+                                                        <div class="small-4 medium-2 columns"><input type="text" placeholder="2" ng-model="newAddress.level"/></div>
                                                         <div class="small-1 columns text-center"><h5>-</h5></div>
-                                                        <div class="small-3 medium-2 columns end"><input type="text" placeholder="18" ng-model="newAddress.unit"/></div>
+                                                        <div class="small-4 medium-2 columns end"><input type="text" placeholder="18" ng-model="newAddress.unit"/></div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="small-5 medium-3 columns"><h5>Singapore</h5></div>
-                                                        <div class="small-7 medium-3 columns end"><input type="text" placeholder="271632" ng-model="newAddress.postalCode" ng-change="validate()"/></div>
+                                                        <div class="small-6 medium-3 columns"><h5>Singapore</h5></div>
+                                                        <div class="small-6 medium-3 columns end"><input type="text" placeholder="271632" ng-model="newAddress.postalCode" ng-change="validate()"/></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -132,7 +122,7 @@
                                 <tfoot>
                                     <tr>
                                         <td>
-                                            <a href="cart.html" class="button secondary text-center buttom left">
+                                            <a href="cart.html" class="button back-btn text-center buttom left">
                                                 <i class="fa fa-arrow-circle-o-left fa-lg"></i>
                                                 Back
                                             </a>

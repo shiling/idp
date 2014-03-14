@@ -89,21 +89,6 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         $scope.favourites = webStorage.get("favourites");  //get fav from local storage
     };
 
-    $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
-        $scope.cart.updateQuantity(product, quantity);
-        webStorage.add("cart", $scope.cart);   //update localstorage
-    };
-
-    $scope.validateQuantity = function(product) {   //args[0] must be class Product
-        quantity = $scope.getQuantity(product); //may not be an non-zero integer
-        $scope.updateQuantity(product, quantity);   //pass to updateQuantity function for validation
-        webStorage.add("cart", $scope.cart);   //update localstorage
-    };
-
-    $scope.getQuantity = function(product) {    //args[0] must be class Product
-        return $scope.cart.getQuantity(product);
-    };
-
     $scope.productFilter = function(product) {
         //not in applied category
         if (searchService.activeCategory && product.categories.indexOf(searchService.activeCategory.name) === -1) {
@@ -131,6 +116,37 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         return true;
     };
 
+    //UPDATE CART
+    $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
+        $scope.cart.updateQuantity(product, quantity);
+        webStorage.add("cart", $scope.cart);   //update localstorage
+    };
+
+    $scope.validateQuantity = function(product) {   //args[0] must be class Product
+        quantity = $scope.getQuantity(product); //may not be an non-zero integer
+        $scope.updateQuantity(product, quantity);   //pass to updateQuantity function for validation
+        webStorage.add("cart", $scope.cart);   //update localstorage
+    };
+
+    $scope.getQuantity = function(product) {    //args[0] must be class Product
+        return $scope.cart.getQuantity(product);
+    };
+
+    $scope.checkout = function(location) {
+        if($scope.cart.getNumOfItems()>0){  //proceed if cart has items
+            if (!webStorage.get("currentOrder")) {    //create currentOrder if doesn't exist
+                webStorage.add("currentOrder", new Order($scope.username));
+            }
+            var currentOrder = $.extend(new Order, webStorage.get("currentOrder")); //convert object to Order
+            currentOrder.items = $scope.cart.items; //add items from cart
+            webStorage.add("currentOrder", currentOrder);   //update currentOrder
+            
+            //go to next page
+            window.location.href = location;
+        }
+    };
+
+    //UPDATE FAVOURITES
     $scope.addToFav = function(productName) {
         $scope.favourites.push(productName);
         webStorage.add('favourites', $scope.favourites);
@@ -146,6 +162,7 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 
 }
 
+//CHECKOUT CONTROLLERS
 function addressesController($scope, webStorage) {
     $scope.username;
     $scope.addresses = []; //array of class address
@@ -237,7 +254,6 @@ function addressesController($scope, webStorage) {
     };
 
 }
-;
 
 function deliveryNotesController($scope, webStorage) {
     $scope.date;
@@ -247,12 +263,28 @@ function deliveryNotesController($scope, webStorage) {
     $scope.valid = false;
 
     $scope.init = function() {
+        $scope.validate();
     };
 
     $scope.validate = function() {
         $scope.valid = false;
         if ($scope.date && $scope.time && $scope.contactNum) {
             $scope.valid = true;
+        }else{
+            $scope.errors = {};
+            if($scope.date === undefined){
+                $scope.errors['date'] = "Required";
+            }
+            if($scope.time === undefined){
+                $scope.errors['time'] = "Required";
+            }
+            var patt_contactNum = /[689]\d{7}/;
+            if($scope.contactNum === undefined){
+                $scope.errors['contactNum'] = "Required";
+            }
+            if($scope.contactNum && !patt_contactNum.test($scope.contactNum)){
+                $scope.errors['contactNum'] = "Invalid";
+            }
         }
     };
 
@@ -260,8 +292,8 @@ function deliveryNotesController($scope, webStorage) {
         if ($scope.valid) {
             //save to currentOrder
             var currentOrder = $.extend(new Order, webStorage.get("currentOrder"));  //convert object to Order
-            currentOrder.date = $scope.date;
-            currentOrder.time = $scope.time;
+            currentOrder.deliveryDate = $scope.date;
+            currentOrder.deliveryTime = $scope.time;
             currentOrder.contactNum = $scope.contactNum;
             currentOrder.specialInstructions = $scope.specialInstructions;
             webStorage.add("currentOrder", currentOrder);
@@ -270,57 +302,100 @@ function deliveryNotesController($scope, webStorage) {
             window.location.href = location;
         }
     };
-
 }
 
 function creditCardController($scope, webStorage) {
-    $scope.userCreditcards = [];
-    $scope.selectedCard;
+    $scope.username;
+    $scope.creditCards = []; //array of class address
+    $scope.newCreditCard;
+    $scope.selectedCreditCard;
+    $scope.valid = false;
 
     $scope.init = function(username) {
-        //get creditcards data
-        cards = [
-            {
-                "username": "shiling",
-                "cardholderName": "Tai Shi Ling",
-                "cardType": "Visa",
-                "cardNumber": "100999888777",
-                "CCV": "008",
-                "expiryMonth": "09",
-                "expiryYear": "2018"
-            },
-            {
-                "username": "caoli",
-                "cardholderName": "Cao Li",
-                "cardType": "Visa",
-                "cardNumber": "09999988811",
-                "CCV": "012",
-                "expiryMonth": "06",
-                "expiryYear": "2020"
-            }
+        $scope.username = username;
+
+        //get credit card data
+        creditCards = [
+            new CreditCard("shiling", "Tai Shi Ling", "Visa", "xxxx-xxxx-xxxx-1823", "008", "2018-09"),
+            new CreditCard("caoli", "Cao Li", "Visa", "xxxx-xxxx-xxxx-3721", "012", "2020-06")
         ];
-        $.each(cards, function(index, card) {
-            if (card.username === username) {
-                $scope.userCreditcards.push(card);
+        $.each(creditCards, function(index, creditCard) {
+            if (creditCard.username === username) {
+                $scope.creditCards.push(creditCard);
             }
         });
-        //get selectedCard from localstorage
-        if (webStorage.get("card") === null) {
-            webStorage.add("card", new CreditCard());
-        }
-        $scope.selectedCard = $.extend(new CreditCard, webStorage.get("card"));
-
+        $scope.newCreditCard = new CreditCard(username);
     };
 
-    $scope.selectCard = function(selectedCard) {
-        //reset all card's selected to false;
-        $.each($scope.userCreditcards, function(index, card) {
-            card.selected = false;
+    $scope.selectCreditCard = function(selectedCreditCard) {
+        //reset
+        $scope.selectedCreditCard = null;
+        $scope.valid = false;
+        if ($scope.newCreditCard) {
+            $scope.newCreditCard.selected = false;
+        }
 
+        //find selected credit card
+        $.each($scope.creditCards, function(index, creditCard) {
+            if (creditCard === selectedCreditCard) {
+                $scope.selectedCreditCard = selectedCreditCard;
+            } else {
+                creditCard.selected = false;
+            }
         });
-        selectedCard.selected = true;
-        $scope.selectedCard = selectedCard;
-        webStorage.add("card", selectedCard);
+        if ($scope.newCreditCard && selectedCreditCard === $scope.newCreditCard) {
+            $scope.selectedCreditCard = selectedCreditCard;
+        }
+
+        //mark selected credit card
+        if ($scope.selectedCreditCard) {
+            $scope.selectedCreditCard.selected = true;
+            $scope.valid = true;
+        }
+    };
+
+
+    //validate new credit card
+    $scope.validate = function() {
+        if ($scope.newCreditCard
+                && $scope.newCreditCard.cardholderName
+                && $scope.newCreditCard.cardNumber
+                && $scope.newCreditCard.CCV
+                && $scope.newCreditCard.expiryMonth) {
+            $scope.valid = true;
+            $scope.selectCreditCard($scope.newCreditCard);
+        } else {
+            $scope.valid = false;
+            $scope.selectCreditCard(null);
+        }
+    };
+
+    $scope.submit = function(location) {
+        if ($scope.valid) {
+            //save credit card to current order
+            var currentOrder = $.extend(new Order, webStorage.get("currentOrder"));  //convert object to Order
+            currentOrder.creditCard = $scope.selectedCreditCard;
+            webStorage.add("currentOrder", currentOrder);
+
+            //go to next page
+            window.location.href = location;
+        }
     };
 }
 
+function confirmCheckoutController($scope, webStorage) {
+    
+    $scope.currentOrder;
+
+    $scope.init = function() {
+        //get currentOrder
+        if(webStorage.get("currentOrder")){
+            $scope.currentOrder = $.extend(new Order, webStorage.get("currentOrder"));
+        }
+    };
+    
+    $scope.submit = function(location){
+        
+    };
+
+}

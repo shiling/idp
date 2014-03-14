@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
@@ -14,14 +16,17 @@
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
+        <!--THIS PAGE ONLY-->
+        <!--add more scripts here-->
         <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
-                Foundation.set_namespace = function () {};
+                Foundation.set_namespace = function() {
+                };
                 $(document).foundation();
             });
         </script>
-        <title>CMart - Cart</title>
+        <title>CMart</title>
     </head>
     <body>
         <div class="off-canvas-wrap">
@@ -34,11 +39,11 @@
                     </section>
 
                     <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Checkout</h1>
+                        <h1 class="title" style="text-align:center;">CMart</h1>
                     </section>
 
-                    <section class="right-small">
-                        <a class="shopping-cart-icon" href="cart.html" ><span></span></a>
+                    <section class="right-small text-center">
+                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
                     </section>
                 </nav><!-- nav bar -->
 
@@ -62,86 +67,80 @@
                     <div class="row">
                         <div class="small-12 columns">
 
+                            <div class="row text-center">
+                                <img src="./img/checkout3.png" style="width: 65%"/>
+                            </div>
+
                             <table style="width:100%;" ng-controller="creditCardController" ng-init="init('shiling')">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <h3 class="text-center"><b>Select Payment Method</b></h3>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    <tr>
-                                    <div class="small-10 small-centered columns">
-                                        <img height="100%" width="100%" src="./img/checkout3.png"/></td>
-                                    </div>
-                                            
-                                    </tr>
-                                    <tr>
-                                        <div class="small-10 small-centered columns">
-                                            <h3><b>Select Payment Method</b></h3>
-                                        </div>
-                                    </tr>
-                                    <tr ng-repeat="card in userCreditcards" >
-                                     
-                                        <td ng-class="{'selectedAddress': card.selected}">
-                                            <a ng-click="selectCard(card)">
-                                            <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5><b>My {{card.cardType}} Card</b></h5></div>
+                                    <tr ng-repeat="creditCard in creditCards"  ng-click="selectCreditCard(creditCard)">
+                                        <td class="selectable-tr" ng-class="{'selected-tr': creditCard.selected}">
+                                            <div class="row">
+                                                <div class="small-2 columns text-center">
+                                                    <i class="fa fa-circle-o" ng-class="{'fa-circle': creditCard.selected}"></i>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Number</h5></div>
-                                                    <div class="small-9 columns"><h5>{{card.cardNumber}}</h5></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Holder's Name</h5></div>
-                                                    <div class="small-9 columns"><h5>{{card.cardholderName}}</h5></div>
-                                                </div>                         
-                                            </div>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="small-10 small-centered columns">
-                                                 <div class="row">
-                                                    <a href="checkout4.html" class="button expand round text-left">
-                                                        <div class="small-12 columns"><h3>>></h3></div>
-                                                    </a>
+                                                <div class="small-10 columns">
+                                                    <h5><b>My {{creditCard.cardType}} Card</b></h5>
+                                                    <h5>{{creditCard.cardholderName}}</h5>
+                                                    <h5>{{creditCard.cardNumber}}</h5>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5><b>New Credit Card</b></h5></div>
+                                        <td ng-class="{'selected-tr': newCreditCard.selected}">
+                                            <div class="row">
+                                                <div class="small-2 columns text-center">
+                                                    <i class="fa fa-circle-o" ng-class="{'fa-circle': newCreditCard.selected}"></i>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Number</h5></div>
-                                                    <div class="small-9 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Holder's Name</h5></div>
-                                                    <div class="small-9 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-6 columns">
-                                                        <h5>Expired on</h5>
-                                                        <input type="text"/>
+                                                <div class="small-8 columns end">
+                                                    <h4><b>New Credit Card</b></h4>
+                                                    <div class="row">
+                                                        <div class="small-4 columns"><h5>Card Holder's Name</h5></div>
+                                                        <div class="small-8 columns"><input type="text" ng-model="newCreditCard.cardholderName" ng-change="validate()" placeholder="Samuel Sim"/></div>
                                                     </div>
-                                                    <div class="small-6 columns">
-                                                        <h5>CVV</h5>
-                                                        <input type="text"/>
+                                                    <div class="row">
+                                                        <div class="small-4 columns"><h5>Number</h5></div>
+                                                        <div class="small-8 columns"><input type="text" ng-model="newCreditCard.cardNumber" ng-change="validate()" placeholder="1234-2345-3456-4567"/></div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="small-10 small-centered columns">
-                                                 <div class="row">
-                                                    <a href="checkout4.html" class="button expand round text-left">
-                                                        <div class="small-12 columns"><h3>>></h3></div>
-                                                    </a>
+                                                    <div class="row">
+                                                        <div class="small-6 columns">
+                                                            <h5>CVV</h5>
+                                                            <input type="text" ng-model="newCreditCard.CCV" ng-change="validate()" placeholder="263"/>
+                                                        </div>
+                                                        <div class="small-6 columns">
+                                                            <h5>Expired on</h5>
+                                                            <input ng-model="newCreditCard.expiryMonth" ng-change="validate()" type="month"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
-                                
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <a href="checkout3.html" class="button back-btn text-center buttom left">
+                                                <i class="fa fa-arrow-circle-o-left fa-lg"></i>
+                                                Back
+                                            </a>
+                                            <a class="button text-center buttom right" ng-click="submit('checkout4.html')" ng-disabled="!valid" ng-class="{'success': valid}">
+                                                Next
+                                                <i class="fa fa-arrow-circle-o-right fa-lg"></i>
+                                            </a>  
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
