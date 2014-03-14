@@ -49,8 +49,9 @@ and open the template in the editor.
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list">
-                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
+                    <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
+                        <li>
+                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a></li>
                         <li><a href="index.html">Store</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
@@ -71,10 +72,10 @@ and open the template in the editor.
                                     <div class="small-10 small-centered columns">
                                         <img height="100%" width="100%" src="./img/checkout4.png"/>
                                     </div>
-                                            
+
                                     </tr>
                                     <tr>
-                                        <td colspan="3"> 
+                                        <td colspan="3">
                                             <div class="small-12 small-centered columns">
                                                 <h5><b>Past Orders</b></h5>
                                             </div>
@@ -149,9 +150,9 @@ and open the template in the editor.
                                             </div>
                                         </td>
                                     </tr>
-                                    
+
                                 </tbody>
-                                
+
                             </table>
                         </div>
                     </div>

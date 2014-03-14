@@ -58,8 +58,9 @@
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list">
-                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
+                    <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
+                        <li>
+                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a>
                         <li><a href="index.html">Store</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
@@ -83,7 +84,7 @@
                                             <i class="fa fa-filter"></i>
                                             <span ng-show="getAppliedFilters().length === 0">Add</span>
                                             <span ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}}</span>
-                                            Filter(s) 
+                                            Filter(s)
                                         </div>
                                     </a>
                                 </div>

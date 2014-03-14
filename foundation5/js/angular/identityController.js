@@ -1,10 +1,10 @@
 function identityController($scope, $http, webStorage, identityServices) {
     $scope.identities = [];
-    $scope.identityMap;
+    $scope.identityMap
     $scope.loggedInUsername = null;
 
     $scope.init = function() {
-         //get identities
+        //get identities
         identityServices.async().then(function(data) {
             $scope.identityMap = data;
             $.each($scope.identityMap, function(username, identity) {
@@ -17,7 +17,7 @@ function identityController($scope, $http, webStorage, identityServices) {
     $scope.login = function() {
         var username = $scope.username;
         var password = $scope.password;
-        if($scope.identityMap[username] && $scope.identityMap[username].password === password) {
+        if ($scope.identityMap[username] && $scope.identityMap[username].password === password) {
             console.log('loggin successful');
             $scope.loggedInUsername = username;
             webStorage.add("loggedInUsername", username);
@@ -30,7 +30,11 @@ function identityController($scope, $http, webStorage, identityServices) {
     };
 
     $scope.getLoggedInUsername = function() {
-        return $scope.loggedInUsername;
+        if ($scope.loggedInUsername!=null) {
+            return $scope.loggedInUsername;
+        } else {
+            return "Guest";
+        }
     };
 
     $scope.isAuthenticated = function() {
