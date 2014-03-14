@@ -18,20 +18,32 @@
         <script src="js/angular/models.js"></script>
         <!--THIS PAGE ONLY-->
         <script src="js/angular/catelogControllers.js"></script>
-        <!--add more scripts here-->
         <script>
             $(function() {
                 $(document).foundation();
+                window.onresize();
             });
+            window.onresize = function(){
+                var theight = $("body").height() - $("nav").height() - $("thead").height() - $("tfoot").height()-20;
+                $(".scrollable-table-wrapper").height(theight);
+            }
         </script>
-
         <style>
-            .item-description .row  {
-                margin-left:5px;
-                margin-right:3px;
+            .scrollable-table-wrapper{
+                overflow-y: auto;   
+            }
+            table{
+                width: 100%;
+                margin-bottom: 0;
+            }
+            tfoot tr td{
+                padding-bottom: 0;
+            }
+            #checkout-btn{
+                padding-top: .5rem;
+                padding-bottom: .5rem;
             }
         </style>
-
         <title>CMart - Cart</title>
     </head>
     <body>
@@ -68,93 +80,95 @@
 
                 <!-- Content -->
                 <section class="main-section">
-
                     <div class="row" >
                         <div class="small-12 columns">
-                            <table style="width:100%;" ng-controller="productsController" ng-init="init()">
-                                <thead>
-                                    <tr>
-                                        <td>
-                                            <h3 class="text-center">My Cart</h3>
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-show="getNumOfItemsInCart() === 0">
-                                        <td class='text-center'><h3>There's nothing in your cart!</h3></td>
-                                    </tr>
-                                    <tr ng-repeat="item in cart.items" class="ng-scope">
-                                        <td>
-                                            <a href="/product.html?{{item.product.name}}">
-                                                <div class="small-2 columns">
-                                                    <img height="100" width="100" src="img/{{item.product.image}}" alt="{{item.product.name}}" />
-                                                </div>
-                                            </a>
-                                            <div class="small-8 columns">
-                                                <a href="/product.html?{{item.product.name}}">
-                                                    <h5>{{item.product.name}}</h5>
-                                                    <h6>{{item.product.price| currency}} each</h6>
-                                                </a>
-                                                <div class="row collapse">
-                                                    <div class="small-2 medium-1 columns">
-                                                        <a href="#" class="tiny button prefix" ng-click="updateQuantity(item.product, getQuantity(item.product) - 1)">
-                                                            <i class="fa fa-minus fa-lg"></i>
+
+                            <div ng-controller="productsController" ng-init="init()">
+                                <table><thead><tr><td><h3 class="text-center">My Cart</h3></td></tr></thead></table>
+                                <div class="scrollable-table-wrapper">
+                                    <table>
+                                        <tbody>
+                                            <tr ng-show="cart.getNumOfItemsInCart() === 0">
+                                                <td class='text-center'><h3>There's nothing in your cart!</h3></td>
+                                            </tr>
+                                            <tr ng-repeat="item in cart.items" class="ng-scope">
+                                                <td>
+                                                    <a href="/product.html?{{item.product.name}}">
+                                                        <div class="small-2 columns">
+                                                            <img height="100" width="100" src="img/{{item.product.image}}" alt="{{item.product.name}}" />
+                                                        </div>
+                                                    </a>
+                                                    <div class="small-7 medium-8 columns">
+                                                        <a href="/product.html?{{item.product.name}}">
+                                                            <h5>{{item.product.name}}</h5>
+                                                            <h6>{{item.product.price| currency}} each</h6>
                                                         </a>
+                                                        <div class="row collapse">
+                                                            <div class="small-2 medium-1 columns">
+                                                                <a href="#" class="tiny button prefix buttom" ng-click="updateQuantity(item.product, getQuantity(item.product) - 1)">
+                                                                    <i class="fa fa-minus fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="small-3 medium-2 columns">
+                                                                <input class="buttom" type="text" ng-model="item.quantity" ng-model-onblur ng-change="validateQuantity(item.product)"/>
+                                                            </div>
+                                                            <div class="small-2 medium-1 columns">
+                                                                <a href="#" class="tiny button postfix buttom" ng-click="updateQuantity(item.product, getQuantity(item.product) + 1)">
+                                                                    <i class="fa fa-plus fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="small-2 small-offset-3 medium-1 medium-offset-1 columns end">
+                                                                <a href="#" class="tiny button postfix alert buttom" ng-click="updateQuantity(item.product, 0)">
+                                                                    <i class="fa fa-trash-o fa-lg"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="small-3 medium-2 columns">
-                                                        <input type="text" ng-model="item.quantity" ng-model-onblur ng-change="validateQuantity(item.product)"/>
+                                                        <h5>{{item.product.price * item.quantity| currency}}</h5>
                                                     </div>
-                                                    <div class="small-2 medium-1 columns">
-                                                        <a href="#" class="tiny button postfix" ng-click="updateQuantity(item.product, getQuantity(item.product) + 1)">
-                                                            <i class="fa fa-plus fa-lg"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="small-2 small-offset-3 medium-1 medium-offset-1 columns end">
-                                                        <a href="#" class="tiny button postfix alert" ng-click="updateQuantity(item.product, 0)">
-                                                            <i class="fa fa-trash-o fa-lg"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="small-2 columns">
-                                                <h5>{{item.product.price * item.quantity| currency}}</h5>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-9 small-offset-1 columns">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <table>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <br/>
+                                                <div class="small-8 small-offset-1 medium-9 medium-offset-1 columns">
                                                     <h5>Subtotal </h5>
                                                 </div>
-                                                <div class="small-2 columns">
-                                                    <h5>$x.xx</h5>
+                                                <div class="small-3 medium-2 columns">
+                                                    <h5>{{cart.getSubtotal() | currency}}</h5>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="small-9 small-offset-1 columns">
+                                                <div class="small-8 small-offset-1 medium-9 medium-offset-1 columns">
                                                     <h5>Delivery Fee</h5>
                                                 </div>
-                                                <div class="small-2 columns">
-                                                    <h5>$x.xx</h5>
+                                                <div class="small-3 medium-2 columns">
+                                                    <h5>{{cart.getDeliveryFee() | currency}}</h5>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <a href="/checkout1.html" class="button expand round text-left buttom">
-                                                    <div class="small-9 small-offset-1 columns">
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                               <a id="checkout-btn" href="/checkout1.html" class="button expand radius text-left buttom">
+                                                    <div class="small-8 small-offset-1 medium-9 medium-offset-1 columns">
                                                         <h3>Checkout</h3>
                                                     </div>
-                                                    <div class="small-2 columns">
-                                                        <h3>$x.xx</h3>
-                                                    </div> </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                    <div class="small-3 medium-2 columns">
+                                                        <h3>{{cart.getGrandTotal() | currency}}</h3>
+                                                    </div>
+                                                </a> 
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
                 </section><!--content-->
 
                 <!-- close the off-canvas menu -->

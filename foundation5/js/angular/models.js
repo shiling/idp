@@ -68,6 +68,22 @@ Cart.prototype.getNumOfItems = function(){
     return length;
 }
 
+Cart.prototype.getSubtotal = function(){
+    var subTotal = 0;
+    $.each(this.items, function(i, item){
+        subTotal += item.product.price * item.quantity;
+    });
+    return subTotal;
+}
+
+Cart.prototype.getDeliveryFee = function(){
+    return 0.0;
+}
+
+Cart.prototype.getGrandTotal = function(){
+    return this.getSubtotal() + this.getDeliveryFee();
+}
+
 function OrderItem(product, quantity) { //args[0] must be class Product, args[1] must be integer
     this.product = product; //class Product
     this.quantity = quantity;   //integer

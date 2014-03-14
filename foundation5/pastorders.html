@@ -39,7 +39,7 @@ and open the template in the editor.
                     </section>
 
                     <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Checkout</h1>
+                        <h1 class="title" style="text-align:center;">Past Orders</h1>
                     </section>
 
                     <section class="right-small">
@@ -76,101 +76,78 @@ and open the template in the editor.
                                     <tr>
                                         <td colspan="3"> 
                                             <div class="small-12 small-centered columns">
-                                                <h5><b>Items</b></h5>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-repeat="item in cart.items">
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>{{item.product.name}}</h6>
-                                                </div>
-                                            </div>
-                                            
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>1</h6>
-                                                </div>
-                                                
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6>{{item.product.price| currency}}</h6>
-                                                </div>
+                                                <h5><b>Past Orders</b></h5>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td class="small-8 columns">
                                             <div class="row">
                                                 <div class="small-10 small-centered columns">
-                                                    <h6>Delivery</h6>
+                                                    <h5><b>2014-03-12 14:40:21</b></h5>
                                                 </div>
                                             </div>
-                                            
-                                        </td>
-                                        <td>
-                                        </td>
-                                        <td>
                                             <div class="row">
                                                 <div class="small-10 small-centered columns">
-                                                    <h6>$xx.xx</h6>
+                                                    <h3><b>$16.15</b></h3>
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6><b>Total</b></h3>
-                                                </div>
-                                            </div>
-                                            
-                                        </td>
-                                        <td>   
-                                        </td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="small-10 small-centered columns">
-                                                    <h6><b>$xx.xx</h6></h3>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
+                                        <td class="small-4 columns">
                                             <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5>Address</h5></div>
-                                                    
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-12 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5>Billing Information</h5></div>
-                                                    
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-12 columns"><input type="text"/></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3">
-                                            <div class="small-10 small-centered columns">
-                                                    <a href="index.html" class="button expand round text-center">
-                                                        <div class="small-12 columns"><h3>OK, send me my stuff</h3></div>  
+                                                 <div class="row">
+                                                    <a href="receipt.html" class="button expand round text-left">
+                                                        <div class="small-12 columns"><h3><b>>></b></h3></div>
                                                     </a>
+                                                </div>
                                             </div>
-                                        </td> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-8 columns">
+                                            <div class="row">
+                                                <div class="small-10 small-centered columns">
+                                                    <h5><b>2014-03-02 11:24:05</b></h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="small-10 small-centered columns">
+                                                    <h3><b>$20.35</b></h3>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="small-4 columns">
+                                            <div class="small-10 small-centered columns">
+                                                 <div class="row">
+                                                    <a href="receipt.html" class="button expand round text-left">
+                                                        <div class="small-12 columns"><h3><b>>></b></h3></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small-8 columns">
+                                            <div class="row">
+                                                <div class="small-10 small-centered columns">
+                                                    <h5><b>2014-01-01 01:01:01</b></h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="small-10 small-centered columns">
+                                                    <h3><b>$51.70</b></h3>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="small-4 columns">
+                                            <div class="small-10 small-centered columns">
+                                                 <div class="row">
+                                                    <a href="receipt.html" class="button expand round text-left">
+                                                        <div class="small-12 columns"><h3><b>>></b></h3></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     
                                 </tbody>
