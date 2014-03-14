@@ -14,7 +14,7 @@
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
-        <script src="js/angular/catelogControllers.js"></script>
+        <script src="js/angular/identityController.js"></script><script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
                 Foundation.set_namespace = function () {};
@@ -46,7 +46,7 @@
                 <aside class="left-off-canvas-menu">
                     <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
                         <li>
-                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a>
+                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a></li>
                         <li><a href="index.html">Store</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
