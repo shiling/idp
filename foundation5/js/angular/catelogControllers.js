@@ -73,8 +73,8 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         //get product data
         productsService.async().then(function(data) {
             $scope.productsMap = data;
-            $.each($scope.productsMap, function(productName, product){
-               $scope.products.push(product); 
+            $.each($scope.productsMap, function(productName, product) {
+                $scope.products.push(product);
             });
         });
         //get cart from localstorage
@@ -125,7 +125,7 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         }
 
         //name does not match
-        if(searchService.name && !product.name.toLowerCase().match(searchService.name.toLowerCase())){
+        if (searchService.name && !product.name.toLowerCase().match(searchService.name.toLowerCase())) {
             return false;
         }
         return true;
@@ -135,10 +135,10 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         $scope.favourites.push(productName);
         webStorage.add('favourites', $scope.favourites);
     };
-    
-    $scope.getFavProducts = function(){ //TODO: make more efficient
+
+    $scope.getFavProducts = function() { //TODO: make more efficient
         var favProducts = [];
-        $.each($scope.favourites, function(index, productName){
+        $.each($scope.favourites, function(index, productName) {
             favProducts.push($scope.productsMap[productName]);
         });
         return favProducts;
@@ -148,16 +148,15 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 
 function addressesController($scope, webStorage) {
     $scope.username;
-    $scope.currentOrder;
     $scope.addresses = []; //array of class address
     $scope.newAddress;
     $scope.selectedAddress;
     $scope.valid = false;
 
     $scope.init = function(username) {
-        
+
         $scope.username = username;
-        
+
         //get addresses data
         var addresses = [
             new Address('shiling', 'North Bridge Road #01-10', '621111'),
@@ -169,83 +168,110 @@ function addressesController($scope, webStorage) {
                 $scope.addresses.push(address);
             }
         });
-        
-        //get currentOrder from localstorage
-        if (webStorage.get("currentOrder") === null) {
-            webStorage.add("currentOrder", new Order());
-        }
-        $scope.currentOrder = $.extend(new Order, webStorage.get("currentOrder"));  //convert object to Order
-        
-        //TODO: check if address alr selected
-        $scope.selectedAddress = $.extend(new Order, $scope.currentOrder.address);
     };
-    
-    $scope.selectAddress = function(selectedAddress){
+
+    $scope.selectAddress = function(selectedAddress) {
         //reset
         $scope.selectedAddress = null;
         $scope.valid = false;
-        if($scope.newAddress){
+        if ($scope.newAddress) {
             $scope.newAddress.selected = false;
         }
-        
+
         //find selected address
         $.each($scope.addresses, function(index, address) {
             if (address === selectedAddress) {
                 $scope.selectedAddress = selectedAddress;
-            }else{
+            } else {
                 address.selected = false;
             }
         });
-        if($scope.newAddress && selectedAddress === $scope.newAddress){
-                $scope.selectedAddress = selectedAddress;
+        if ($scope.newAddress && selectedAddress === $scope.newAddress) {
+            $scope.selectedAddress = selectedAddress;
         }
-        
+
         //mark selected addresses
-        if($scope.selectedAddress){
+        if ($scope.selectedAddress) {
             $scope.selectedAddress.selected = true;
             $scope.valid = true;
         }
-        saveAddress();
     };
-    
-    saveAddress = function(){
-        $scope.currentOrder.address = $scope.selectedAddress;
-        webStorage.add("currentOrder", $scope.currentOrder);
-    };
-    
+
     //validate new address
-    $scope.validate = function(){
-        if($scope.newAddress && $scope.newAddress.building && $scope.newAddress.postalCode){    //valid new address
+    $scope.validate = function() {
+        if ($scope.newAddress && $scope.newAddress.building && $scope.newAddress.postalCode) {    //valid new address
             $scope.valid = true;
             $scope.selectAddress($scope.newAddress);
-        }else{
+        } else {
             $scope.valid = false;
             $scope.selectAddress(null);
         }
     };
-    
-    formatNewAddress = function(){
-        if($scope.newAddress.level && $scope.newAddress.unit){
+
+    formatNewAddress = function() {
+        if ($scope.newAddress.level && $scope.newAddress.unit) {
             return "{0}, #{1}-{2}".format($scope.newAddress.building, $scope.newAddress.level, $scope.newAddress.unit)
-        }else{
+        } else {
             return $scope.newAddress.building;
         }
     };
-    
-    $scope.submit = function(location){
-        //if new address is selected, convert to Address object
-        if($scope.selectedAddress === $scope.newAddress){
-            $scope.selectedAddress = new Address($scope.username,
-                formatNewAddress(), 
-                $scope.newAddress.postalCode);
-                saveAddress();
-        }
-        if($scope.valid){
+
+    $scope.submit = function(location) {
+        if ($scope.valid) {
+            //if new address is selected, convert to Address object
+            if ($scope.selectedAddress === $scope.newAddress) {
+                $scope.selectedAddress = new Address(
+                        $scope.username,
+                        formatNewAddress(),
+                        $scope.newAddress.postalCode);
+            }
+
+            //save address to current order
+            var currentOrder = $.extend(new Order, webStorage.get("currentOrder"));  //convert object to Order
+            currentOrder.address = $scope.selectedAddress;
+            webStorage.add("currentOrder", currentOrder);
+
+            //go to next page
             window.location.href = location;
         }
     };
-    
-};
+
+}
+;
+
+function deliveryNotesController($scope, webStorage) {
+    $scope.date;
+    $scope.time;
+    $scope.contactNum;
+    $scope.specialInstructions;
+    $scope.valid = false;
+
+    $scope.init = function() {
+    };
+
+    $scope.validate = function() {
+        $scope.valid = false;
+        if ($scope.date && $scope.time && $scope.contactNum) {
+            $scope.valid = true;
+        }
+    };
+
+    $scope.submit = function(location) {
+        if ($scope.valid) {
+            //save to currentOrder
+            var currentOrder = $.extend(new Order, webStorage.get("currentOrder"));  //convert object to Order
+            currentOrder.date = $scope.date;
+            currentOrder.time = $scope.time;
+            currentOrder.contactNum = $scope.contactNum;
+            currentOrder.specialInstructions = $scope.specialInstructions;
+            webStorage.add("currentOrder", currentOrder);
+
+            //go to next page
+            window.location.href = location;
+        }
+    };
+
+}
 
 function creditCardController($scope, webStorage) {
     $scope.userCreditcards = [];
@@ -253,24 +279,24 @@ function creditCardController($scope, webStorage) {
 
     $scope.init = function(username) {
         //get creditcards data
-        cards=[
+        cards = [
             {
                 "username": "shiling",
                 "cardholderName": "Tai Shi Ling",
                 "cardType": "Visa",
                 "cardNumber": "100999888777",
-                "CCV":"008",
-                "expiryMonth":"09",
-                "expiryYear":"2018"
+                "CCV": "008",
+                "expiryMonth": "09",
+                "expiryYear": "2018"
             },
-             {
+            {
                 "username": "caoli",
                 "cardholderName": "Cao Li",
                 "cardType": "Visa",
                 "cardNumber": "09999988811",
-                "CCV":"012",
-                "expiryMonth":"06",
-                "expiryYear":"2020"
+                "CCV": "012",
+                "expiryMonth": "06",
+                "expiryYear": "2020"
             }
         ];
         $.each(cards, function(index, card) {
@@ -282,7 +308,7 @@ function creditCardController($scope, webStorage) {
         if (webStorage.get("card") === null) {
             webStorage.add("card", new CreditCard());
         }
-        $scope.selectedCard = $.extend(new CreditCard, webStorage.get("card"));  
+        $scope.selectedCard = $.extend(new CreditCard, webStorage.get("card"));
 
     };
 

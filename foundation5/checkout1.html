@@ -76,7 +76,7 @@
                     <div class="row">
                         <div class="small-12 columns">
                             <div class="row">
-                                <img height="100%" width="100%" src="./img/checkout1.png"/>
+                                <img src="./img/checkout1.png"/>
                             </div>
 
                             <table style="width:100%;" ng-controller="addressesController" ng-init="init('shiling')">
@@ -112,7 +112,7 @@
                                                 <div class="small-8 columns end">
                                                     <h4><b>New Address</b></h4>
                                                     <div class="row">
-                                                        <div class="small-12 columns"><input type="text" placeholder="81 Victoria Street" ng-model="newAddress.building" ng-blur="validate()"/></div>
+                                                        <div class="small-12 columns"><input type="text" placeholder="81 Victoria Street" ng-model="newAddress.building" ng-change="validate()"/></div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="small-1 columns text-right"><h5>#</h5></div>
@@ -122,7 +122,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="small-5 medium-3 columns"><h5>Singapore</h5></div>
-                                                        <div class="small-7 medium-3 columns end"><input type="text" placeholder="271632" ng-model="newAddress.postalCode" ng-blur="validate()"/></div>
+                                                        <div class="small-7 medium-3 columns end"><input type="text" placeholder="271632" ng-model="newAddress.postalCode" ng-change="validate()"/></div>
                                                     </div>
                                                 </div>
                                             </div>
