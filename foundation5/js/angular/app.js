@@ -1,8 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//ANGULAR JS
 var app = angular.module('cmartApp', ['mm.foundation', 'webStorageModule', 'truncate']);
 
 //retrieves categories from json file
@@ -111,3 +107,14 @@ app.directive('ngModelOnblur', function() {
         }
     };
 });
+
+//UTILITY
+String.prototype.format = String.prototype.f = function() {
+    var s = this,
+        i = arguments.length;
+
+    while (i--) {
+        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+    }
+    return s;
+};
