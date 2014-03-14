@@ -145,9 +145,11 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     };
 
 }
+
 function addressesController($scope) {
     $scope.addresses = []; //array of class address
     $scope.newAddress;
+    $scope.selectedAddress;
     $scope.valid = false;
 
     $scope.init = function(username) {
@@ -162,7 +164,11 @@ function addressesController($scope) {
                 $scope.addresses.push(address);
             }
         });
-        return $scope.addresses;
+        //get selectedAddress from localstorage
+        if (webStorage.get("address") === null) {
+            webStorage.add("address", new Address());
+        }
+        $scope.selectedAddress = $.extend(new Address, webStorage.get("address"));  //convert object to Address
     };
     
     $scope.selectAddress = function(selectedAddress){
@@ -170,6 +176,7 @@ function addressesController($scope) {
         $.each($scope.addresses, function(index, address) {
             if (address === selectedAddress) {
                 address.selected = true;
+                webStorage.add("address", selectedAddress);
                 $scope.valid = true;
             }else{
                 address.selected = false;
@@ -185,3 +192,55 @@ function addressesController($scope) {
     };
 
 };
+
+function creditCardController($scope, webStorage) {
+    $scope.userCreditcards = [];
+    $scope.selectedCard;
+
+    $scope.init = function(username) {
+        //get creditcards data
+        cards=[
+            {
+                "username": "shiling",
+                "cardholderName": "Tai Shi Ling",
+                "cardType": "Visa",
+                "cardNumber": "100999888777",
+                "CCV":"008",
+                "expiryMonth":"09",
+                "expiryYear":"2018"
+            },
+             {
+                "username": "caoli",
+                "cardholderName": "Cao Li",
+                "cardType": "Visa",
+                "cardNumber": "09999988811",
+                "CCV":"012",
+                "expiryMonth":"06",
+                "expiryYear":"2020"
+            }
+        ];
+        $.each(cards, function(index, card) {
+            if (card.username === username) {
+                $scope.userCreditcards.push(card);
+            }
+        });
+        //get selectedCard from localstorage
+        if (webStorage.get("card") === null) {
+            webStorage.add("card", new CreditCard());
+        }
+        $scope.selectedCard = $.extend(new CreditCard, webStorage.get("card"));  
+
+    };
+
+    $scope.selectCard = function(selectedCard) {
+        //reset all card's selected to false;
+        $.each($scope.userCreditcards, function(index, card) {
+            card.selected = false;
+
+        });
+        selectedCard.selected = true;
+        $scope.selectedCard = selectedCard;
+        webStorage.add("card", selectedCard);
+    };
+}
+
