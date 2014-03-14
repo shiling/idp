@@ -2,7 +2,7 @@ function retrieveProduct($scope, $http){
     $scope.products = [];
     $scope.product = null;
     $scope.productFound = false;
-    
+
     $scope.init = function(){
         $http.get('./data/products.json').success(function(data){
             $.each(data, function(i,e){
@@ -18,8 +18,10 @@ function retrieveProduct($scope, $http){
             });
         });
     };
-    
+
     $scope.related = function(products, product){
+         if(product==null || product==undefined)
+            return [];
         relatedProducts = [];
         console.log("related function");
         console.log(products);
@@ -44,7 +46,7 @@ function retrieveProduct($scope, $http){
 
 function retrieveRelated($scope, $http){
     $scope.products = [];
-    
+
     $scope.init = function(){
         $http.get('./data/products.json').success(function(data){
             $scope.products = data;

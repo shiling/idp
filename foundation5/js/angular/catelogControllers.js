@@ -152,12 +152,32 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         webStorage.add('favourites', $scope.favourites);
     };
 
+    $scope.toggleFav = function(productName) {
+        var index = $scope.favourites.indexOf(productName);
+        if(index === -1) {
+            $scope.favourites.push(productName);
+        } else {
+            $scope.favourites.splice(index, 1);
+        }
+        webStorage.add('favourites', $scope.favourites);
+    };
+
     $scope.getFavProducts = function() { //TODO: make more efficient
         var favProducts = [];
         $.each($scope.favourites, function(index, productName) {
             favProducts.push($scope.productsMap[productName]);
         });
         return favProducts;
+    };
+
+    $scope.isProductInFav = function (productName) {
+        var products = $scope.getFavProducts();
+        for(var i=0; i<products.length; i++) {
+            if(products[i].name === productName) {
+                return true;
+            }
+        }
+        return false;
     };
 
 }

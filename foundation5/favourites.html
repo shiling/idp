@@ -16,7 +16,7 @@
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
-        <!--THIS PAGE ONLY-->
+        <script src="js/angular/identityController.js"></script><!--THIS PAGE ONLY-->
         <script src="js/angular/catelogControllers.js"></script>
         <script src="js/headroom/headroom.min.js"></script>
         <script>
@@ -58,9 +58,11 @@
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list">
-                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
-                        <li><a href="index.html">Store</a></li>
+                    <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
+                        <li>
+                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a></li>
+<li>
+                        <a href="index.html">Store</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="favourites.html">Favourites</a></li>
                         <li><a href="purchases.html">Purchases</a></li>
@@ -83,7 +85,7 @@
                                             <i class="fa fa-filter"></i>
                                             <span ng-show="getAppliedFilters().length === 0">Add</span>
                                             <span ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}}</span>
-                                            Filter(s) 
+                                            Filter(s)
                                         </div>
                                     </a>
                                 </div>
