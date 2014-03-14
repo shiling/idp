@@ -147,6 +147,8 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 }
 function addressesController($scope) {
     $scope.addresses = []; //array of class address
+    $scope.newAddress;
+    $scope.valid = false;
 
     $scope.init = function(username) {
         //get addresses data
@@ -164,13 +166,22 @@ function addressesController($scope) {
     };
     
     $scope.selectAddress = function(selectedAddress){
+        $scope.valid = false;
         $.each($scope.addresses, function(index, address) {
             if (address === selectedAddress) {
                 address.selected = true;
+                $scope.valid = true;
             }else{
                 address.selected = false;
             }
         });
+    };
+    
+    $scope.validate = function(){
+        //check for new address
+        if(!$scope.valid && $scope.newAddress.building && $scope.newAddress.postalCode){
+            $scope.valid = true;
+        }
     };
 
 };

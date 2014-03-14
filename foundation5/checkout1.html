@@ -108,20 +108,19 @@
                                                 <h4><b>New Address</b></h4>
                                                 <div class="row">
                                                     <div class="small-10 small-offset-2 columns">
-
                                                         <div class="row">
                                                             <div class="small-3 columns"><h5>Building's Name</h5></div>
-                                                            <div class="small-9 columns"><input type="text"/></div>
+                                                            <div class="small-9 columns"><input type="text" ng-model="newAddress.building" ng-blur="validate()"/></div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="small-2 columns text-right"><h5>#</h5></div>
-                                                            <div class="small-4 columns"><input type="text"/></div>
+                                                            <div class="small-4 columns"><input type="text" ng-model="newAddress.level"/></div>
                                                             <div class="small-2 columns text-right"><h5>-</h5></div>
-                                                            <div class="small-4 columns"><input type="text"/></div>
+                                                            <div class="small-4 columns"><input type="text" ng-model="newAddress.unit"/></div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="small-3 columns"><h5>Post Code</h5></div>
-                                                            <div class="small-9 columns"><input type="text"/></div>
+                                                            <div class="small-3 columns"><h5>Postal Code</h5></div>
+                                                            <div class="small-9 columns"><input type="text" ng-model="newAddress.postalCode" ng-blur="validate()"/></div>
                                                         </div>
                                                     </div>
                                                 </div>   
@@ -137,7 +136,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="small-4 small-offset-4 columns">
-                                                    <a href="checkout2.html" class="button expand round text-center">
+                                                    <a href="checkout2.html" class="button expand round text-center" ng-click="validate()" ng-disabled="!valid">
                                                         Next
                                                     </a>
                                                 </div>
