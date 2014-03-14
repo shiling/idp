@@ -81,7 +81,7 @@
                                             <i class="fa fa-filter"></i>
                                             <span ng-show="getAppliedFilters().length === 0">Add</span>
                                             <span ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}}</span>
-                                            Filter(s) 
+                                            Filter(s)
                                         </div>
                                     </a>
                                 </div>
@@ -135,7 +135,7 @@
                                                 <div class="row">
                                                     <div class="small-12 columns">
                                                         <a href="product.html?{{product.name}}">
-                                                            <img src="img/{{product.image}}" alt="{{product.name}}"/>
+                                                            <img ng-src="img/{{product.image}}" alt="{{product.name}}"/>
                                                             <div class="small-11 small-centered columns">
                                                                 <h5 class="product-title">{{product.name| characters:45}}<br/><small>{{product.unit}}</small></h5>
                                                                 <h6>{{product.price| currency}}</h6>
