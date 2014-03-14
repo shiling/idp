@@ -104,10 +104,6 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         return $scope.cart.getQuantity(product);
     };
 
-    $scope.getNumOfItemsInCart = function() {
-        return $scope.cart.getNumOfItems();
-    };
-
     $scope.productFilter = function(product) {
         //not in applied category
         if (searchService.activeCategory && product.categories.indexOf(searchService.activeCategory.name) === -1) {
