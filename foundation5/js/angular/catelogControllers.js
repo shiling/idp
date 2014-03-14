@@ -148,38 +148,29 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 function addressesController($scope) {
     $scope.addresses = []; //array of class address
 
-    $scope.init = function() {
+    $scope.init = function(username) {
         //get addresses data
-        $scope.addresses = [
-            {
-                "username": "shiling",
-                "name": "Tai Shi Ling",
-                "address": "North Bridge Road #01-10",
-                "postalcode": "(S)621111"
-            },
-            {
-                "username": "shiling",
-                "name": "Tai Shi Ling",
-                "address": "Clementi Road #08-08",
-                "postalcode": "(S)688111"
-            },
-            {
-                "username": "cao li",
-                "name": "Cao Li",
-                "address": "Lakeside Drive #18-18",
-                "postalcode": "(S)688000"
-            }
+        var addresses = [
+            new Address('shiling', 'North Bridge Road #01-10', '(S)621111'),
+            new Address('shiling', 'Clementi Road #08-08', '(S)688111'),
+            new Address('cao li', 'Lakeside Drive #18-18', '(S)688000')
         ];
-    };
-
-    $scope.getUserAddresses = function(username) {
-        userAddress = [];
-        $.each($scope.addresses, function(index, address) {
+        $.each(addresses, function(index, address) {
             if (address.username === username) {
-                userAddress.push(address);
+                $scope.addresses.push(address);
             }
         });
-        return userAddress;
+        return $scope.addresses;
     };
-}
-;
+    
+    $scope.selectAddress = function(selectedAddress){
+        $.each($scope.addresses, function(index, address) {
+            if (address === selectedAddress) {
+                address.selected = true;
+            }else{
+                address.selected = false;
+            }
+        });
+    };
+
+};

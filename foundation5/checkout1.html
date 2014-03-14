@@ -3,24 +3,40 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.2/css/foundation.min.css" rel="stylesheet">
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <script src="js/vendor/modernizr.js"></script>
         <script src="js/vendor/jquery.js"></script>
         <script src="js/foundation.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+        <script src="js/angular/angular.min.js"></script>
         <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
         <script src="js/angular/angular-webstorage.js"></script>
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
+        <!--THIS PAGE ONLY-->
         <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
+                Foundation.set_namespace = function() {
+                };
                 $(document).foundation();
             });
         </script>
-        <title>CMart - Cart</title>
+        <style>
+            .address{
+                cursor: pointer;
+            }
+            .address :hover{
+                background-color: #008cba;
+            }
+            .selected-address{
+                background-color: #008cba;
+            }
+        </style>
+        <title>CMart</title>
     </head>
     <body>
         <div class="off-canvas-wrap">
@@ -60,81 +76,72 @@
                     <div class="row">
                         <div class="small-12 columns">
 
-                            <table style="width:100%;" ng-controller="addressesController" ng-init="init()">
+                            <table style="width:100%;" ng-controller="addressesController" ng-init="init('shiling')">
                                 <tbody>
                                     <tr>
-                                        <td colspan="2">
-                                            <div class="small-10 small-centered columns">
+                                        <td>
+                                            <div class="small-12 columns">
                                                 <img height="100%" width="100%" src="./img/checkout1.png"/>
                                             </div>
                                         </td>
                                     </tr>    
                                     <tr>
-                                        <td colspan="2">
-                                            <div class="small-12 small-centered columns">
-                                                <h5>Select Delivery Address</h5>
+                                        <td>
+                                            <div class="small-12 columns">
+                                                <h3>Select Delivery Address</h3>
                                             </div>
                                         </td>
                                     </tr> 
-                                    <tr ng-repeat="address in getUserAddresses('shiling')">
-                                        <td>
-                                            <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5><b>{{address.username}}'s Address:</b></h5></div>
+                                    <tr ng-repeat="address in addresses"  ng-click="selectAddress(address)">
+                                        <td class="pointer address" ng-class="{'selected-address': address.selected}">
+                                            <div class="row">
+                                                <div class="small-10 small-offset-2 columns">
+                                                    <h5>{{address.address}}</h5>
+                                                    <h5>{{address.postalCode}}</h5>
                                                 </div>
-                                             <div class="row">
-                                                    <div class="small-12 columns"><h5>{{address.address}}</h5></div>
-                                                </div>
-                                             <div class="row">
-                                                    <div class="small-12 columns"><h5>{{address.postalcode}}</h5></div>
-                                                </div>
-                                        </td>
-                                        <td>
-                                          <a href="#" class="tiny button">x</a>  
+                                            </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="small-10 small-centered columns">
-                                                <div class="row">
-                                                    <div class="small-12 columns"><h5><b>New Address</b></h5></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Name</h5></div>
-                                                    <div class="small-9 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Building's Name</h5></div>
-                                                    <div class="small-9 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-2 columns text-right"><h5>#</h5></div>
-                                                    <div class="small-4 columns"><input type="text"/></div>
-                                                    <div class="small-2 columns text-right"><h5>-</h5></div>
-                                                    <div class="small-4 columns"><input type="text"/></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns"><h5>Post Code</h5></div>
-                                                    <div class="small-9 columns"><input type="text"/></div>
-                                                </div>
-                                        </td>
+                                    <tr ng-click="selectAddress(null)">
                                         <td>
                                             <div class="small-12 small-centered columns">
+                                                <h4><b>New Address</b></h4>
                                                 <div class="row">
-                                                    <a href="#" class="tiny button">+</a>
-                                                </div>
+                                                    <div class="small-10 small-offset-2 columns">
+
+                                                        <div class="row">
+                                                            <div class="small-3 columns"><h5>Building's Name</h5></div>
+                                                            <div class="small-9 columns"><input type="text"/></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="small-2 columns text-right"><h5>#</h5></div>
+                                                            <div class="small-4 columns"><input type="text"/></div>
+                                                            <div class="small-2 columns text-right"><h5>-</h5></div>
+                                                            <div class="small-4 columns"><input type="text"/></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="small-3 columns"><h5>Post Code</h5></div>
+                                                            <div class="small-9 columns"><input type="text"/></div>
+                                                        </div>
+                                                    </div>
+                                                </div>   
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="small-12 small-centered columns">
-                                                <div class="row">
-                                                    <a href="checkout2.html" class="button expand round text-center">
-                                                        <div class="small-12 columns"><h3>Next</h3></div>
+                                            <div class="row">
+                                                <div class="small-4 columns">
+                                                    <a href="cart.html" class="button expand round text-center">
+                                                        Back
                                                     </a>
                                                 </div>
-                                            </div>   
+                                                <div class="small-4 small-offset-4 columns">
+                                                    <a href="checkout2.html" class="button expand round text-center">
+                                                        Next
+                                                    </a>
+                                                </div>
+                                            </div>    
                                         </td>
                                     </tr>
                                 </tbody>

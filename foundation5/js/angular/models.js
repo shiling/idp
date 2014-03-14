@@ -120,9 +120,8 @@ function Identity(username, email, password) {
     this.password = password;
 }
 
-function Address(username, addresseeName, address, postalCode) {
+function Address(username, address, postalCode) {
     this.username = username;   
-    this.addresseeName = addresseeName;
     this.address = address;
     this.postalCode = postalCode;
 }
