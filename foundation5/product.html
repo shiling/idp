@@ -21,7 +21,8 @@
         <script src="js/angular/productViewController.js"></script>
         <script>
             $(function() {
-                Foundation.set_namespace = function() {};
+                Foundation.set_namespace = function() {
+                };
                 $(document).foundation();
             });
 
@@ -64,7 +65,7 @@
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                   <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
+                    <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
                         <li>
                             <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a>
                         </li>
@@ -96,17 +97,14 @@
 
                         <div ng-controller="productsController" ng-init="init()">
 
-							<div id="favModal" class="reveal-modal" data-reveal>
-					    		<b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
-					    	</div>
+                            <div id="favModal" class="reveal-modal" data-reveal>
+                                <b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
+                            </div>
 
                             <br/>
                             <br/>
                             <div id="product-name">
-                                <a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="toggleFav(product.name)">
-                                	<i class="fa fa-heart" ng-show="isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i>
-                                	<i class="fa fa-heart-o" ng-show="!isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i>
-                                	</a>
+                                <a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="toggleFav(product.name)"> <i class="fa fa-heart" ng-show="isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> <i class="fa fa-heart-o" ng-show="!isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> </a>
                             </div>
                             <div id="brand-name">
                                 by {{product.brand}}
@@ -126,23 +124,27 @@
                             <br/>
 
                             <div class="row">
-                                <div class="small-3 small-offset-3 columns">
-                                    <a class="button expand" ng-show="getQuantity(product) === 0" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                <div class="small-6 columns" ng-show="getQuantity(product) === 0">
+                                    <a class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
                                 </div>
 
-                                <div class="small-1 small-offset-3 columns" ng-show="getQuantity(product) > 0">
-                                    <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                <div class="small-6 columns" ng-show="getQuantity(product) > 0">
+                                    <div class="row collapse">
+                                        <div class="small-3 columns">
+                                            <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                        </div>
+                                        <div class="small-6 columns">
+                                            <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                        </div>
+                                        <div class="small-3 columns">
+                                            <a class="tiny button postfix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="small-1 columns" ng-show="getQuantity(product) > 0">
-                                    <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
-                                </div>
-                                <div class="small-1 columns" ng-show="getQuantity(product) > 0">
-                                    <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
-                                </div>
-
-                                <div class="small-3 columns end">
+                                <div class="small-6 columns">
                                     <a class="button expand" ng-click="subscribe()">Subscribe</a>
                                 </div>
+
                             </div>
 
                             <div>
