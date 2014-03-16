@@ -24,9 +24,6 @@
             });
         </script>
         <style>
-            .line-4{
-                line-height: 4;
-            }
         </style>
         <title>CMart - Purchase History</title>
     </head>
@@ -51,14 +48,15 @@
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list">
-                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
-                        <li><a href="index.html">Store</a></li>
-                        <li><a href="cart.html">Cart</a></li>
-                        <li><a href="favourites.html">Favourites</a></li>
-                        <li><a href="purchases.html">Purchases</a></li>
-                        <li><a href="statistics.html">Statistics</a></li>
-                        <li><a href="settings.html">Settings</a></li>
+                    <ul class="off-canvas-list" ng-init="init()">
+                        <li><a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> Guest</a></li>
+                        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
+                        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
+                        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
+                        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
+                        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
+                        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
+                        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
                     </ul>
                 </aside><!--off canvas menu-->
 
