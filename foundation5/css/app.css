@@ -115,13 +115,6 @@ a.back-btn:hover{
 }
 
 /*
-    ???
-*/
-.buttom{
-    margin-bottom: 0 !important;
-}
-
-/*
     TABLE
 */
 .scrollable-table-wrapper{
@@ -158,6 +151,15 @@ tbody tr td{
 /*
     ???
 */
+.buttom{
+    margin-bottom: 0 !important;
+}
+
+.off-canvas-list .fa{
+    width: 1.5rem;
+    text-align: center;
+}
+
 .content {
     margin-left:auto;
     margin-right:auto;
