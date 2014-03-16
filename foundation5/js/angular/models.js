@@ -38,12 +38,12 @@ Cart.prototype.updateQuantity = function(product, quantity) {   //args[0] must b
     var intRegex = /^\d+$/;
     if (intRegex.test(quantity)) { //make sure is integer
         quantity = parseInt(quantity);
-        if(quantity === 0){ //remove if quantity is 0
+        if (quantity === 0) { //remove if quantity is 0
             this.removeItem(product);
-        }else{  //update if quantity is not zero
+        } else {  //update if quantity is not zero
             this.items[product.name] = new OrderItem(product, quantity);
         }
-    }else{  //remove if not integer
+    } else {  //remove if not integer
         this.removeItem(product);
     }
 };
@@ -60,28 +60,33 @@ Cart.prototype.removeItem = function(product) { //args[0] must be class Product
     delete this.items[product.name];
 };
 
-Cart.prototype.getNumOfItems = function(){
-    var length = 0;
-    $.each(this.items, function(i, e){
-        length++;
+Cart.prototype.isEmpty = function() {
+    var isEmpty = true;
+    $.each(this.items, function(i, e) {
+        isEmpty = false;
+        return false;    //break out of $.each loop
     });
-    return length;
+    return isEmpty;
 };
 
-Cart.prototype.getSubtotal = function(){
+Cart.prototype.getSubtotal = function() {
     var subTotal = 0;
-    $.each(this.items, function(i, item){
+    $.each(this.items, function(i, item) {
         subTotal += item.product.price * item.quantity;
     });
     return subTotal;
 };
 
-Cart.prototype.getDeliveryFee = function(){
+Cart.prototype.getDeliveryFee = function() {
     return 0.0;
 };
 
-Cart.prototype.getGrandTotal = function(){
+Cart.prototype.getGrandTotal = function() {
     return this.getSubtotal() + this.getDeliveryFee();
+};
+
+Cart.prototype.getCharges = function() {
+    return getCharges(this.items);
 };
 
 function OrderItem(product, quantity) { //args[0] must be class Product, args[1] must be integer
@@ -98,17 +103,36 @@ function Subscription(username, product, quantity, frequency, num_times, num_tim
     this.num_times_delivered = num_times_delivered; //integer
 }
 
-function Order(username, address, creditCard, date, time, contactNum, specialInstruction, status) {
+function Order(username) {
     this.username = username;
-    this.address = address; //class Address
-    this.creditCard = creditCard;   //class CreditCard
-    this.deliveryDate = date;   //date
-    this.deliveryTime = time;   //time
-    this.contactNum = contactNum;
-    this.specialInstructions = specialInstruction;  
-    this.status = status;   //string - 'processing','shipped','delivered'
-    this.items = [];    //array of class OrderItem
+    this.address; //class Address
+    this.creditCard;   //class CreditCard
+    this.deliveryDate;
+    this.deliveryTime;
+    this.contactNum;
+    this.specialInstructions;
+    this.status;   //string - 'processing','shipped','delivered'
+    this.items;    //array of class OrderItem
+    this.orderDate; //timestamp
+    this.id;    //integer
 }
+
+Order.prototype.getOrderDate = function() {
+    var d = new Date(this.orderDate);
+    return d.toString();
+};
+
+Order.prototype.getCharges = function() {
+    return getCharges(this.items);
+};
+
+Order.prototype.reset = function() {
+    this.deliveryDate = null;
+    this.deliveryTime = null;
+    this.specialInstructions = null;
+    this.status = null;
+    this.items = null;
+};
 
 function User(identity) {
     this.identity = identity;   //class Identity
@@ -124,7 +148,7 @@ function Identity(username, email, password) {
 }
 
 function Address(username, address, postalCode) {
-    this.username = username;   
+    this.username = username;
     this.address = address;
     this.postalCode = postalCode;
 }
@@ -137,4 +161,15 @@ function CreditCard(username, cardholderName, cardType, cardNumber, CCV, expiryM
     this.CCV = CCV;
     this.expiryMonth = expiryMonth;
     this.expiryYear = expiryYear;
+}
+
+//helper functions
+function getCharges(orderItems) {
+    var subTotal = 0;
+    $.each(orderItems, function(index, item) {
+        subTotal += item.product.price * item.quantity;
+    });
+    var deliveryFee = 0.0;
+    var grandTotal = subTotal + deliveryFee;
+    return {'subTotal': subTotal, 'deliveryFee': deliveryFee, 'grandTotal': grandTotal};
 }

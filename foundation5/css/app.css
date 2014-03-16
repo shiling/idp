@@ -1,15 +1,13 @@
 /*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Feb 28, 2014, 5:39:09 PM
-    Author     : shilingtaiÏ
+    BODY
 */
 html, body, .off-canvas-wrap, .inner-wrap, .left-off-canvas-menu{
     height: 100%;
 }
+
+/*
+    BUTTONS
+*/
 a{
     cursor: pointer;
 }
@@ -25,9 +23,17 @@ a.back-btn:hover{
 .clickable{
     cursor: pointer;
 }
+
+/*
+    COLOURS
+*/
 .white {
     color: white;
 }
+
+/*
+    HEADROOM
+*/
 .headroom{
     z-index: 49;
     background-color: #f2f2f2;
@@ -46,6 +52,10 @@ a.back-btn:hover{
 .headroom-pinned{
     top: 2.8125rem;
 }
+
+/*
+    CATEGORIES BAR
+*/
 .cat-bar{
     overflow: hidden;
     overflow-x: auto;
@@ -83,6 +93,10 @@ a.back-btn:hover{
 .sub-cat-bar .cat-btn-inactive{
     background-color: #008cba;
 }
+
+/*
+    PRODUCT TILE
+*/
 .product-tile{
     border: thin solid gainsboro;
     background-color: #eeeeee;
@@ -100,10 +114,19 @@ a.back-btn:hover{
     max-height: 4.5rem;
 }
 
+/*
+    ???
+*/
 .buttom{
     margin-bottom: 0 !important;
 }
 
+/*
+    TABLE
+*/
+.scrollable-table-wrapper{
+    overflow-y: auto;   
+}
 table{
     width: 100%;
     margin-bottom: 0;
@@ -132,7 +155,9 @@ tbody tr td{
     background-color: #c5e8f3;
 }
 
-
+/*
+    ???
+*/
 .content {
     margin-left:auto;
     margin-right:auto;

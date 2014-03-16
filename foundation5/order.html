@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="cmartApp">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--SITE WIDE-->
+        <link href="css/foundation.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
+        <script src="js/vendor/modernizr.js"></script>
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/angular/angular.min.js"></script>
+        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
+        <script src="js/angular/angular-webstorage.js"></script>
+        <script src="js/angular/angular-truncate.js"></script>
+        <script src="js/angular/app.js"></script>
+        <script src="js/angular/models.js"></script>
+        <!--THIS PAGE ONLY-->
+        <script src="js/angular/catelogControllers.js"></script>
+        <script>
+            $(function() {
+                $(document).foundation();
+            });
+        </script>
+        <style>
+            .line-4{
+                line-height: 4;
+            }
+        </style>
+        <title>CMart - Purchase History</title>
+    </head>
+    <body>
+        <div class="off-canvas-wrap">
+            <div class="inner-wrap">
+
+                <!-- Nav Bar -->
+                <nav class="tab-bar" data-magellan-expedition="fixed">
+                    <section class="left-small">
+                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
+
+                    <section class="middle tab-bar-section">
+                        <h1 class="title" style="text-align:center;">CMart</h1>
+                    </section>
+
+                    <section class="right-small text-center">
+                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
+                    </section>
+                </nav><!-- nav bar -->
+
+                <!-- Off Canvas Menu -->
+                <aside class="left-off-canvas-menu">
+                    <ul class="off-canvas-list">
+                        <li><a href="#"><img src="#" height="80" width="80"/>Guest</a></li>
+                        <li><a href="index.html">Store</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="favourites.html">Favourites</a></li>
+                        <li><a href="purchases.html">Purchases</a></li>
+                        <li><a href="statistics.html">Statistics</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                    </ul>
+                </aside><!--off canvas menu-->
+
+                <!-- Content -->
+                <section class="main-section">
+                    <div ng-controller="viewPurchaseController" ng-init="init()">
+                        <br/>
+                        <div class="row" >
+                            <div class='small-12 columns'>
+                                <h3><b>Order #{{purchase.id}}</b></h3>
+                                <div class='small-11 small-offset-1'>
+                                    <p>
+                                        <b>Deliver On: </b>{{purchase.deliveryDate}}, {{purchase.deliveryTime}}<br/>
+                                        <b>Ordered On: </b>{{purchase.getOrderDate()}}<br/>
+                                        <b>Status: </b><span class='label round'>{{purchase.status}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="small-12 columns">
+                                <table>
+                                    <tr class='secondary'>
+                                        <td>
+                                            <div class='small-8 columns'>
+                                                <h4><b>Item</b></h4>
+                                            </div>
+                                            <div class='small-2 columns text-center'>
+                                                <h4><b>Qty</b></h4>
+                                            </div>
+                                            <div class='small-2 columns text-right'>
+                                                <h4><b>Amt</b></h4>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat='item in purchase.items'>
+                                        <td>
+                                            <div class='small-2 columns'>
+                                                <img src='img/{{item.product.image}}'/>
+                                            </div>
+                                            <div class='small-6 columns'>
+                                                <h5>{{item.product.name}}<br/><small>@ {{item.product.price}} each</small></h5>
+                                            </div>
+                                            <div class='small-2 columns text-center'>
+                                                <h6>{{item.quantity}}</h6>
+                                            </div>
+                                            <div class='small-2 columns text-right'>
+                                                <h6>{{item.quantity * item.product.price| currency}}</h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class='small-12 medium-6 columns'>
+                                <table>
+                                    <tr class='secondary'>
+                                        <td>
+                                            <h4><b>Address</b></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class='small-10 small-offset-2 medium-offset-1 columns'>
+                                                <p>
+                                                    {{purchase.address.address}}<br/>
+                                                    Singapore {{purchase.address.postalCode}}
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class='small-12 medium-6 columns'>
+                                <table>
+                                    <tr class='secondary'>
+                                        <td>
+                                            <h4><b>Billing</b></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class='small-10 small-offset-2 medium-offset-1 columns'>
+                                                <p>
+                                                    {{purchase.creditCard.cardholderName}}<br/>
+                                                    {{purchase.creditCard.cardNumber}}
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class='small-12 columns'>
+                                <table>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <a href="purchases.html" class="button back-btn text-center buttom left">
+                                                    <i class="fa fa-arrow-circle-o-left fa-lg"></i>
+                                                    Purchase History
+                                                </a> 
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section><!--content-->
+
+                <!-- close the off-canvas menu -->
+                <a class="exit-off-canvas"></a>
+
+            </div><!--inner-wrap-->
+        </div><!--off-canvas-wrap-->
+    </body>
+</html>

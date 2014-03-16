@@ -133,14 +133,14 @@ function productsController($scope, $http, webStorage, productsService, searchSe
     };
 
     $scope.checkout = function(location) {
-        if($scope.cart.getNumOfItems()>0){  //proceed if cart has items
+        if (!$scope.cart.isEmpty()) {  //proceed if cart has items
             if (!webStorage.get("currentOrder")) {    //create currentOrder if doesn't exist
                 webStorage.add("currentOrder", new Order($scope.username));
             }
             var currentOrder = $.extend(new Order, webStorage.get("currentOrder")); //convert object to Order
             currentOrder.items = $scope.cart.items; //add items from cart
             webStorage.add("currentOrder", currentOrder);   //update currentOrder
-            
+
             //go to next page
             window.location.href = location;
         }
@@ -154,7 +154,7 @@ function productsController($scope, $http, webStorage, productsService, searchSe
 
     $scope.toggleFav = function(productName) {
         var index = $scope.favourites.indexOf(productName);
-        if(index === -1) {
+        if (index === -1) {
             $scope.favourites.push(productName);
         } else {
             $scope.favourites.splice(index, 1);
@@ -170,10 +170,10 @@ function productsController($scope, $http, webStorage, productsService, searchSe
         return favProducts;
     };
 
-    $scope.isProductInFav = function (productName) {
+    $scope.isProductInFav = function(productName) {
         var products = $scope.getFavProducts();
-        for(var i=0; i<products.length; i++) {
-            if(products[i].name === productName) {
+        for (var i = 0; i < products.length; i++) {
+            if (products[i].name === productName) {
                 return true;
             }
         }
@@ -292,17 +292,17 @@ function deliveryNotesController($scope, webStorage) {
         var patt_contactNum = /^[689]\d{7}$/;
         if ($scope.date && $scope.time && $scope.contactNum && patt_contactNum.test($scope.contactNum)) {
             $scope.valid = true;
-        }else{
-            if($scope.date === undefined){
+        } else {
+            if ($scope.date === undefined) {
                 $scope.errors['date'] = "Required";
             }
-            if($scope.time === undefined){
+            if ($scope.time === undefined) {
                 $scope.errors['time'] = "Required";
             }
-            if($scope.contactNum === undefined){
+            if ($scope.contactNum === undefined) {
                 $scope.errors['contactNum'] = "Required";
             }
-            if($scope.contactNum && !patt_contactNum.test($scope.contactNum)){
+            if ($scope.contactNum && !patt_contactNum.test($scope.contactNum)) {
                 $scope.errors['contactNum'] = "Invalid";
             }
         }
@@ -404,18 +404,92 @@ function creditCardController($scope, webStorage) {
 }
 
 function confirmCheckoutController($scope, webStorage) {
-    
     $scope.currentOrder;
 
     $scope.init = function() {
         //get currentOrder
-        if(webStorage.get("currentOrder")){
+        if (webStorage.get("currentOrder")) {
             $scope.currentOrder = $.extend(new Order, webStorage.get("currentOrder"));
         }
     };
-    
-    $scope.submit = function(location){
-        
+
+    $scope.submit = function(location) {
+        //set currentOrder status, orderDate and id
+        $scope.currentOrder.status = "Processing";
+        $scope.currentOrder.orderDate = $.now();
+        $scope.currentOrder.id = Math.floor((Math.random() * 10000000));    //random 6 digit number
+
+        //add currentOrder to purchase history
+        if (!webStorage.get("purchaseHistory")) {
+            webStorage.add("purchaseHistory", []);
+        }
+        var purchaseHistory = webStorage.get("purchaseHistory");
+        purchaseHistory.push($scope.currentOrder);
+        webStorage.add("purchaseHistory", purchaseHistory);
+
+        //clear currentOrder and cart
+        webStorage.add("cart", null);
+        $scope.currentOrder.reset();
+        webStorage.add("currentOrder", $scope.currentOrder);
+
+        //go to next page
+        window.location.href = location;
+    };
+}
+
+function purchaseHistoryController($scope, webStorage) {
+    $scope.purchaseHistory = [];   //array of orderItems
+
+    $scope.init = function() {
+        //get purchase history
+        if (!webStorage.get("purchaseHistory")) {
+            webStorage.add("purchaseHistory", []);
+        }
+        var purchaseHistory = webStorage.get("purchaseHistory");
+        $.each(purchaseHistory, function(i, order) {
+            $scope.purchaseHistory.push($.extend(new Order, order));
+        });
     };
 
+    $scope.getUndeliveredOrders = function() {
+        var undelivered = [];
+        $.each($scope.purchaseHistory, function(i, purchase) {
+            if(purchase.status !== "Delivered")
+            undelivered.push(purchase);
+        });
+        return undelivered;
+    };
+    
+    $scope.getDeliveredOrders = function() {
+        var delivered = [];
+        $.each($scope.purchaseHistory, function(i, purchase) {
+            if(purchase.status === "Delivered")
+            delivered.push(purchase);
+        });
+        return delivered;
+    };
+
+}
+
+function viewPurchaseController($scope, webStorage){
+    $scope.purchase; 
+
+    $scope.init = function() {
+        //get order id from query string in url
+        var id = parseInt(getQueryValue("id"));
+        console.log(id);
+        
+        //get purchase history
+        if (!webStorage.get("purchaseHistory")) {
+            webStorage.add("purchaseHistory", []);
+        }
+        var purchaseHistory = webStorage.get("purchaseHistory");
+        $.each(purchaseHistory, function(i, order) {
+            if(order.id === id){
+                $scope.purchase = $.extend(new Order,order);
+                return false;   //break from $.each loop
+            }
+        });
+    };
+    
 }

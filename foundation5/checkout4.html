@@ -121,19 +121,19 @@
                                                             <h6>Subtotal</h6>
                                                         </div>
                                                         <div class="small-3 medium-2 columns text-right">
-                                                            <h6>{{0| currency}}</h6>
+                                                            <h6>{{currentOrder.getCharges().subTotal| currency}}</h6>
                                                         </div>
                                                         <div class="small-9 medium-10 columns">
                                                             <h6>Delivery</h6>
                                                         </div>
                                                         <div class="small-3 medium-2 columns text-right">
-                                                            <h6>{{0| currency}}</h6>
+                                                            <h6>{{currentOrder.getCharges().deliveryFee| currency}}</h6>
                                                         </div>
                                                         <div class="small-9 medium-10 columns">
                                                             <h5><b>Grand Total</b></h5>
                                                         </div>
                                                         <div class="small-3 medium-2 columns text-right">
-                                                            <h6><b>{{12| currency}}</b></h6>
+                                                            <h6><b>{{currentOrder.getCharges().grandTotal| currency}}</b></h6>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -156,10 +156,10 @@
                                     <tfoot>
                                         <tr>
                                             <td>
-                                                <a href="checkout1.html" class="button back-btn text-center buttom left">
+                                                <a href="checkout3.html" class="button back-btn text-center buttom left">
                                                     <i class="fa fa-arrow-circle-o-left fa-lg"></i> Back
                                                 </a>
-                                                <a class="button success text-center buttom right" ng-click="submit('checkout4.html')">
+                                                <a class="button success text-center buttom right" ng-click="submit('purchases.html')">
                                                     Confirm <i class="fa fa-thumbs-o-up fa-lg"></i>
                                                 </a>  
                                             </td>

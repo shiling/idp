@@ -27,6 +27,9 @@
                 Foundation.set_namespace = function() {
                 };
                 $(document).foundation();
+                $('.datepicker').pickadate({
+                    format: 'd mmm (ddd)'
+                })
             });
         </script>
         <title>CMart</title>
@@ -90,7 +93,7 @@
                                                 <div class="row">
                                                     <div class="small-4 medium-4 columns"><h5>Date</h5></div>
                                                     <div class="small-8 medium-8 large-5 columns end">
-                                                        <input ng-model="date" class="fieldset__input js__datepicker" type="text" placeholder="Select date" ng-change="validate()">
+                                                        <input ng-model="date" class="datepicker" type="text" placeholder="Select date" ng-change="validate()">
                                                     </div>
                                                 </div>
                                                 <div class="row">
