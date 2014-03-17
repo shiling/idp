@@ -8,6 +8,7 @@
         "description": "Pokka Jasmine Green Tea is brewed with carefully selected premium tea leaves, contains no preservatives and with 25% lower sugar level.",
         "image": "PGT.jpg",
         "filters": ["Halal"],
+        "stock": 100,
         "related": ["Pokka Lemon Tea", "Pokka No Sugar Oolong Tea"]
     },
     {
@@ -19,6 +20,7 @@
         "description": "Pokka Lemon Tea is a refreshing blend of authentic premium black tea with real lemon juice. This delicious thirst-quencher contains Vitamin C and natural antioxidants. Experience this delightful citrus blend today!",
         "image": "PLT.jpg",
         "filters": ["Halal"],
+        "stock": 100,
         "related": ["Pokka Jasmine Green Tea", "Pokka No Sugar Oolong Tea"]
     },
     {
@@ -30,6 +32,7 @@
         "description": "Pokka No Sugar Oolong Tea is real brewed with selected premium tea leaves and contains absolutely no sugar, preservatives, or coloring, offering you ultimate healthy enjoyment. Indulge in its refreshing harmony every day!",
         "image": "POT.jpg",
         "filters": ["Halal", "Sugar-Free"],
+        "stock": 100,
         "related": ["Pokka Jasmine Green Tea", "Pokka No Sugar Oolong Tea, Pokka Lemon Tea"]
     },
     {
@@ -41,6 +44,7 @@
         "description": "F&N Seasons Barley Drink is made from selected barley that is brewed and lightly sweetened for a drink that is as familiar and comforting as that prepared by your mum. When the weather heats up, trust barley water to cool you down. Made with a reduced sugar recipe, it is also certified a 'Healthier Choice' beverage.",
         "image": "FNSB.jpg",
         "filters": ["Halal"],
+        "stock": 100,
         "related": ["Yeo's Lychee Drink"]
     },
     {
@@ -52,6 +56,7 @@
         "description": "Yeo's Lychee Drink is the perfect drink for seasonal fruit lovers in Asia. Enjoy the delicately sweet luscious taste of lychee all year round. Drink it chilled, over crushed ice, or simply try mixing it in your cocktails!",
         "image": "YLD.jpg",
         "filters": ["Halal"],
+        "stock": 100,
         "related": ["F&N Seasons Barley Drink"]
     },
     {
@@ -63,6 +68,7 @@
         "description": "F&N Seasons Ice Peach Tea is a delectable combination of peach and tea brewed from real tea leaves. Quench your thirst and take a break from the hustle and bustle - one whiff and you'll be transported to a far away breezy summer day in a land full of ripening peach trees.",
         "image": "FNSP.jpg",
         "filters": ["Halal"],
+        "stock": 100,
         "related": ["Pokka Jasmine Green Tea", " Pokka Lemon Tea,Pokka No Sugar Oolong Tea"]
     },
     {
@@ -74,6 +80,7 @@
         "description": "Pokka Premium Milk Coffee is made from specially selected gourmet coffee beans and high quality milk. Its rich taste and luscious coffee aroma linger on to delight the taste buds. This drink is real brewed for coffee aficionados and those who seek, enjoy and appreciate the highest quality and best taste. Come and indulge in the smooth and sensational taste today! With no added preservatives or coloring.",
         "image": "PPMC.jpg",
         "filters": ["Halal"],
+        "stock": 100,
         "related": ["Starbucks Frappuccino Mocha Chilled Coffee Drink"]
     },
     {
@@ -85,6 +92,7 @@
         "description": "A satisfying and smooth blend of Starbucks Coffee with creamy milk and rich chocolate taste; low fat",
         "image": "SFMCC.jpg",
         "filters": ["Halal"],
+        "stock": 0,
         "related": ["Pokka Premium Milk Coffee"]
     }
 ]
