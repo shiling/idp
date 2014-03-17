@@ -124,7 +124,10 @@
                                     <div class="row">
                                         <div class="small-10 small-centered medium-8 columns">
                                             <div class="small-12 medium-6 columns">
-                                                <div ng-show="getQuantity(product) === 0">
+                                                <div ng-show="product.stock === 0">
+                                                    <a class="button expand prefix buttom" disabled>Out of Stock</a>
+                                                </div>
+                                                <div ng-show="product.stock > 0 && getQuantity(product) === 0">
                                                     <a class="button postfix expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
                                                 </div>
                                                 <div ng-show="getQuantity(product) > 0">

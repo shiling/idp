@@ -17,6 +17,7 @@ function Product(name, brand, price, unit, description, image) {
     this.image = image;
     this.categories = [];   //class Category
     this.filters = [];  //class Filter
+    this.stock; //integer
     this.related = [];  //class Product
 }
 
