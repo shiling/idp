@@ -138,6 +138,56 @@ app.factory('searchService', function() {
     return searchService;
 });
 
+app.factory('subscriptionsService', function(webStorage) {
+    var subscriptions;
+    var subscriptionsService = {
+        getSubscriptions: function() {
+            if (!subscriptions) {
+                subscriptions = [];
+                if (!webStorage.get('subscriptions')) {
+                    webStorage.add('subscriptions', []);
+                }
+                $.each(webStorage.get('subscriptions'), function(index, orderItem) {
+                    subscriptions.push($.extend(new OrderItem, orderItem));
+                });
+            }
+            return subscriptions;
+        },
+        getOngoingSubscriptions: function() {
+            if (!subscriptions) {
+                this.getSubscriptions();
+            }
+            var ongoingSubscriptions = [];
+            $.each(subscriptions, function(index, subscription) {
+                if (subscription.numTimesDelivered < subscription.numTimes) {
+                    ongoingSubscriptions.push(subscription);
+                }
+            });
+            return ongoingSubscriptions;
+        },
+        getExpiredSubscriptions: function() {
+            if (!subscriptions) {
+                this.getSubscriptions();
+            }
+            var expiredSubscriptions = [];
+            $.each(subscriptions, function(index, subscription) {
+                if (subscription.numTimesDelivered === subscription.numTimes) {
+                    expiredSubscriptions.push(subscription);
+                }
+            });
+            return expiredSubscriptions;
+        },
+        addSubscription: function(orderItem) {    //args[0] must be OrderItem
+            if (!subscriptions) {
+                this.getSubscriptions();
+            }
+            subscriptions.push(orderItem);
+            webStorage.add('subscriptions', subscriptions);
+        }
+    };
+    return subscriptionsService;
+});
+
 /*
  * CONTROLLERS
  */
@@ -233,10 +283,9 @@ app.controller('categoriesController', function($scope, $http, categoriesService
     };
 });
 
-app.controller('productsController', function($scope, $http, webStorage, productsService, searchService) {
+app.controller('productsController', function($scope, webStorage, productsService, searchService) {
     $scope.productsMap;    //hashmap of class Product
     $scope.products = [];   //array of class Product
-    $scope.product; //class Product
     $scope.cart;    //class Cart
     $scope.searchService = searchService;
     $scope.favourites = []; //array of product names
@@ -250,18 +299,14 @@ app.controller('productsController', function($scope, $http, webStorage, product
             $.each($scope.productsMap, function(productName, product) {
                 $scope.products.push(product);
             });
-            //retrieve selected product
-            var productName = getQueryValue("name");
-            if (productName) {
-                $scope.product = $scope.productsMap[productName]
-            }
         });
 
         //get cart from localstorage
         if (webStorage.get("cart") === null) {
             webStorage.add("cart", new Cart());
         }
-        $scope.cart = $.extend(new Cart, webStorage.get("cart"));  //convert object to Cart
+        $scope.cart = Cart.cast(webStorage.get("cart"));  //convert object to Cart
+
         //get fav from localstorage
         if (webStorage.get("favourites") === null) {
             webStorage.add("favourites", []);
@@ -296,16 +341,6 @@ app.controller('productsController', function($scope, $http, webStorage, product
         }
         return true;
     };
-    
-    $scope.getRelated = function(){
-        var relatedProducts = [];
-        if($scope.product){
-            $.each($scope.product.related, function(i,productName){
-                relatedProducts.push($scope.productsMap[productName]);
-            });
-        }
-        return relatedProducts;
-    };
 
     //UPDATE CART
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
@@ -320,7 +355,9 @@ app.controller('productsController', function($scope, $http, webStorage, product
     };
 
     $scope.getQuantity = function(product) {    //args[0] must be class Product
-        return $scope.cart.getQuantity(product);
+        if ($scope.cart && product) {
+            return $scope.cart.getQuantity(product);
+        }
     };
 
     $scope.checkout = function(location) {
@@ -330,27 +367,12 @@ app.controller('productsController', function($scope, $http, webStorage, product
             }
             var currentOrder = $.extend(new Order, webStorage.get("currentOrder")); //convert object to Order
             currentOrder.items = $scope.cart.items; //add items from cart
+            currentOrder.subscriptions = $scope.cart.subscriptions; //add subscriptions from cart
             webStorage.add("currentOrder", currentOrder);   //update currentOrder
 
             //go to next page
             window.location.href = location;
         }
-    };
-
-    //UPDATE FAVOURITES
-    $scope.addToFav = function(productName) {
-        $scope.favourites.push(productName);
-        webStorage.add('favourites', $scope.favourites);
-    };
-
-    $scope.toggleFav = function(productName) {
-        var index = $scope.favourites.indexOf(productName);
-        if (index === -1) {
-            $scope.favourites.push(productName);
-        } else {
-            $scope.favourites.splice(index, 1);
-        }
-        webStorage.add('favourites', $scope.favourites);
     };
 
     $scope.getFavProducts = function() {
@@ -360,13 +382,83 @@ app.controller('productsController', function($scope, $http, webStorage, product
         });
         return favProducts;
     };
+});
 
-    $scope.isProductInFav = function(productName) {
-        var products = $scope.getFavProducts();
-        for (var i = 0; i < products.length; i++) {
-            if (products[i].name === productName) {
-                return true;
+app.controller('viewProductController', function($scope, webStorage) {  //inherit $scope from productsController
+    $scope.product;
+
+    $scope.init = function() {
+        //retrieve selected product
+        var productName = getQueryValue("name");
+        $scope.$watch('productsMap', function(newValue, oldValue) {
+            if ($scope.productsMap) {
+                $scope.product = $scope.productsMap[productName];
             }
+        });
+    };
+
+    //FAVOURITES
+    $scope.toggleFav = function() {
+        if ($scope.product) {
+            var index = $scope.favourites.indexOf($scope.product.name);
+            if (index === -1) { //add
+                $scope.favourites.push($scope.product.name);
+            } else {    //remove
+                $scope.favourites.splice(index, 1);
+            }
+            webStorage.add('favourites', $scope.favourites);
+        }
+    };
+
+    $scope.isInFav = function() {
+        if ($scope.product) {
+            return $scope.favourites.indexOf($scope.product.name) !== -1;
+        }
+    };
+
+    //RELATED
+    $scope.getRelated = function() {
+        if ($scope.product) {
+            var relatedProducts = [];
+            $.each($scope.product.related, function(i, productName) {
+                relatedProducts.push($scope.productsMap[productName]);
+            });
+            return relatedProducts;
+        }
+    };
+});
+
+//inherit $scope from productsController and viewProductController
+app.controller('subscribeController', function($scope, webStorage) {
+    $scope.subscribeForm = {
+        quantity: 1,
+        frequency: 4,
+        numTimes: 3
+    };
+
+    $scope.subscribe = function() {
+        if ($scope.product) {
+            //create subscription and add to cart
+            var subscription = new OrderItem($scope.product,
+                    $scope.subscribeForm.quantity,
+                    true,
+                    $scope.subscribeForm.frequency,
+                    $scope.subscribeForm.numTimes);
+            //add to cart
+            $scope.cart.addSubscription(subscription);
+            webStorage.add("cart", $scope.cart);   //update localstorage
+        }
+    };
+    $scope.decrement = function(fieldName) {
+        $scope.subscribeForm[fieldName] -= 1;
+    };
+    $scope.increment = function(fieldName) {
+        $scope.subscribeForm[fieldName] += 1;
+    };
+
+    $scope.isInCart = function() {
+        if ($scope.cart.subscriptions[$scope.product.name]) {
+            return true;
         }
         return false;
     };
@@ -593,13 +685,13 @@ app.controller('creditCardController', function($scope, webStorage) {
     };
 });
 
-app.controller('confirmCheckoutController', function($scope, webStorage) {
+app.controller('confirmCheckoutController', function($scope, webStorage, subscriptionsService) {
     $scope.currentOrder;
 
     $scope.init = function() {
         //get currentOrder
         if (webStorage.get("currentOrder")) {
-            $scope.currentOrder = $.extend(new Order, webStorage.get("currentOrder"));
+            $scope.currentOrder = Order.cast(webStorage.get("currentOrder"));
         }
     };
 
@@ -616,6 +708,12 @@ app.controller('confirmCheckoutController', function($scope, webStorage) {
         var purchaseHistory = webStorage.get("purchaseHistory");
         purchaseHistory.push($scope.currentOrder);
         webStorage.add("purchaseHistory", purchaseHistory);
+
+        //add subscriptions
+        $.each($scope.currentOrder.subscriptions, function(productName, orderItem) {
+            orderItem.numTimesDelivered = 0;
+            subscriptionsService.addSubscription(orderItem);
+        });
 
         //clear currentOrder and cart
         webStorage.add("cart", null);
@@ -637,7 +735,7 @@ app.controller('purchaseHistoryController', function($scope, webStorage) {
         }
         var purchaseHistory = webStorage.get("purchaseHistory");
         $.each(purchaseHistory, function(i, order) {
-            $scope.purchaseHistory.push($.extend(new Order, order));
+            $scope.purchaseHistory.push(Order.cast(order));
         });
     };
 
@@ -666,7 +764,6 @@ app.controller('viewPurchaseController', function($scope, webStorage) {
     $scope.init = function() {
         //get order id from query string in url
         var id = parseInt(getQueryValue("id"));
-        console.log(id);
 
         //get purchase history
         if (!webStorage.get("purchaseHistory")) {
@@ -675,10 +772,22 @@ app.controller('viewPurchaseController', function($scope, webStorage) {
         var purchaseHistory = webStorage.get("purchaseHistory");
         $.each(purchaseHistory, function(i, order) {
             if (order.id === id) {
-                $scope.purchase = $.extend(new Order, order);
+                $scope.purchase = Order.cast(order);
                 return false;   //break from $.each loop
             }
         });
+    };
+});
+
+app.controller('subscriptionsController', function($scope, subscriptionsService) {
+    $scope.subscriptions;
+    $scope.ongoingSubscriptions;
+    $scope.expiredSubscriptions;
+
+    $scope.init = function() {
+        $scope.subscriptions = subscriptionsService.getSubscriptions();
+        $scope.ongoingSubscriptions = subscriptionsService.getOngoingSubscriptions();
+        $scope.expiredSubscriptions = subscriptionsService.getExpiredSubscriptions();
     };
 });
 

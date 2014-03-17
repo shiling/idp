@@ -90,7 +90,7 @@
                                                     </a>
                                                     <div class="small-9 medium-8 columns">
                                                         <a href="/product.html?{{item.product.name}}">
-                                                            <h6>{{item.product.name}} <br/><small>@ {{item.product.price| currency}} each</small></h6>
+                                                            <h6>{{item.product.name}} <br/><small>@ {{item.getUnitPrice()| currency}} each</small></h6>
                                                         </a>
                                                         <div class="row collapse">
                                                             <div class="small-2 medium-1 columns">
@@ -114,7 +114,28 @@
                                                         </div>
                                                     </div>
                                                     <div class="small-3 medium-2 columns  text-right">
-                                                        <h6>{{item.product.price * item.quantity| currency}}</h6>
+                                                        <h6>{{item.getTotalPrice()| currency}}</h6>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="item in cart.subscriptions">
+                                                <td>
+                                                    <a href="/product.html?name={{item.product.name}}">
+                                                        <div class="small-2 columns hide-for-small-only">
+                                                            <img height="100" width="100" src="img/{{item.product.image}}" alt="{{item.product.name}}" />
+                                                        </div>
+                                                    </a>
+                                                    <div class="small-9 medium-8 columns">
+                                                        <a href="/product.html?{{item.product.name}}">
+                                                            <h6>{{item.product.name}} (Subscription)<br/><small>@ {{item.getUnitPrice()| currency}} each</small></h6>
+                                                        </a>
+                                                        <h6>{{item.quantity}} units every {{item.frequency}} weeks, {{item.numTimes}} times
+                                                            <a href="" class="tiny button"><i class="fa fa-pencil"></i></a>
+                                                            <a href="" class="tiny button alert"><i class="fa fa-trash-o"></i></a>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="small-3 medium-2 columns  text-right">
+                                                        <h6>{{item.getTotalPrice()| currency}}</h6>
                                                     </div>
                                                 </td>
                                             </tr>
