@@ -31,8 +31,19 @@ Product.prototype.inFilter = function(filterName) {
 function Cart(username) {
     this.username = username;
     this.items = {};    //hashmap of class OrderItem
-    this.subscriptions = {};    //hashmap of class Subscription
+    this.subscriptions = {};    //hashmap of class OrderItem
 }
+
+Cart.cast = function(object){
+    var order = $.extend(new Cart, object);
+    $.each(order.items, function(productName, orderItem){
+        order.items[productName] = $.extend(new OrderItem, orderItem);
+    });
+    $.each(order.subscriptions, function(productName, orderItem){
+        order.subscriptions[productName] = $.extend(new OrderItem, orderItem);
+    });
+    return order;
+};
 
 Cart.prototype.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
     var intRegex = /^\d+$/;
@@ -69,34 +80,35 @@ Cart.prototype.isEmpty = function() {
     return isEmpty;
 };
 
-Cart.prototype.getSubtotal = function() {
-    var subTotal = 0;
-    $.each(this.items, function(i, item) {
-        subTotal += item.product.price * item.quantity;
-    });
-    return subTotal;
-};
-
-Cart.prototype.getDeliveryFee = function() {
-    return 0.0;
-};
-
-Cart.prototype.getGrandTotal = function() {
-    return this.getSubtotal() + this.getDeliveryFee();
+Cart.prototype.addSubscription = function(subscription) {    //args[0] must be class OrderItem
+    this.subscriptions[subscription.product.name] = subscription;
 };
 
 Cart.prototype.getCharges = function() {
-    return getCharges(this.items);
+    return getCharges(this);
 };
 
-function OrderItem(product, quantity) { //args[0] must be class Product, args[1] must be integer
+function OrderItem(product, quantity, isSubscription, frequency, numTimes) { //args[0] must be class Product, args[1] must be integer
     this.product = product; //class Product
-    this.quantity = quantity;   //integer
-    this.isSubscription = false;
-    this.frequency;
-    this.num_times; //integer
-    this.num_times_delivered; //integer
+    this.quantity = quantity;   //integer; per delivery
+    this.isSubscription = isSubscription;
+    this.frequency = frequency;
+    this.numTimes = numTimes; //integer
+    this.numTimesDelivered; //integer
 }
+
+OrderItem.prototype.getUnitPrice = function() {
+    if (this.isSubscription) {
+        return 0.85 * this.product.price;
+    }
+    return this.product.price;
+};
+OrderItem.prototype.getTotalPrice = function() {
+    if (this.isSubscription) {
+        return 0.85 * this.product.price * this.quantity * this.numTimes;
+    }
+    return this.product.price * this.quantity;
+};
 
 function Order(username) {
     this.username = username;
@@ -108,9 +120,21 @@ function Order(username) {
     this.specialInstructions;
     this.status;   //string - 'processing','shipped','delivered'
     this.items;    //array of class OrderItem
+    this.subscriptions; //array of class OrderItem
     this.orderDate; //timestamp
     this.id;    //integer
 }
+
+Order.cast = function(object){
+    var order = $.extend(new Order, object);
+    $.each(order.items, function(productName, orderItem){
+        order.items[productName] = $.extend(new OrderItem, orderItem);
+    });
+    $.each(order.subscriptions, function(productName, orderItem){
+        order.subscriptions[productName] = $.extend(new OrderItem, orderItem);
+    });
+    return order;
+};
 
 Order.prototype.getOrderDate = function() {
     var d = new Date(this.orderDate);
@@ -118,7 +142,7 @@ Order.prototype.getOrderDate = function() {
 };
 
 Order.prototype.getCharges = function() {
-    return getCharges(this.items);
+    return getCharges(this);
 };
 
 Order.prototype.reset = function() {
@@ -159,10 +183,13 @@ function CreditCard(username, cardholderName, cardType, cardNumber, CCV, expiryM
 }
 
 //helper functions
-function getCharges(orderItems) {   //args[0] must be array of order items
+function getCharges(object) {   //args[0] must be class Cart or Order
     var subTotal = 0;
-    $.each(orderItems, function(index, item) {
-        subTotal += item.product.price * item.quantity;
+    $.each(object.items, function(productName, orderItem) {
+        subTotal += orderItem.getTotalPrice();
+    });
+    $.each(object.subscriptions, function(productName, orderItem) {
+        subTotal += orderItem.getTotalPrice();
     });
     var deliveryFee = 0.0;
     var grandTotal = subTotal + deliveryFee;

@@ -102,13 +102,29 @@
                                             <td>
                                                 <div class="small-12 large-10 large-centered columns">
                                                     <div class="small-7 medium-8 columns">
-                                                        <h6>{{item.product.name}} <br/><small>@ {{item.product.price| currency}} each</small></h6>
+                                                        <h6>{{item.product.name}} <br/><small>@ {{item.getUnitPrice()| currency}} each</small></h6>
                                                     </div>
                                                     <div class="small-2 medium-2 columns text-right">
                                                         <h6 class="label radius secondary"><b>{{item.quantity}}</b></h6>
                                                     </div>
                                                     <div class="small-3 medium-2 columns text-right">
-                                                        <span class="">{{item.product.price * item.quantity| currency}}</span>
+                                                        <span class="">{{item.getTotalPrice()| currency}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="item in currentOrder.subscriptions">
+                                            <td>
+                                                <div class="small-12 large-10 large-centered columns">
+                                                    <div class="small-7 medium-8 columns">
+                                                        <h6>{{item.product.name}} (Subscription)<br/><small>@ {{item.getUnitPrice()| currency}} each</small></h6>
+                                                        <h6>{{item.quantity}} units every {{item.frequency}} weeks, {{item.numTimes}} times</h6>
+                                                    </div>
+                                                    <div class="small-2 medium-2 columns text-right">
+                                                        <h6 class="label radius secondary"><b>{{item.quantity * item.numTimes}}</b></h6>
+                                                    </div>
+                                                    <div class="small-3 medium-2 columns text-right">
+                                                        <span class="">{{item.getTotalPrice()| currency}}</span>
                                                     </div>
                                                 </div>
                                             </td>

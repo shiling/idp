@@ -82,121 +82,156 @@
                         <div class="small-12 columns">
 
                             <div ng-controller="productsController" ng-init="init()">
-                                <!-- Favourites Modal -->
-                                <div id="favModal" class="reveal-modal" data-reveal>
-                                    <b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
-                                </div><!-- Favourites Modal -->
+                                <div ng-controller="viewProductController" ng-init="init()">
+                                    <!-- Favourites Modal -->
+                                    <div id="favModal" class="reveal-modal" data-reveal>
+                                        <b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
+                                    </div><!-- Favourites Modal -->
 
-                                <div class="row">
-                                    <div class="small-12 columns">
-                                        <span><a href="/"><i class="fa fa-arrow-circle-o-left"></i> Back to Store</a></span>
+                                    <div class="row">
+                                        <div class="small-12 columns">
+                                            <span><a href="/"><i class="fa fa-arrow-circle-o-left"></i> Back to Store</a></span>
+                                        </div>
+                                        <div class="small-10 columns">
+                                            <h2>
+                                                {{product.name}}
+                                                <small>{{product.unit}}</small>
+                                            </h2>
+                                            <h4>{{product.price| currency}} each</h4>
+                                        </div>
+                                        <div class="small-2 columns">
+                                            <h2>
+                                                <a ng-click="toggleFav()"> 
+                                                    <i class="fa fa-heart" ng-show="isInFav()" onclick="toggleFavBtn(this)"></i> 
+                                                    <i class="fa fa-heart-o" ng-show="!isInFav()" onclick="toggleFavBtn(this)"></i> 
+                                                </a>
+                                            </h2>
+                                        </div>
                                     </div>
-                                    <div class="small-10 columns">
-                                        <h2>
-                                            {{product.name}}
-                                            <small>{{product.unit}}</small>
-                                        </h2>
-                                        <h4>{{product.price| currency}} each</h4>
+
+                                    <div class="row">
+                                        <div class="small-10 small-centered columns text-center">
+                                            <img ng-src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
+                                        </div>
                                     </div>
-                                    <div class="small-2 columns">
-                                        <h2>
-                                            <a ng-click="toggleFav(product.name)"> 
-                                                <i class="fa fa-heart" ng-show="isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> 
-                                                <i class="fa fa-heart-o" ng-show="!isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> 
+
+                                    <div class="panel">
+                                        <b>Brand:</b><br/> {{product.brand}}<br/><br/>
+                                        <b>Description: </br/></b> {{product.description}}
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="small-10 small-centered medium-8 columns">
+                                            <div class="small-12 medium-6 columns">
+                                                <div ng-show="getQuantity(product) === 0">
+                                                    <a class="button postfix expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                                </div>
+                                                <div ng-show="getQuantity(product) > 0">
+                                                    <h6 class="text-center" style="margin-top: -22px; background-color: #ccc; margin-bottom: 0px;">Update Cart</h6>
+                                                    <div class="row collapse">
+                                                        <div class="small-4 columns">
+                                                            <a class="button prefix" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                                        </div>
+                                                        <div class="small-4 columns">
+                                                            <input type="text" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                                        </div>
+                                                        <div class="small-4 columns">
+                                                            <a class="button postfix" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="small-12 medium-6 columns">
+                                                <a class="button postfix expand" data-reveal-id="subscribeModal" data-reveal>Subscribe (Save 15%)</a>
+                                            </div>
+                                            <div id="subscribeModal" class="reveal-modal small" data-reveal>
+                                                <div ng-controller="subscribeController" ng-init="init()">
+                                                    <h4>Subscribe to <b>{{product.name}}</b></h4>
+                                                    <h5> @ {{.85 * product.price| currency}} each (15% off)</h5>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="small-6 small-offset-3 columns">
+                                                            <div class="row collapse">
+                                                                <div class="small-3 columns">
+                                                                    <a class="button prefix" ng-click="decrement('quantity')">-</a>
+                                                                </div>
+                                                                <div class="small-6 columns">
+                                                                    <input type="number" id="quantity" min="1" max="10" ng-model="subscribeForm.quantity">
+                                                                </div>
+                                                                <div class="small-3 columns">
+                                                                    <a class="button postfix" ng-click="increment('quantity')">+</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="small-3 columns">
+                                                            <label for="quantity" class="left inline"> unit(s)</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-3 columns">
+                                                            <label for="frequency" class="right inline"> every </label>
+                                                        </div>
+                                                        <div class="small-6 columns">
+                                                            <div class="row collapse">
+                                                                <div class="small-3 columns">
+                                                                    <a class="button prefix" ng-click="decrement('frequency')">-</a>
+                                                                </div>
+                                                                <div class="small-6 columns">
+                                                                    <input type="number" id="frequency" min="1" max="10" ng-model="subscribeForm.frequency">
+                                                                </div>
+                                                                <div class="small-3 columns">
+                                                                    <a class="button postfix" ng-click="increment('frequency')">+</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="small-3 columns">
+                                                            <label for="frequency" class="left inline"> week(s) </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="small-3 columns">
+                                                            <label for="numTimes" class="right inline"> for </label>
+                                                        </div>
+                                                        <div class="small-6 columns">
+                                                            <div class="row collapse">
+                                                                <div class="small-3 columns">
+                                                                    <a class="button prefix" ng-click="decrement('numTimes')">-</a>
+                                                                </div>
+                                                                <div class="small-6 columns">
+                                                                    <input type="number" id="frequency" min="1" max="10" ng-model="subscribeForm.numTimes">
+                                                                </div>
+                                                                <div class="small-3 columns">
+                                                                    <a class="button postfix" ng-click="increment('numTimes')">+</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="small-3 columns">
+                                                            <label for="numTimes" class="left inline"> times </label>
+                                                        </div>
+                                                    </div>
+                                                    <a class="button expand" ng-click="subscribe()">Subscribe</a>
+                                                    <div data-alert class="alert-box success text-center" ng-show="isInCart()">
+                                                        Subscription has been added to cart
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        Related products:
+                                    </div>
+                                    <br/>
+                                    <ul class="small-block-grid-3 medium-block-grid-6">
+                                        <li ng-repeat="relatedProduct in getRelated()">
+                                            <a class="th" href="product.html?name={{relatedProduct.name}}" ng-show="{{!!relatedProduct.image}}"> 
+                                                <img ng-src="img/{{relatedProduct.image}}" alt="{{product.name}}" style='width: 100%'> 
                                             </a>
-                                        </h2>
-                                    </div>
+                                        </li>
+                                    </ul>
                                 </div>
-
-                                <div class="row">
-                                    <div class="small-10 small-centered columns text-center">
-                                        <img ng-src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
-                                    </div>
-                                </div>
-
-                                <div class="panel">
-                                    <b>Brand:</b><br/> {{product.brand}}<br/><br/>
-                                    <b>Description: </br/></b> {{product.description}}
-                                </div>
-                                <br/>
-                                <br/>
-                                <div class="row">
-                                    <div class="small-10 small-centered medium-8 columns">
-                                        <div class="small-12 medium-6 columns">
-                                            <div ng-show="getQuantity(product) === 0">
-                                                <a class="button postfix expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
-                                            </div>
-                                            <div ng-show="getQuantity(product) > 0">
-                                                <h6 class="text-center" style="margin-top: -22px; background-color: #ccc; margin-bottom: 0px;">Update Cart</h6>
-                                                <div class="row collapse">
-                                                    <div class="small-4 columns">
-                                                        <a class="button prefix" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
-                                                    </div>
-                                                    <div class="small-4 columns">
-                                                        <input type="text" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
-                                                    </div>
-                                                    <div class="small-4 columns">
-                                                        <a class="button postfix" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="small-12 medium-6 columns">
-                                            <a class="button postfix expand" data-reveal-id="subscribeModal" data-reveal>Subscribe (Save 15%)</a>
-                                        </div>
-                                        <div id="subscribeModal" class="reveal-modal" data-reveal>
-                                            <h4>Subscribe to <b>{{product.name}}</b></h4>
-                                            <h5> @ {{.85 * product.price| currency}} each (15% off)</h5>
-                                            <form>
-                                                <div class="row">
-                                                    <div class="small-6 small-offset-3 columns">
-                                                        <input type="number" id="quantity" placeholder="1">
-                                                    </div>
-                                                    <div class="small-3 columns">
-                                                        <label for="quantity" class="left inline"> unit(s) per delivery</label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns">
-                                                        <label for="frequency" class="right inline"> every </label>
-                                                    </div>
-                                                    <div class="small-6 columns">
-                                                        <input type="number" id="frequency">
-                                                    </div>
-                                                    <div class="small-3 columns">
-                                                        <label for="frequency" class="left inline"> weeks </label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="small-3 columns">
-                                                        <label for="frequency" class="right inline"> for </label>
-                                                    </div>
-                                                    <div class="small-6 columns">
-                                                        <input type="number" id="frequency">
-                                                    </div>
-                                                    <div class="small-3 columns">
-                                                        <label for="frequency" class="left inline"> times </label>
-                                                    </div>
-                                                </div>
-                                                <input class="button expand" type="submit" value="Subscribe">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    Related products:
-                                </div>
-                                <br/>
-                                <ul class="small-block-grid-3 medium-block-grid-6">
-                                    <li ng-repeat="relatedProduct in getRelated()">
-                                        <a class="th" href="product.html?name={{relatedProduct.name}}" ng-show="{{!!relatedProduct.image}}"> 
-                                            <img ng-src="img/{{relatedProduct.image}}" alt="{{product.name}}" style='width: 100%'> 
-                                        </a>
-                                    </li>
-                                </ul>
                             </div>
-
                         </div>
                     </div>
                 </section><!--content-->

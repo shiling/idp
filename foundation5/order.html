@@ -68,6 +68,11 @@
                         <br/>
                         <div class="row" >
                             <div class='small-12 columns'>
+                                <a href="purchases.html" class="text-center buttom left">
+                                    <i class="fa fa-arrow-circle-o-left fa-lg"></i>
+                                    Purchase History
+                                </a><br/>
+                                <br/>
                                 <h3><b>Order #{{purchase.id}}</b></h3>
                                 <div class='small-11 small-offset-1'>
                                     <p>
@@ -100,13 +105,30 @@
                                                 <img src='img/{{item.product.image}}'/>
                                             </div>
                                             <div class='small-6 columns'>
-                                                <h5>{{item.product.name}}<br/><small>@ {{item.product.price}} each</small></h5>
+                                                <h5>{{item.product.name}}<br/><small>@ {{item.getUnitPrice() | currency}} each</small></h5>
                                             </div>
                                             <div class='small-2 columns text-center'>
                                                 <h6>{{item.quantity}}</h6>
                                             </div>
                                             <div class='small-2 columns text-right'>
-                                                <h6>{{item.quantity * item.product.price| currency}}</h6>
+                                                <h6>{{item.getTotalPrice() | currency}}</h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat='item in purchase.subscriptions'>
+                                        <td>
+                                            <div class='small-2 columns'>
+                                                <img src='img/{{item.product.image}}'/>
+                                            </div>
+                                            <div class='small-6 columns'>
+                                                <h6>{{item.product.name}} (Subscription)<br/><small>@ {{item.getUnitPrice() | currency}} each</small></h6>
+                                                <h6>{{item.quantity}} units every {{item.frequency}} weeks, {{item.numTimes}} times</h6>
+                                            </div>
+                                            <div class='small-2 columns text-center'>
+                                                <h6>{{item.quantity * item.numTimes}}</h6>
+                                            </div>
+                                            <div class='small-2 columns text-right'>
+                                                <h6>{{item.getTotalPrice() | currency}}</h6>
                                             </div>
                                         </td>
                                     </tr>
@@ -150,21 +172,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                </table>
-
-                            </div>
-                            <div class='small-12 columns'>
-                                <table>
-                                    <tfoot>
-                                        <tr>
-                                            <td>
-                                                <a href="purchases.html" class="button back-btn text-center buttom left">
-                                                    <i class="fa fa-arrow-circle-o-left fa-lg"></i>
-                                                    Purchase History
-                                                </a> 
-                                            </td>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
