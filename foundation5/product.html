@@ -16,9 +16,7 @@
         <script src="js/angular/angular-truncate.js"></script>
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
-        <script src="js/angular/identityController.js"></script><script src="js/angular/catelogControllers.js"></script>
         <!--THIS PAGE ONLY-->
-        <script src="js/angular/productViewController.js"></script>
         <script>
             $(function() {
                 Foundation.set_namespace = function() {
@@ -55,111 +53,152 @@
                     </section>
 
                     <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">Store</h1>
+                        <h1 class="title" style="text-align:center;">CMart</h1>
                     </section>
 
-                    <section class="right-small">
-                        <a class="menu-icon" ><span></span></a>
+                    <section class="right-small text-center">
+                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
                     </section>
                 </nav><!-- nav bar -->
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list" ng-controller="identityController" ng-init="init()">
-                        <li>
-                            <a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> {{getLoggedInUsername()}}</a>
-                        </li>
-                        <li>
-                            <a href="index.html">Store</a>
-                        </li>
-                        <li>
-                            <a href="cart.html">Cart</a>
-                        </li>
-                        <li>
-                            <a href="favourites.html">Favourites</a>
-                        </li>
-                        <li>
-                            <a href="purchases.html">Purchases</a>
-                        </li>
-                        <li>
-                            <a href="statistics.html">Statistics</a>
-                        </li>
-                        <li>
-                            <a href="settings.html">Settings</a>
-                        </li>
+                    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
+                        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
+                        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
+                        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
+                        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
+                        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
+                        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
+                        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
+                        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
                     </ul>
                 </aside><!--off canvas menu-->
 
                 <!-- Content -->
                 <section class="main-section">
+                    <br/>
+                    <div class="row">
+                        <div class="small-12 columns">
 
-                    <div ng-controller="retrieveProduct" ng-init="init()" class="content">
+                            <div ng-controller="productsController" ng-init="init()">
+                                <!-- Favourites Modal -->
+                                <div id="favModal" class="reveal-modal" data-reveal>
+                                    <b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
+                                </div><!-- Favourites Modal -->
 
-                        <div ng-controller="productsController" ng-init="init()">
-
-                            <div id="favModal" class="reveal-modal" data-reveal>
-                                <b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
-                            </div>
-
-                            <br/>
-                            <br/>
-                            <div id="product-name">
-                                <a href="index.html"><i class="fa fa-arrow-circle-o-left"></i></a> {{product.name}} <a ng-click="toggleFav(product.name)"> <i class="fa fa-heart" ng-show="isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> <i class="fa fa-heart-o" ng-show="!isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> </a>
-                            </div>
-                            <div id="brand-name">
-                                by {{product.brand}}
-                            </div>
-                            <div id="product-image"><img ng-src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
-                            </div>
-                            <br/>
-                            <div id="product-price">
-                                ${{product.price}}
-                            </div>
-                            per {{product.unit}}
-                            <br/>
-
-                            <div class="panel">
-                                {{product.description}}
-                            </div>
-                            <br/>
-
-                            <div class="row">
-                                <div class="small-6 columns" ng-show="getQuantity(product) === 0">
-                                    <a class="button expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                <div class="row">
+                                    <div class="small-12 columns">
+                                        <span><a href="/"><i class="fa fa-arrow-circle-o-left"></i> Back to Store</a></span>
+                                    </div>
+                                    <div class="small-10 columns">
+                                        <h2>
+                                            {{product.name}}
+                                            <small>{{product.unit}}</small>
+                                        </h2>
+                                        <h4>{{product.price| currency}} each</h4>
+                                    </div>
+                                    <div class="small-2 columns">
+                                        <h2>
+                                            <a ng-click="toggleFav(product.name)"> 
+                                                <i class="fa fa-heart" ng-show="isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> 
+                                                <i class="fa fa-heart-o" ng-show="!isProductInFav(product.name)" onclick="toggleFavBtn(this)"></i> 
+                                            </a>
+                                        </h2>
+                                    </div>
                                 </div>
 
-                                <div class="small-6 columns" ng-show="getQuantity(product) > 0">
-                                    <div class="row collapse">
-                                        <div class="small-3 columns">
-                                            <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                <div class="row">
+                                    <div class="small-10 small-centered columns text-center">
+                                        <img ng-src="img/{{product.image}}" alt="{{product.name}}" style='height: 250px'>
+                                    </div>
+                                </div>
+
+                                <div class="panel">
+                                    <b>Brand:</b><br/> {{product.brand}}<br/><br/>
+                                    <b>Description: </br/></b> {{product.description}}
+                                </div>
+                                <br/>
+                                <br/>
+                                <div class="row">
+                                    <div class="small-10 small-centered medium-8 columns">
+                                        <div class="small-12 medium-6 columns">
+                                            <div ng-show="getQuantity(product) === 0">
+                                                <a class="button postfix expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                            </div>
+                                            <div ng-show="getQuantity(product) > 0">
+                                                <h6 class="text-center" style="margin-top: -22px; background-color: #ccc; margin-bottom: 0px;">Update Cart</h6>
+                                                <div class="row collapse">
+                                                    <div class="small-4 columns">
+                                                        <a class="button prefix" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
+                                                    </div>
+                                                    <div class="small-4 columns">
+                                                        <input type="text" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                                    </div>
+                                                    <div class="small-4 columns">
+                                                        <a class="button postfix" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="small-6 columns">
-                                            <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                        <div class="small-12 medium-6 columns">
+                                            <a class="button postfix expand" data-reveal-id="subscribeModal" data-reveal>Subscribe (Save 15%)</a>
                                         </div>
-                                        <div class="small-3 columns">
-                                            <a class="tiny button postfix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>
+                                        <div id="subscribeModal" class="reveal-modal" data-reveal>
+                                            <h4>Subscribe to <b>{{product.name}}</b></h4>
+                                            <h5> @ {{.85 * product.price| currency}} each (15% off)</h5>
+                                            <form>
+                                                <div class="row">
+                                                    <div class="small-6 small-offset-3 columns">
+                                                        <input type="number" id="quantity" placeholder="1">
+                                                    </div>
+                                                    <div class="small-3 columns">
+                                                        <label for="quantity" class="left inline"> unit(s) per delivery</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-3 columns">
+                                                        <label for="frequency" class="right inline"> every </label>
+                                                    </div>
+                                                    <div class="small-6 columns">
+                                                        <input type="number" id="frequency">
+                                                    </div>
+                                                    <div class="small-3 columns">
+                                                        <label for="frequency" class="left inline"> weeks </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="small-3 columns">
+                                                        <label for="frequency" class="right inline"> for </label>
+                                                    </div>
+                                                    <div class="small-6 columns">
+                                                        <input type="number" id="frequency">
+                                                    </div>
+                                                    <div class="small-3 columns">
+                                                        <label for="frequency" class="left inline"> times </label>
+                                                    </div>
+                                                </div>
+                                                <input class="button expand" type="submit" value="Subscribe">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="small-6 columns">
-                                    <a class="button expand" ng-click="subscribe()">Subscribe</a>
+
+                                <div>
+                                    Related products:
                                 </div>
-
+                                <br/>
+                                <ul class="small-block-grid-3 medium-block-grid-6">
+                                    <li ng-repeat="relatedProduct in getRelated()">
+                                        <a class="th" href="product.html?name={{relatedProduct.name}}" ng-show="{{!!relatedProduct.image}}"> 
+                                            <img ng-src="img/{{relatedProduct.image}}" alt="{{product.name}}" style='width: 100%'> 
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
 
-                            <div>
-                                Related products:
-                            </div>
-                            <br/>
-                            <ul class="small-block-grid-6">
-                                <li ng-repeat="product in related(products, product)">
-                                    <a class="th" href="product.html?{{product.name}}" ng-show="{{!!product.image}}"> <img ng-src="img/{{product.image}}" alt="{{product.name}}" style='width: 100%'> </a>
-                                </li>
-                            </ul>
                         </div>
-
                     </div>
-
                 </section><!--content-->
 
                 <!-- close the off-canvas menu -->

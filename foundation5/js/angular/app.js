@@ -36,16 +36,16 @@ app.factory('categoriesService', function($http) {
 app.factory('identityService', function($http, webStorage) {
     var promise;
     var identityService = {
-        username: function(){
+        username: function() {
             var username = webStorage.get('username');
-            if(!username){
-                username = 'Guest'; 
+            if (!username) {
+                username = 'Guest';
             }
             return username;
         },
-        isAuthenticated: function(){
+        isAuthenticated: function() {
             var username = webStorage.get('username');
-            if(!username){
+            if (!username) {
                 return true;
             }
             return false;
@@ -63,19 +63,19 @@ app.factory('identityService', function($http, webStorage) {
             }
             return promise;
         },
-        login: function(username, password, onLogin){
-            if(!promise){
+        login: function(username, password, onLogin) {
+            if (!promise) {
                 this.async().then(__login);
-            }else{
+            } else {
                 promise.then(__login);
             }
-            function __login(identitiesMap){
+            function __login(identitiesMap) {
                 var identity = identitiesMap[username];
-                if(!identity){
+                if (!identity) {
                     onLogin(false, {username: "Username is not registered"});
-                }else if(identity.password !== password){
+                } else if (identity.password !== password) {
                     onLogin(false, {password: "Wrong Password"});
-                }else{
+                } else {
                     webStorage.add('username', username);
                     onLogin(true);
                 }
@@ -141,20 +141,21 @@ app.factory('searchService', function() {
 /*
  * CONTROLLERS
  */
-app.controller('identityController',function ($scope, $http, identityService) {
+app.controller('identityController', function($scope, $http, identityService) {
     $scope.loginForm = {
         username: null,
         password: null,
         errors: null
     };
 
-    $scope.init = function() {};
+    $scope.init = function() {
+    };
 
     $scope.login = function(previousUrl) {
-        identityService.login($scope.loginForm.username, $scope.loginForm.password, function(success, errors){
-            if(success){
-                window.location.href ='/';
-            }else{
+        identityService.login($scope.loginForm.username, $scope.loginForm.password, function(success, errors) {
+            if (success) {
+                window.location.href = '/';
+            } else {
                 $scope.loginForm.errors = errors;
             }
         });
@@ -233,8 +234,9 @@ app.controller('categoriesController', function($scope, $http, categoriesService
 });
 
 app.controller('productsController', function($scope, $http, webStorage, productsService, searchService) {
-    $scope.productsMap;    //hashmap of class product
+    $scope.productsMap;    //hashmap of class Product
     $scope.products = [];   //array of class Product
+    $scope.product; //class Product
     $scope.cart;    //class Cart
     $scope.searchService = searchService;
     $scope.favourites = []; //array of product names
@@ -242,11 +244,19 @@ app.controller('productsController', function($scope, $http, webStorage, product
     $scope.init = function() {
         //get product data
         productsService.async().then(function(data) {
+            //get products as hashmap
             $scope.productsMap = data;
+            //create copy of products as array
             $.each($scope.productsMap, function(productName, product) {
                 $scope.products.push(product);
             });
+            //retrieve selected product
+            var productName = getQueryValue("name");
+            if (productName) {
+                $scope.product = $scope.productsMap[productName]
+            }
         });
+
         //get cart from localstorage
         if (webStorage.get("cart") === null) {
             webStorage.add("cart", new Cart());
@@ -257,6 +267,7 @@ app.controller('productsController', function($scope, $http, webStorage, product
             webStorage.add("favourites", []);
         }
         $scope.favourites = webStorage.get("favourites");  //get fav from local storage
+
     };
 
     $scope.productFilter = function(product) {
@@ -284,6 +295,16 @@ app.controller('productsController', function($scope, $http, webStorage, product
             return false;
         }
         return true;
+    };
+    
+    $scope.getRelated = function(){
+        var relatedProducts = [];
+        if($scope.product){
+            $.each($scope.product.related, function(i,productName){
+                relatedProducts.push($scope.productsMap[productName]);
+            });
+        }
+        return relatedProducts;
     };
 
     //UPDATE CART
@@ -572,7 +593,7 @@ app.controller('creditCardController', function($scope, webStorage) {
     };
 });
 
-app.controller('confirmCheckoutController', function ($scope, webStorage) {
+app.controller('confirmCheckoutController', function($scope, webStorage) {
     $scope.currentOrder;
 
     $scope.init = function() {
@@ -639,7 +660,7 @@ app.controller('purchaseHistoryController', function($scope, webStorage) {
     };
 });
 
-app.controller('viewPurchaseController', function ($scope, webStorage) {
+app.controller('viewPurchaseController', function($scope, webStorage) {
     $scope.purchase;
 
     $scope.init = function() {
