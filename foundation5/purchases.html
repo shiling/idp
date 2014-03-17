@@ -17,7 +17,6 @@
         <script src="js/angular/app.js"></script>
         <script src="js/angular/models.js"></script>
         <!--THIS PAGE ONLY-->
-        <script src="js/angular/catelogControllers.js"></script>
         <script>
             $(function() {
                 $(document).foundation();
@@ -48,8 +47,8 @@
 
                 <!-- Off Canvas Menu -->
                 <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list" ng-init="init()">
-                        <li><a href="#"><img ng-src="img/Guest.png" height="80" width="80"/> Guest</a></li>
+                    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
+                        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
                         <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
                         <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
                         <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
