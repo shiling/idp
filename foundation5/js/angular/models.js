@@ -92,15 +92,10 @@ Cart.prototype.getCharges = function() {
 function OrderItem(product, quantity) { //args[0] must be class Product, args[1] must be integer
     this.product = product; //class Product
     this.quantity = quantity;   //integer
-}
-
-function Subscription(username, product, quantity, frequency, num_times, num_times_delivered) {
-    this.username = username;   //string
-    this.product = product; //class Product
-    this.quantity = quantity;   //integer
-    this.frequency = frequency; //integer
-    this.num_times = num_times; //integer
-    this.num_times_delivered = num_times_delivered; //integer
+    this.isSubscription = false;
+    this.frequency;
+    this.num_times; //integer
+    this.num_times_delivered; //integer
 }
 
 function Order(username) {
@@ -164,7 +159,7 @@ function CreditCard(username, cardholderName, cardType, cardNumber, CCV, expiryM
 }
 
 //helper functions
-function getCharges(orderItems) {
+function getCharges(orderItems) {   //args[0] must be array of order items
     var subTotal = 0;
     $.each(orderItems, function(index, item) {
         subTotal += item.product.price * item.quantity;
