@@ -89,7 +89,7 @@
                                                         </div>
                                                     </a>
                                                     <div class="small-9 medium-8 columns">
-                                                        <a href="/product.html?{{item.product.name}}">
+                                                        <a href="/product.html?name={{item.product.name}}">
                                                             <h6>{{item.product.name}} <br/><small>@ {{item.getUnitPrice()| currency}} each</small></h6>
                                                         </a>
                                                         <div class="row collapse">
@@ -130,8 +130,8 @@
                                                             <h6>{{item.product.name}} (Subscription)<br/><small>@ {{item.getUnitPrice()| currency}} each</small></h6>
                                                         </a>
                                                         <h6>{{item.quantity}} units every {{item.frequency}} weeks, {{item.numTimes}} times
-                                                            <a href="" class="tiny button"><i class="fa fa-pencil"></i></a>
-                                                            <a href="" class="tiny button alert"><i class="fa fa-trash-o"></i></a>
+                                                            <a class="tiny button"><i class="fa fa-pencil"></i></a>
+                                                            <a class="tiny button alert"><i class="fa fa-trash-o"></i></a>
                                                         </h6>
                                                     </div>
                                                     <div class="small-3 medium-2 columns  text-right">

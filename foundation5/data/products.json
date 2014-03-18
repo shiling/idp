@@ -78,7 +78,7 @@
         "unit": "500ml",
         "categories": ["Drinks", "Coffee"],
         "description": "Pokka Premium Milk Coffee is made from specially selected gourmet coffee beans and high quality milk. Its rich taste and luscious coffee aroma linger on to delight the taste buds. This drink is real brewed for coffee aficionados and those who seek, enjoy and appreciate the highest quality and best taste. Come and indulge in the smooth and sensational taste today! With no added preservatives or coloring.",
-        "image": "PPMC.jpg",
+        "image": "PPMC.JPG",
         "filters": ["Halal"],
         "stock": 100,
         "related": ["Starbucks Frappuccino Mocha Chilled Coffee Drink"]
@@ -94,5 +94,29 @@
         "filters": ["Halal"],
         "stock": 0,
         "related": ["Pokka Premium Milk Coffee"]
+    },
+    {
+        "name": "Ferrero Rocher Chocolate T16",
+        "brand": "Ferrero Rocher",
+        "price": 8.95 ,
+        "unit": "200g",
+        "categories": ["Snacks", "Chocolate"],
+        "description": "Crisp milk chocolate & hazelnut shells with a rich, smooth chocolate filling; elegant and delightful",
+        "image": "FRC16.jpg",
+        "filters": ["Halal"],
+        "stock": 100,
+        "related": ["Ferrero Rocher Chocolate T24"]
+    },
+    {
+        "name": "Ferrero Rocher Chocolate T24",
+        "brand": "Ferrero Rocher",
+        "price": 14.95 ,
+        "unit": "300g",
+        "categories": ["Snacks", "Chocolate"],
+        "description": "Crisp milk chocolate & hazelnut shells with a rich, smooth chocolate filling; elegant and delightful",
+        "image": "FRC24.jpg",
+        "filters": ["Halal"],
+        "stock": 100,
+        "related": ["Ferrero Rocher Chocolate T16"]
     }
 ]
