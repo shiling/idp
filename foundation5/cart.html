@@ -99,7 +99,7 @@
                                                                 </a>
                                                             </div>
                                                             <div class="small-3 medium-2 columns">
-                                                                <input class="buttom" type="text" ng-model="item.quantity" ng-model-onblur ng-change="validateQuantity(item.product)"/>
+                                                                <input class="buttom" type="number" ng-model="item.quantity" ng-model-onblur ng-change="validateQuantity(item.product)"/>
                                                             </div>
                                                             <div class="small-2 medium-1 columns">
                                                                 <a href="#" class="tiny button postfix buttom" ng-click="updateQuantity(item.product, getQuantity(item.product) + 1)">

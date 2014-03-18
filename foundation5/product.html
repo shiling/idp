@@ -128,7 +128,7 @@
                                                     <a class="button expand prefix buttom" disabled>Out of Stock</a>
                                                 </div>
                                                 <div ng-show="product.stock > 0 && getQuantity(product) === 0">
-                                                    <a class="button postfix expand" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                                    <a class="button postfix expand" ng-click="updateQuantity(product, 1)">Add To Cart <i class="fa fa-shopping-cart"></i></a>
                                                 </div>
                                                 <div ng-show="getQuantity(product) > 0">
                                                     <h6 class="text-center" style="margin-top: -22px; background-color: #ccc; margin-bottom: 0px;">Update Cart</h6>
@@ -137,7 +137,7 @@
                                                             <a class="button prefix" ng-click="updateQuantity(product, getQuantity(product) - 1)">-</a>
                                                         </div>
                                                         <div class="small-4 columns">
-                                                            <input type="text" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                                            <input type="number" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
                                                         </div>
                                                         <div class="small-4 columns">
                                                             <a class="button postfix" ng-click="updateQuantity(product, getQuantity(product) + 1)">+</a>

@@ -204,7 +204,7 @@ app.controller('identityController', function($scope, $http, identityService) {
     $scope.login = function(previousUrl) {
         identityService.login($scope.loginForm.username, $scope.loginForm.password, function(success, errors) {
             if (success) {
-                window.location.href = '/';
+                window.location.href = 'index.html';
             } else {
                 $scope.loginForm.errors = errors;
             }
