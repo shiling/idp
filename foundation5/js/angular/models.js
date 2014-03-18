@@ -78,6 +78,10 @@ Cart.prototype.isEmpty = function() {
         isEmpty = false;
         return false;    //break out of $.each loop
     });
+    $.each(this.subscriptions, function(i, e) {
+        isEmpty = false;
+        return false;    //break out of $.each loop
+    });
     return isEmpty;
 };
 
