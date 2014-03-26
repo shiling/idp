@@ -115,6 +115,26 @@ a.back-btn:hover{
 }
 
 /*
+    UPDATE CART POPUP
+*/
+#update-cart-popup{
+    width: 10rem; 
+    display: block; 
+    top: 55px; 
+    right:6px; 
+    visibility: visible;
+}
+#update-cart-popup .joyride-nub{
+    border-color: #68c244;
+    left:inherit; 
+    right:5px
+}
+#update-cart-popup .joyride-content-wrapper{
+    background-color: #68c244;
+    padding: .5rem;
+}
+
+/*
     TABLE
 */
 .scrollable-table-wrapper{
