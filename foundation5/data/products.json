@@ -316,7 +316,7 @@
         "brand": "Dannon",
         "price": 6.5,
         "unit": "330g",
-        "categories": ["Dairy", "Yoghurt"],
+        "categories": ["Dairy", "Yogurt"],
         "description": "Nonfat for health and happiness!",
         "image": "DOH.JPG",
         "filters": ["Halal", "Nut-Free", "Vegetarian"],
