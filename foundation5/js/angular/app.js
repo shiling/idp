@@ -468,7 +468,7 @@ app.controller('subscribeController', function($scope, webStorage) {
 app.controller('addressesController', function($scope, webStorage) {
     $scope.username;
     $scope.addresses = []; //array of class address
-    $scope.newAddress;
+    $scope.newAddress = {};
     $scope.selectedAddress;
     $scope.valid = false;
 
@@ -493,26 +493,26 @@ app.controller('addressesController', function($scope, webStorage) {
         //reset
         $scope.selectedAddress = null;
         $scope.valid = false;
-        if ($scope.newAddress) {
-            $scope.newAddress.selected = false;
-        }
 
         //find selected address
         $.each($scope.addresses, function(index, address) {
             if (address === selectedAddress) {
                 $scope.selectedAddress = selectedAddress;
+                $scope.valid = true;
             } else {
-                address.selected = false;
+                address.selected = false;   //deselect
             }
         });
-        if ($scope.newAddress && selectedAddress === $scope.newAddress) {
+        if (selectedAddress === $scope.newAddress) {
             $scope.selectedAddress = selectedAddress;
+            $scope.validate();
+        }else{
+            $scope.newAddress.selected = false; //deselect
         }
 
-        //mark selected addresses
+        //if found selectedAddress, select it
         if ($scope.selectedAddress) {
             $scope.selectedAddress.selected = true;
-            $scope.valid = true;
         }
     };
 
@@ -520,10 +520,8 @@ app.controller('addressesController', function($scope, webStorage) {
     $scope.validate = function() {
         if ($scope.newAddress && $scope.newAddress.building && $scope.newAddress.postalCode) {    //valid new address
             $scope.valid = true;
-            $scope.selectAddress($scope.newAddress);
         } else {
             $scope.valid = false;
-            $scope.selectAddress(null);
         }
     };
 

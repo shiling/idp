@@ -202,6 +202,7 @@ tbody tr td{
 }
 .selectable-tr :hover{
     background-color: #c5e8f3;
+    cursor: pointer;
 }
 .selected-tr{
     background-color: #c5e8f3;
