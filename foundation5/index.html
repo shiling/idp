@@ -14,8 +14,11 @@
         <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
         <script src="js/angular/angular-webstorage.js"></script>
         <script src="js/angular/angular-truncate.js"></script>
-        <script src="js/angular/app.js"></script>
-        <script src="js/angular/models.js"></script>
+        <script src="js/app/models.js"></script>
+        <script src="js/app/app.js"></script>
+        <script src="js/app/app.directives.js"></script>
+        <script src="js/app/app.services.js"></script>
+        <script src="js/app/app.controllers.js"></script>
         <!--THIS PAGE ONLY-->
         <script src="js/headroom/headroom.min.js"></script>
         <script>
@@ -33,6 +36,18 @@
                 headroom.init();
             });
         </script>
+        <style>
+            .product-tile img{
+                width: 100%;
+                height: 12rem;
+            }
+
+            .product-title{
+                line-height: 1.5rem;
+                min-height: 6rem;
+                max-height: 4.5rem;
+            }
+        </style>
         <title>CMart</title>
     </head>
     <body>
@@ -93,8 +108,10 @@
                                 <h4>Add Filters:</h4>
                                 <div class="panel">
                                     <ul class="small-block-grid-2">
-                                        <li ng-repeat="filter in filters" class="text-left">
-                                            <input type="checkbox" value="{{filter.name}}" ng-model="filter.selected"/><label>{{filter.name}}</label>
+                                        <li ng-repeat="filter in filtersService.filters" class="text-left">
+                                            <div ng-click="toggleFilter(filter)">
+                                                <input type="checkbox" value="{{filter}}" ng-checked="isApplied(filter)"/><label>{{filter}}</label>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -177,6 +194,14 @@
                 <!-- close the off-canvas menu -->
                 <a class="exit-off-canvas"></a>
 
+                <!-- update cart popup -->
+                <div id="update-cart-popup" class="joyride-tip-guide" data-index="0">
+                    <span class="joyride-nub top"></span>
+                    <div class="joyride-content-wrapper">
+                        <p>Added to cart!</p>
+                    </div>
+                </div>
+                
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->
     </body>

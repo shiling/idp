@@ -1,6 +1,6 @@
 [
-    {"name": "Halal"},
-    {"name": "Nut-Free"},
-    {"name": "Vegetarian"},
-    {"name": "Sugar-Free"}
+    "Halal", 
+    "Sugar-Free", 
+    "Nut-Free", 
+    "Vegetarian"
 ]

@@ -93,7 +93,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td ng-class="{'selected-tr': newAddress.selected}">
+                                        <td class="selectable-tr" ng-class="{'selected-tr': newAddress.selected}" ng-click="selectAddress(newAddress)">
                                             <div class="row">
                                                 <div class="small-2 columns text-center">
                                                     <i class="fa fa-circle-o" ng-class="{'fa-circle': newAddress.selected}"></i>

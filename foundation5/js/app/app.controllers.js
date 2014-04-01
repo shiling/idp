@@ -1,194 +1,4 @@
 /*
- * ANGULARJS
- */
-var app = angular.module('cmartApp', ['mm.foundation', 'webStorageModule', 'truncate']);
-
-/*
- * SERVICES
- */
-//retrieves categories from json file
-app.factory('categoriesService', function($http) {
-    var promise;
-    var categoriesService = {
-        async: function() {
-            if (!promise) {
-                promise = $http.get('./data/categories.json').then(function(response) {
-                    categories = [];
-                    $.each(response.data, function(i, e) {
-                        cat = $.extend(new Category, e); //convert object to Category
-                        cat.subcategories = [];
-                        $.each(e.subcategories, function(i, e2) {
-                            sub_cat = $.extend(new Category, e2); //convert object to Category
-                            cat.subcategories.push(sub_cat);
-                        });
-                        categories.push(cat);
-                    });
-                    return categories;
-                });
-            }
-            return promise;
-        }
-    };
-    return categoriesService;
-});
-
-//retrieves identities from json file
-app.factory('identityService', function($http, webStorage) {
-    var promise;
-    var identityService = {
-        username: function() {
-            var username = webStorage.get('username');
-            if (!username) {
-                username = 'Guest';
-            }
-            return username;
-        },
-        isAuthenticated: function() {
-            var username = webStorage.get('username');
-            if (!username) {
-                return true;
-            }
-            return false;
-        },
-        async: function() {
-            if (!promise) {
-                promise = $http.get('./data/identities.json').then(function(response) {
-                    identitiesMap = {};
-                    $.each(response.data, function(i, e) {
-                        var identity = $.extend(new Identity, e);
-                        identitiesMap[identity.username] = identity;
-                    });
-                    return identitiesMap;
-                });
-            }
-            return promise;
-        },
-        login: function(username, password, onLogin) {
-            if (!promise) {
-                this.async().then(__login);
-            } else {
-                promise.then(__login);
-            }
-            function __login(identitiesMap) {
-                var identity = identitiesMap[username];
-                if (!identity) {
-                    onLogin(false, {username: "Username is not registered"});
-                } else if (identity.password !== password) {
-                    onLogin(false, {password: "Wrong Password"});
-                } else {
-                    webStorage.add('username', username);
-                    onLogin(true);
-                }
-            }
-        }
-    };
-    return identityService;
-});
-
-//retrieves products from json file
-app.factory('productsService', function($http) {
-    var promise;
-    var productsService = {
-        async: function() {
-            if (!promise) {
-                promise = $http.get('./data/products.json').then(function(response) {
-                    productsMap = {};
-                    $.each(response.data, function(i, e) {
-                        product = $.extend(new Product, e); //convert object to Product
-                        productsMap[product.name] = product;
-                    });
-                    return productsMap;
-                });
-            }
-            return promise;
-        }
-    };
-    return productsService;
-});
-
-//retrieves filters from json file
-app.factory('filtersService', function($http) {
-    var promise;
-    var filtersService = {
-        async: function() {
-            if (!promise) {
-                promise = $http.get('./data/filters.json').then(function(response) {
-                    filters = [];
-                    $.each(response.data, function(i, e) {
-                        filter = $.extend(new Filter, e); //convert object to Product
-                        filters.push(filter);
-                    });
-                    return filters;
-                });
-            }
-            return promise;
-        }
-    };
-    return filtersService;
-});
-
-//retrieves categories from json file
-app.factory('searchService', function() {
-    var searchService = {
-        'activeCategory': null,
-        'activeSubcategory': null,
-        'name': null,
-        'filters': []
-    };
-    return searchService;
-});
-
-app.factory('subscriptionsService', function(webStorage) {
-    var subscriptions;
-    var subscriptionsService = {
-        getSubscriptions: function() {
-            if (!subscriptions) {
-                subscriptions = [];
-                if (!webStorage.get('subscriptions')) {
-                    webStorage.add('subscriptions', []);
-                }
-                $.each(webStorage.get('subscriptions'), function(index, orderItem) {
-                    subscriptions.push($.extend(new OrderItem, orderItem));
-                });
-            }
-            return subscriptions;
-        },
-        getOngoingSubscriptions: function() {
-            if (!subscriptions) {
-                this.getSubscriptions();
-            }
-            var ongoingSubscriptions = [];
-            $.each(subscriptions, function(index, subscription) {
-                if (subscription.numTimesDelivered < subscription.numTimes) {
-                    ongoingSubscriptions.push(subscription);
-                }
-            });
-            return ongoingSubscriptions;
-        },
-        getExpiredSubscriptions: function() {
-            if (!subscriptions) {
-                this.getSubscriptions();
-            }
-            var expiredSubscriptions = [];
-            $.each(subscriptions, function(index, subscription) {
-                if (subscription.numTimesDelivered === subscription.numTimes) {
-                    expiredSubscriptions.push(subscription);
-                }
-            });
-            return expiredSubscriptions;
-        },
-        addSubscription: function(orderItem) {    //args[0] must be OrderItem
-            if (!subscriptions) {
-                this.getSubscriptions();
-            }
-            subscriptions.push(orderItem);
-            webStorage.add('subscriptions', subscriptions);
-        }
-    };
-    return subscriptionsService;
-});
-
-/*
  * CONTROLLERS
  */
 app.controller('identityController', function($scope, $http, identityService) {
@@ -222,28 +32,67 @@ app.controller('identityController', function($scope, $http, identityService) {
 });
 
 app.controller('searchController', function($scope, filtersService, searchService) {
-    $scope.filters = [];
     $scope.searchService = searchService;
+    $scope.filtersService = filtersService;
 
     $scope.init = function() {
-        //get filters data
-        filtersService.async().then(function(data) {
-            $scope.filters = data;
-        });
     };
-
+    
+    $scope.dissect = function(){
+        var terms = $scope.searchService.name.split(" ");
+        var filters = [];
+        $.each(terms, function(index, term){
+            if(term.charAt(0) === "#"){ //find filter terms
+                term = term.substring(1,term.length);   //remove #
+                if($scope.filtersService.filtersDictionary){
+                    var filter = $scope.filtersService.filtersDictionary[term];
+                    if(filter){
+                        filters.push(filter);
+                    }
+                }
+            }
+        });
+        $scope.searchService.filters = filters;
+    };
+    
     $scope.getAppliedFilters = function() {
         return $scope.searchService.filters;
     };
 
-    $scope.saveFilters = function() {
-        $scope.searchService.filters = [];
-        $.each($scope.filters, function(index, filter) {
-            if (filter.selected) {
-                $scope.searchService.filters.push(filter.name);
+    $scope.applyFilter = function(filter){
+        $scope.searchService.filters.push(filter);
+        $scope.searchService.name += " #" + filter;
+    };
+    
+    $scope.removeFilter = function(filter){
+        var index = $scope.searchService.filters.indexOf(filter);
+        if(index !== -1){
+            $scope.searchService.filters.splice(index,1);
+        }
+        var terms = $scope.searchService.name.split(" ");
+        $scope.searchService.name = '';
+        $.each(terms, function(index, term){
+            if(term.charAt(0) !== "#"){
+                $scope.searchService.name += term + " ";
             }
         });
+        $.each($scope.searchService.filters, function(index, filter){
+            $scope.searchService.name += "#" + filter + " ";
+        });
     };
+    
+    $scope.toggleFilter = function(filter){
+        if($scope.isApplied(filter)){
+            $scope.removeFilter(filter);
+        }else{
+            $scope.applyFilter(filter);
+        }
+    };
+    
+    $scope.isApplied = function(filter){
+        return $scope.searchService.filters.indexOf(filter) !== -1;
+    };
+    
 });
 
 app.controller('categoriesController', function($scope, $http, categoriesService, searchService) {
@@ -256,34 +105,46 @@ app.controller('categoriesController', function($scope, $http, categoriesService
         categoriesService.async().then(function(data) {
             $scope.categories = data;
         });
+        //
+        if($scope.searchService.category){
+            $scope.subcategories = $scope.searchService.category.subcategories;
+        }
     };
 
     $scope.selectCategory = function(category) {
-        $scope.searchService.activeCategory = category;
-        $scope.searchService.activeSubcategory = null;
-        $scope.subcategories = $scope.searchService.activeCategory.subcategories;
+        $scope.searchService.category = category;
+        $scope.searchService.subcategory = null;
+        //$scope.searchService.save();
+        if($scope.searchService.category) $scope.subcategories = $scope.searchService.category.subcategories;
     };
 
     $scope.isActiveCategory = function(category) {
-        if ($scope.searchService.activeCategory === category) {
+        if(!$scope.searchService.category && !category) {
+            return true;
+        }
+        if($scope.searchService.category && category && $scope.searchService.category.name === category.name) {
             return true;
         }
         return false;
     };
 
     $scope.selectSubcategory = function(subcategory) {
-        $scope.searchService.activeSubcategory = subcategory;
+        $scope.searchService.subcategory = subcategory;
+        //$scope.searchService.save();
     };
 
     $scope.isActiveSubcategory = function(subcategory) {
-        if ($scope.searchService.activeSubcategory === subcategory) {
+        if(!$scope.searchService.subcategory && !subcategory) {
+            return true;
+        }
+        if($scope.searchService.subcategory && subcategory && $scope.searchService.subcategory.name === subcategory.name) {
             return true;
         }
         return false;
     };
 });
 
-app.controller('productsController', function($scope, webStorage, productsService, searchService) {
+app.controller('productsController', function($scope, webStorage, productsService, searchService, filtersService) {
     $scope.productsMap;    //hashmap of class Product
     $scope.products = [];   //array of class Product
     $scope.cart;    //class Cart
@@ -312,34 +173,47 @@ app.controller('productsController', function($scope, webStorage, productsServic
             webStorage.add("favourites", []);
         }
         $scope.favourites = webStorage.get("favourites");  //get fav from local storage
-
+        
     };
 
-    $scope.productFilter = function(product) {
+    $scope.productFilter = function(product) { 
+        var show = true;
         //not in applied category
-        if (searchService.activeCategory && product.categories.indexOf(searchService.activeCategory.name) === -1) {
-            return false;
+        if (searchService.category && product.categories.indexOf(searchService.category.name) === -1) {
+            show = false;
         }
         //not in applied subcategory
-        if (searchService.activeSubcategory && product.categories.indexOf(searchService.activeSubcategory.name) === -1) {
-            return false;
+        else if (searchService.subcategory && product.categories.indexOf(searchService.subcategory.name) === -1) {
+            show = false;
         }
-        //not in applied filter
-        var include = true;
-        $.each(searchService.filters, function(index, filter) {
-            if (product.filters.indexOf(filter) === -1) {
-                include = false;
+        else{
+            //name does not match
+            if (searchService.name) {
+                //&& !product.name.toLowerCase().match(searchService.name.toLowerCase())
+                var productName = product.name.toLowerCase();
+                var searchtext = searchService.name.toLowerCase();
+                var terms = searchtext.split(" ");
+                $.each(terms, function(index, term){
+                    if(term.charAt(0) !== '#'){ //ignore filter terms
+                        if(!productName.match(term)){ 
+                            show = false;
+                            return false;   //break out of $.each
+                        }
+                    }
+                });
             }
-        });
-        if (!include) {
-            return false;
+            //not in applied filter
+            if(searchService.filters.length > 0){
+                $.each(searchService.filters, function(index, filter) {
+                    if (product.filters.indexOf(filter) === -1) {
+                        show = false;
+                        return false;   //break out of $.each
+                    }
+                });
+            }
         }
-
-        //name does not match
-        if (searchService.name && !product.name.toLowerCase().match(searchService.name.toLowerCase())) {
-            return false;
-        }
-        return true;
+        $scope.$emit('refresh');
+        return show;
     };
 
     //UPDATE CART
@@ -468,7 +342,7 @@ app.controller('subscribeController', function($scope, webStorage) {
 app.controller('addressesController', function($scope, webStorage) {
     $scope.username;
     $scope.addresses = []; //array of class address
-    $scope.newAddress = {};
+    $scope.newAddress;
     $scope.selectedAddress;
     $scope.valid = false;
 
@@ -493,26 +367,26 @@ app.controller('addressesController', function($scope, webStorage) {
         //reset
         $scope.selectedAddress = null;
         $scope.valid = false;
+        if ($scope.newAddress) {
+            $scope.newAddress.selected = false;
+        }
 
         //find selected address
         $.each($scope.addresses, function(index, address) {
             if (address === selectedAddress) {
                 $scope.selectedAddress = selectedAddress;
-                $scope.valid = true;
             } else {
-                address.selected = false;   //deselect
+                address.selected = false;
             }
         });
-        if (selectedAddress === $scope.newAddress) {
+        if ($scope.newAddress && selectedAddress === $scope.newAddress) {
             $scope.selectedAddress = selectedAddress;
-            $scope.validate();
-        }else{
-            $scope.newAddress.selected = false; //deselect
         }
 
-        //if found selectedAddress, select it
+        //mark selected addresses
         if ($scope.selectedAddress) {
             $scope.selectedAddress.selected = true;
+            $scope.valid = true;
         }
     };
 
@@ -520,8 +394,10 @@ app.controller('addressesController', function($scope, webStorage) {
     $scope.validate = function() {
         if ($scope.newAddress && $scope.newAddress.building && $scope.newAddress.postalCode) {    //valid new address
             $scope.valid = true;
+            $scope.selectAddress($scope.newAddress);
         } else {
             $scope.valid = false;
+            $scope.selectAddress(null);
         }
     };
 
@@ -607,7 +483,7 @@ app.controller('deliveryNotesController', function($scope, webStorage) {
 app.controller('creditCardController', function($scope, webStorage) {
     $scope.username;
     $scope.creditCards = []; //array of class address
-    $scope.newCreditCard = {};
+    $scope.newCreditCard;
     $scope.selectedCreditCard;
     $scope.valid = false;
 
@@ -631,26 +507,26 @@ app.controller('creditCardController', function($scope, webStorage) {
         //reset
         $scope.selectedCreditCard = null;
         $scope.valid = false;
+        if ($scope.newCreditCard) {
+            $scope.newCreditCard.selected = false;
+        }
 
         //find selected credit card
         $.each($scope.creditCards, function(index, creditCard) {
             if (creditCard === selectedCreditCard) {
                 $scope.selectedCreditCard = selectedCreditCard;
-                $scope.valid = true;
             } else {
                 creditCard.selected = false;
             }
         });
-        if (selectedCreditCard === $scope.newCreditCard) {
+        if ($scope.newCreditCard && selectedCreditCard === $scope.newCreditCard) {
             $scope.selectedCreditCard = selectedCreditCard;
-            $scope.validate();
-        }else{
-            $scope.newCreditCard.selected = false;
         }
 
         //mark selected credit card
         if ($scope.selectedCreditCard) {
             $scope.selectedCreditCard.selected = true;
+            $scope.valid = true;
         }
     };
 
@@ -663,8 +539,10 @@ app.controller('creditCardController', function($scope, webStorage) {
                 && $scope.newCreditCard.CCV
                 && $scope.newCreditCard.expiryMonth) {
             $scope.valid = true;
+            $scope.selectCreditCard($scope.newCreditCard);
         } else {
             $scope.valid = false;
+            $scope.selectCreditCard(null);
         }
     };
 
@@ -786,69 +664,3 @@ app.controller('subscriptionsController', function($scope, subscriptionsService)
         $scope.expiredSubscriptions = subscriptionsService.getExpiredSubscriptions();
     };
 });
-
-/*
- * DIRECTIVES
- */
-app.directive('ngModelOnblur', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        priority: 1,
-        link: function(scope, element, attrs, ngModelCtrl) {
-            if (attrs.type === 'radio' || attrs.type === 'checkbox') {
-                return;
-            }
-            var update = function() {
-                scope.$apply(function() {
-                    ngModelCtrl.$setViewValue(element.val().trim());
-                    ngModelCtrl.$render();
-                });
-            };
-            element.off('input').off('keydown').off('change').on('focus', function() {
-                scope.$apply(function() {
-                    ngModelCtrl.$setPristine();
-                });
-            }).on('blur', update).on('keydown', function(e) {
-                if (e.keyCode === 13) {
-                    update();
-                }
-            });
-        }
-    };
-});
-
-//UTILITY
-String.prototype.format = String.prototype.f = function() {
-    var s = this,
-            i = arguments.length;
-
-    while (i--) {
-        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
-    }
-    return s;
-};
-
-var MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-var DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-Date.prototype.toString = Date.prototype.tS = function() {
-    var isAm = this.getHours() / 12 < 0;
-    var ampm = isAm ? "AM" : "PM";
-
-    return "{0} {1} ({2}),   {3}:{4} {5}".format(
-            this.getDate(),
-            MONTH_NAMES[this.getMonth()],
-            DAY_NAMES[this.getDay()],
-            this.getHours(),
-            this.getMinutes(),
-            ampm
-            );
-};
-
-//get value from query string in url
-function getQueryValue(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
