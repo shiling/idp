@@ -607,7 +607,7 @@ app.controller('deliveryNotesController', function($scope, webStorage) {
 app.controller('creditCardController', function($scope, webStorage) {
     $scope.username;
     $scope.creditCards = []; //array of class address
-    $scope.newCreditCard;
+    $scope.newCreditCard = {};
     $scope.selectedCreditCard;
     $scope.valid = false;
 
@@ -631,26 +631,26 @@ app.controller('creditCardController', function($scope, webStorage) {
         //reset
         $scope.selectedCreditCard = null;
         $scope.valid = false;
-        if ($scope.newCreditCard) {
-            $scope.newCreditCard.selected = false;
-        }
 
         //find selected credit card
         $.each($scope.creditCards, function(index, creditCard) {
             if (creditCard === selectedCreditCard) {
                 $scope.selectedCreditCard = selectedCreditCard;
+                $scope.valid = true;
             } else {
                 creditCard.selected = false;
             }
         });
-        if ($scope.newCreditCard && selectedCreditCard === $scope.newCreditCard) {
+        if (selectedCreditCard === $scope.newCreditCard) {
             $scope.selectedCreditCard = selectedCreditCard;
+            $scope.validate();
+        }else{
+            $scope.newCreditCard.selected = false;
         }
 
         //mark selected credit card
         if ($scope.selectedCreditCard) {
             $scope.selectedCreditCard.selected = true;
-            $scope.valid = true;
         }
     };
 
@@ -663,10 +663,8 @@ app.controller('creditCardController', function($scope, webStorage) {
                 && $scope.newCreditCard.CCV
                 && $scope.newCreditCard.expiryMonth) {
             $scope.valid = true;
-            $scope.selectCreditCard($scope.newCreditCard);
         } else {
             $scope.valid = false;
-            $scope.selectCreditCard(null);
         }
     };
 
