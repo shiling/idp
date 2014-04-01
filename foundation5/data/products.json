@@ -127,7 +127,7 @@
         "categories": ["Produces", "Fruits"],
         "description": "Sun-Maid Natural California Raisins are a 100% natural, delicious and sweet way to get more fruit into your diet!",
         "image": "SMR.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": ["Tai Sun Roasted Cashew Nuts"]
     },
@@ -139,7 +139,7 @@
         "categories": ["Produces", "Fruits"],
         "description": "Tai Sun Roasted Cashew Nuts are mildly sweet and irresistibly crunchy. They are full of nutritional compounds, antioxidants and minerals, and are also trans fat and cholesterol free.",
         "image": "TSCN.JPG",
-        "filters": ["Halal, Vegetarian, Sugar-Free"],
+        "filters": ["Halal", "Vegetarian", "Sugar-Free"],
         "stock": 100,
         "related": ["Sun-Maid Natural California Raisins"]
     },
@@ -151,7 +151,7 @@
         "categories": ["Produces", "Vegetables"],
         "description": "Irresistably green and leafy, perfect for hot soups and cloudy weather!",
         "image": "PK.jpg",
-        "filters": ["Halal, Vegetarian, Nut-Free, Sugar-Free"],
+        "filters": ["Halal", "Vegetarian", "Nut-Free", "Sugar-Free"],
         "stock": 100,
         "related": ["Sun-Maid Natural California Raisins, Tai Sun Roasted Cashew Nuts"]
     },
@@ -163,7 +163,7 @@
         "categories": ["Meats", "Pork"],
         "description": "Irresistably red and meaty, perfect for hot soups and cloudy weather!",
         "image": "PKP.jpg",
-        "filters": ["Nut-Free, Sugar-Free"],
+        "filters": ["Nut-Free", "Sugar-Free"],
         "stock": 100,
         "related": ["Settler Smoked Salmon", "Frangosul Frozen Leg of Lamb", "Frangosul Frozen Beef Ribeye", "Frangosul Frozen Chicken Boneless Leg Meat"]
     },
@@ -175,7 +175,7 @@
         "categories": ["Meats", "Poultry"],
         "description": "Irresistably white and birdy, perfect for hot soups and cloudy weather!",
         "image": "FFC.jpg",
-        "filters": ["Halal, Nut-Free, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Sugar-Free"],
         "stock": 100,
         "related": ["Settler Smoked Salmon", "Frangosul Frozen Leg of Lamb", "Frangosul Frozen Beef Ribeye", "Porkeee Frozen Lean Pork"]
     },
@@ -187,7 +187,7 @@
         "categories": ["Meats", "Beef"],
         "description": "Irresistably red and round, perfect for hot soups and cloudy weather!",
         "image": "FRS.jpg",
-        "filters": ["Nut-Free, Sugar-Free"],
+        "filters": ["Nut-Free", "Sugar-Free"],
         "stock": 100,
         "related": ["Settler Smoked Salmon", "Frangosul Frozen Leg of Lamb", "Frangosul Frozen Chicken Boneless Leg Meat", "Porkeee Frozen Lean Pork"]
     },
@@ -199,7 +199,7 @@
         "categories": ["Meats", "Mutton"],
         "description": "Irresistably leg and lamby, perfect for hot soups and cloudy weather!",
         "image": "LL.jpg",
-        "filters": ["Halal, Nut-Free, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Sugar-Free"],
         "stock": 100,
         "related": ["Settler Smoked Salmon", "Frangosul Frozen Beef Ribeye", "Frangosul Frozen Chicken Boneless Leg Meat", "Porkeee Frozen Lean Pork"]
     },
@@ -211,7 +211,7 @@
         "categories": ["Meats", "Fish", "Seafood"],
         "description": "Irresistably red and swimmy, perfect for hot soups and cloudy weather!",
         "image": "SS.jpg",
-        "filters": ["Halal, Nut-Free, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Sugar-Free"],
         "stock": 100,
         "related": ["Frangosul Frozen Leg of Lamb", "Frangosul Frozen Beef Ribeye", "Frangosul Frozen Chicken Boneless Leg Meat", "Porkeee Frozen Lean Pork"]
     },
@@ -223,7 +223,7 @@
         "categories": ["Grains", "Rice"],
         "description": "Royal Umbrella Fragrant Rice is made of only the highest quality 100% whole kernel Thai Hom Mali rice. With a perfect mix of fertile soil, climate and rice growing technology, Royal Umbrella's jasmine rice beats the taste test of the most discerning rice lovers the world over and was crowned 'Best Rice' at the 2009 World Rice Conference.",
         "image": "RUFR.JPG",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     },
@@ -235,7 +235,7 @@
         "categories": ["Grains", "Bread"],
         "description": "Start your day by replacing a slice or two of your white bread with Fine Grain Wholemeal Bread for a more balanced and healthy diet!",
         "image": "JWB.png",
-        "filters": ["Halal, Nut-Free, Vegetarian, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian", "Sugar-Free"],
         "stock": 100,
         "related": ["Jumbo 600 Enriched White Bread"]
     },
@@ -247,7 +247,7 @@
         "categories": ["Grains", "Bread"],
         "description": "Baked from high protein flour and enriched with vitamins and minerals.",
         "image": "JB.png",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": ["Junior Fine Grain Wholemeal Bread"]
     },
@@ -259,7 +259,7 @@
         "categories": ["Grains", "Cereal"],
         "description": "Kellogg's Special K Cereal is made from delicious, light crisp flakes of rice and wheat. It has a low GI (glycemic index), is 99% fat free, and is a good source of protein, which is essential for a balanced diet. Start your day the Special K way - it's that simple!",
         "image": "KSK.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     },
@@ -271,7 +271,7 @@
         "categories": ["Snacks", "Biscuits"],
         "description": "The McVitie’s Digestive is a delicious wheat biscuit made using the traditional recipe (our secret to that same great taste!). This has been the case since the very first McVitie's Digestive was made in 1892.",
         "image": "MCVD.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian", "Sugar-Free"],
         "stock": 100,
         "related": [""]
     },
@@ -283,7 +283,7 @@
         "categories": ["Snacks", "Sweets"],
         "description": "Each candy is wrapped in a printed waxed paper wrapper, but within this, the sticky candies are again wrapped in a thin edible paper-like wrapping made from sticky rice.",
         "image": "WRC.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     },
@@ -295,7 +295,7 @@
         "categories": ["Dairy", "Cheese"],
         "description": "Creamy and sliced, best thing since brown bread!",
         "image": "KCC.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian", "Sugar-Free"],
         "stock": 100,
         "related": [""]
     },
@@ -307,7 +307,7 @@
         "categories": ["Dairy", "Butter"],
         "description": "Pure, Irish, and Butter! What's there not to like!",
         "image": "KPIB.png",
-        "filters": ["Halal, Nut-Free, Vegetarian, Sugar-Free"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian", "Sugar-Free"],
         "stock": 100,
         "related": [""]
     },
@@ -319,7 +319,7 @@
         "categories": ["Dairy", "Yoghurt"],
         "description": "Nonfat for health and happiness!",
         "image": "DOH.JPG",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     },
@@ -331,7 +331,7 @@
         "categories": ["Drinks", "Juice"],
         "description": "Purple and grapey, good for taking out skunks as well!",
         "image": "FNGG.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     },
@@ -343,7 +343,7 @@
         "categories": ["Drinks", "Soda"],
         "description": "Purple and grapey, good for taking out skunks as well!",
         "image": "FNGG.jpg",
-        "filters": ["Halal, Nut-Free, Vegetarian"],
+        "filters": ["Halal", "Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     },
@@ -355,7 +355,7 @@
         "categories": ["Drinks", "Alcohol"],
         "description": "Apples for everyone!",
         "image": "SAC.jpg",
-        "filters": ["Nut-Free, Vegetarian"],
+        "filters": ["Nut-Free", "Vegetarian"],
         "stock": 100,
         "related": [""]
     }
