@@ -138,7 +138,7 @@
         "unit": "130g",
         "categories": ["Produces", "Fruits"],
         "description": "Tai Sun Roasted Cashew Nuts are mildly sweet and irresistibly crunchy. They are full of nutritional compounds, antioxidants and minerals, and are also trans fat and cholesterol free.",
-        "image": "TSCN.jpg",
+        "image": "TSCN.JPG",
         "filters": ["halal, vegetarian, sugar-free"],
         "stock": 100,
         "related": ["Sun-Maid Natural California Raisins"]
@@ -222,7 +222,7 @@
         "unit": "10kg",
         "categories": ["Grains", "Rice"],
         "description": "Royal Umbrella Fragrant Rice is made of only the highest quality 100% whole kernel Thai Hom Mali rice. With a perfect mix of fertile soil, climate and rice growing technology, Royal Umbrella's jasmine rice beats the taste test of the most discerning rice lovers the world over and was crowned 'Best Rice' at the 2009 World Rice Conference.",
-        "image": "RUFR.jpg",
+        "image": "RUFR.JPG",
         "filters": ["halal, nut-free, vegetarian"],
         "stock": 100,
         "related": [""]
@@ -318,7 +318,7 @@
         "unit": "330g",
         "categories": ["Dairy", "Yoghurt"],
         "description": "Nonfat for health and happiness!",
-        "image": "DOH.jpg",
+        "image": "DOH.JPG",
         "filters": ["halal, nut-free, vegetarian"],
         "stock": 100,
         "related": [""]
