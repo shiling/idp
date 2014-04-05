@@ -3,26 +3,15 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!--SITE WIDE-->
-        <link href="css/foundation.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/app.css" rel="stylesheet">
-        <script src="js/vendor/modernizr.js"></script>
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/foundation.min.js"></script>
-        <script src="js/angular/angular.min.js"></script>
-        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
-        <script src="js/angular/angular-webstorage.js"></script>
-        <script src="js/angular/angular-truncate.js"></script>
-        <script src="js/angular/app.js"></script>
-        <script src="js/angular/models.js"></script>
-        <!--THIS PAGE ONLY-->
-        <!--add more scripts here-->
+        <script src="js/vendor/head.min.js"></script>
+        <script src="js/app/scripts.js"></script>
         <script>
-            $(function() {
-                Foundation.set_namespace = function() {
-                };
-                $(document).foundation();
+            head.ready("jquery", function() {
+                $(function() {
+                    head.ready("foundation", function() {
+                        
+                    });
+                });
             });
         </script>
         <title>CMart</title>

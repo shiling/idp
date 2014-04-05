@@ -14,15 +14,17 @@
         <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
         <script src="js/angular/angular-webstorage.js"></script>
         <script src="js/angular/angular-truncate.js"></script>
-        <script src="js/angular/app.js"></script>
-        <script src="js/angular/models.js"></script>
+        <script src="js/app/models.js"></script>
+        <script src="js/app/app.js"></script>
+        <script src="js/app/app.directives.js"></script>
+        <script src="js/app/app.services.js"></script>
+        <script src="js/app/app.controllers.js"></script>
         <!--THIS PAGE ONLY-->
-        <script src="js/vendor/headroom.min.js"></script>
+        <script src="js/headroom/headroom.min.js"></script>
         <script>
             $(function() {
                 //foundation
-                Foundation.set_namespace = function() {
-                };
+                Foundation.set_namespace = function() {};
                 $(document).foundation();
                 $("#addFilter-btn").click(function() {
                     $("#filterModal").foundation('reveal', 'close');
@@ -34,6 +36,18 @@
                 headroom.init();
             });
         </script>
+        <style>
+            .product-tile img{
+                width: 100%;
+                height: 12rem;
+            }
+
+            .product-title{
+                line-height: 1.5rem;
+                min-height: 6rem;
+                max-height: 4.5rem;
+            }
+        </style>
         <title>CMart</title>
     </head>
     <body>
@@ -45,9 +59,8 @@
                     <section class="left-small">
                         <a class="left-off-canvas-toggle menu-icon"><span></span></a>
                     </section>
-
-                    <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">CMart</h1>
+                    <section class="middle tab-bar-section text-center">
+                        <h1 class="title">CMart</h1>
                     </section>
 
                     <section class="right-small text-center">
@@ -68,7 +81,7 @@
                         <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
                     </ul>
                 </aside><!--off canvas menu-->
-
+                
                 <!-- Content -->
                 <section class="main-section">
                     <header class="headroom">
@@ -95,8 +108,10 @@
                                 <h4>Add Filters:</h4>
                                 <div class="panel">
                                     <ul class="small-block-grid-2">
-                                        <li ng-repeat="filter in filters" class="text-left">
-                                            <input type="checkbox" value="{{filter.name}}" ng-model="filter.selected"/><label>{{filter.name}}</label>
+                                        <li ng-repeat="filter in filtersService.filters" class="text-left">
+                                            <div ng-click="toggleFilter(filter)">
+                                                <input type="checkbox" value="{{filter}}" ng-checked="isApplied(filter)"/><label>{{filter}}</label>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -128,25 +143,26 @@
                     <div class="row">
                         <div class="small-12 columns">
                             <br/>
-                            <h1>My Favourites</h1>
-                            <br/>
                             <!--products-->
                             <div ng-controller="productsController" ng-init="init()">
                                 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4">
-                                    <li ng-repeat="product in getFavProducts() | filter: productFilter">
+                                    <li ng-repeat="product in products | filter: productFilter">
                                         <div class="row">
                                             <div class="small-11 small-centered columns product-tile">
                                                 <div class="row">
                                                     <div class="small-12 columns">
                                                         <a href="product.html?name={{product.name}}">
-                                                            <img src="img/{{product.image}}" alt="{{product.name}}"/>
+                                                            <img ng-src="img/{{product.image}}" alt="{{product.name}}"/>
                                                             <div class="small-11 small-centered columns">
                                                                 <h5 class="product-title">{{product.name| characters:45}}<br/><small>{{product.unit}}</small></h5>
                                                                 <h6>{{product.price| currency}}</h6>
                                                             </div>
                                                         </a>
-                                                        <div ng-show="getQuantity(product) === 0">
-                                                            <a class="button expand prefix buttom" ng-click="updateQuantity(product, 1)">Add To Cart</a>
+                                                        <div ng-show="product.stock === 0">
+                                                            <a class="button expand prefix buttom" disabled>Out of Stock</a>
+                                                        </div>
+                                                        <div ng-show="product.stock > 0 && getQuantity(product) === 0">
+                                                            <a class="button expand prefix buttom" ng-click="updateQuantity(product, 1)">Add To Cart <i class="fa fa-shopping-cart">    </i></a>
                                                         </div>
                                                         <div class="row collapse" style="width:100%" ng-show="getQuantity(product) > 0">
                                                             <div class="small-3 columns">
@@ -155,7 +171,7 @@
                                                                 </a>
                                                             </div>
                                                             <div class="small-6 columns">
-                                                                <input type="text" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
+                                                                <input type="number" class="buttom" ng-model="cart.items[product.name]['quantity']" ng-model-onblur ng-change="validateQuantity(product)"/>
                                                             </div>
                                                             <div class="small-3 columns">
                                                                 <a class="tiny button prefix buttom" ng-click="updateQuantity(product, getQuantity(product) + 1)">
@@ -178,6 +194,14 @@
                 <!-- close the off-canvas menu -->
                 <a class="exit-off-canvas"></a>
 
+                <!-- update cart popup -->
+                <div id="update-cart-popup" class="joyride-tip-guide" data-index="0">
+                    <span class="joyride-nub top"></span>
+                    <div class="joyride-content-wrapper">
+                        <p>Added to cart!</p>
+                    </div>
+                </div>
+                
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->
     </body>

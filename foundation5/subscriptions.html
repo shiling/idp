@@ -3,28 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!--SITE WIDE-->
-        <link href="css/foundation.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/app.css" rel="stylesheet">
-        <script src="js/vendor/modernizr.js"></script>
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/foundation.min.js"></script>
-        <script src="js/angular/angular.min.js"></script>
-        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
-        <script src="js/angular/angular-webstorage.js"></script>
-        <script src="js/angular/angular-truncate.js"></script>
-        <script src="js/angular/app.js"></script>
-        <script src="js/angular/models.js"></script>
-        <!--THIS PAGE ONLY-->
-        <script>
-            $(function() {
-                $(document).foundation();
-            });
-        </script>
-        <style>
-        </style>
-        <title>CMart - Purchase History</title>
+        <script src="js/vendor/head.min.js"></script>
+        <script src="js/app/scripts.js"></script>
+        <title>CMart - Subscriptions</title>
     </head>
     <body>
         <div class="off-canvas-wrap">
@@ -64,24 +45,34 @@
                     <div class="row" >
                         <div class="small-12 columns">
                             <div ng-controller="subscriptionsController" ng-init="init()">
-                                <table><thead><tr><td><h3 class="text-center">My Subscriptions</h3></td></tr></thead></table>
+                                <br/>
+                                <h1>
+                                    My Subscriptions
+                                </h1>
+                                <h6 class="subheader">Subscribe to products to have them automatically billed and delivered to you at a discounted rate.</h6>
+                                
+                                <!--Subscriptions-->
+                                <br/>
                                 <table>
                                     <tbody>
+                                        <!--Ongoing Subscriptions-->
                                         <tr class='secondary'>
                                             <td>
                                                 <h4>Ongoing Subscriptions</h4>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class='text-center' ng-show='ongoingSubscriptions.length === 0'><h3>You have no upcoming deliveries!</h3></td>
+                                        <tr ng-show="ongoingSubscriptions.length === 0">
+                                            <td class='text-center'>
+                                                <h5>You don't have any ongoing subscriptions.</h5>
+                                            </td>
                                         </tr>
                                         <tr ng-repeat="subscription in ongoingSubscriptions" class="selectable-tr">
                                             <td>
                                                 <div class="row">
-                                                    <div class="small-2 columns">
+                                                    <div class="small-12 medium-2 columns">
                                                         <img src="img/{{subscription.product.image}}"/>
                                                     </div>
-                                                    <div class="small-10 columns">
+                                                    <div class="small-12 medium-10 columns">
                                                         <h5>{{subscription.product.name}}<br/><small>@ {{subscription.getUnitPrice() | currency}} each</small></h5>
                                                         <h6>{{subscription.quantity}} units every {{subscription.frequency}} weeks, {{subscription.numTimes}} times</h6>
                                                         <h6>{{subscription.numTimes - subscription.numTimesDelivered}} deliveries left, Next delivery: 20 Mar (Thu), 2:00PM</h6>
@@ -89,6 +80,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        <!--Expired Subscriptions-->
                                         <tr class='secondary'>
                                             <td ng-hide='expiredSubscriptions.length === 0'>
                                                 <h4>Expired Subscriptions</h4>
@@ -96,6 +88,15 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                
+                                <!--Recommendations-->
+                                <br/>
+                                <div>
+                                    <h4>
+                                        Would you like to subscribe to: <br/>
+                                    </h4>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
