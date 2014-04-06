@@ -13,18 +13,6 @@
                     });
                 });
             });
-            function toggleFavBtn(btn) {
-                if ($(btn).hasClass('fa-heart')) {// is currently added to fav
-                    $(btn).removeClass('fa-heart');
-                    $(btn).addClass('fa-heart-o');
-                    $("#favModalAction").html("removed");
-                } else {
-                    $(btn).removeClass('fa-heart-o');
-                    $(btn).addClass('fa-heart');
-                    $("#favModalAction").html("added");
-                }
-                $('#favModal').foundation('reveal', 'open');
-            }
         </script>
         <title>CMart - Store</title>
     </head>
@@ -199,9 +187,6 @@
                         </div>
                     </div>
                 </section><!--content-->
-
-                <!-- close the off-canvas menu -->
-                <a class="exit-off-canvas"></a>
 
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->

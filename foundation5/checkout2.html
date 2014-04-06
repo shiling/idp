@@ -3,39 +3,36 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!--SITE WIDE-->
-        <link href="css/foundation.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/app.css" rel="stylesheet">
-        <script src="js/vendor/modernizr.js"></script>
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/foundation.min.js"></script>
-        <script src="js/angular/angular.min.js"></script>
-        <script src="js/angular/mm-foundation-tpls-0.1.0.min.js"></script>
-        <script src="js/angular/angular-webstorage.js"></script>
-        <script src="js/angular/angular-truncate.js"></script>
-        <script src="js/angular/app.js"></script>
-        <script src="js/angular/models.js"></script>
-        <!--THIS PAGE ONLY-->
-        <!--add more scripts here-->
-        <link rel="stylesheet" href="css/default.css" id="theme_base">
-        <link rel="stylesheet" href="css/default.date.css" id="theme_date">
-        <link rel="stylesheet" href="css/default.time.css" id="theme_time">
-        
-        <script src="js/date/picker.js"></script>
-        <script src="js/date/picker.date.js"></script>
-        <script src="js/date/picker.time.js"></script>
-        <script src="js/date/legacy.js"></script>
-        <script src="js/date/main.js"></script>
-        
+        <script src="js/vendor/head.min.js"></script>
+        <script src="js/app/scripts.js"></script>
         <script>
-            $(function() {
-                Foundation.set_namespace = function() {
-                };
-                $(document).foundation();
-                $('.datepicker').pickadate({
-                    format: 'd mmm (ddd)'
-                })
+            head.ready("jquery", function() {
+                $(function() {
+                    head.ready("foundation", function() {
+
+                    });
+
+                    head.load(
+                        "css/picker.base.css", 
+                        "css/picker.date.css", 
+                        "css/picker.time.css", 
+                        "js/date/legacy.js", 
+                        "js/date/picker.js", 
+                        "js/date/picker.date.js", 
+                        "js/date/picker.time.js", 
+                        function() {
+                            $('.datepicker').pickadate({
+                                format: 'd mmm (ddd)',
+                                min: true,
+                                max: 30     //90 days after today
+                            });
+                            $('.timepicker').pickatime({
+                                min: [9,0],
+                                max: [20,0],
+                                interval: 60
+                            });
+                    });
+                });
             });
         </script>
         <title>CMart</title>
@@ -46,34 +43,8 @@
         <div class="off-canvas-wrap">
             <div class="inner-wrap">
 
-                <!-- Nav Bar -->
-                <nav class="tab-bar" data-magellan-expedition="fixed">
-                    <section class="left-small">
-                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-                    </section>
-
-                    <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">CMart</h1>
-                    </section>
-
-                    <section class="right-small text-center">
-                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
-                    </section>
-                </nav><!-- nav bar -->
-
-                <!-- Off Canvas Menu -->
-                <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
-                        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
-                        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
-                        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
-                        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
-                        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
-                        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
-                        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
-                        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
-                    </ul>
-                </aside><!--off canvas menu-->
+                <cm-menu></cm-menu>
+                
                 <section class="main-section">
 
                     <div class="row">
@@ -106,7 +77,7 @@
                                                 <div class="row">
                                                     <div class="small-4 medium-4 columns"><h5>Time</h5></div>
                                                     <div class="small-8 medium-8 large-5 columns end">
-                                                        <input ng-model="time" class="fieldset__input js__timepicker" type="text" placeholder="Select time" ng-change="validate()">
+                                                        <input ng-model="time" class="timepicker" type="text" placeholder="Select time" ng-change="validate()">
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -144,8 +115,6 @@
                         </div>
                     </div>
                 </section><!--content-->
-
-                <a class="exit-off-canvas"></a>
 
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->
