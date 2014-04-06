@@ -9,12 +9,22 @@
             head.ready("jquery", function() {
                 $(function() {
                     head.ready("foundation", function() {
-                        window.onresize();
+                        checkBodyHeight();
                     });
                 });
             });
+            
+            var bodyHeight = 0;
+            function checkBodyHeight(){
+                if($("body").height() !== bodyHeight){
+                    bodyHeight = $("body").height();
+                    window.onresize();
+                }
+                setTimeout(checkBodyHeight, 500);
+            }
+            
             window.onresize = function(){
-                var theight = $("body").height() - $("nav").height() - $("thead").height() - $("tfoot").height()-20;
+                var theight = $("body").height() - $("nav").height() - $(".content-header").height() - $("tfoot").height()-50;
                 $(".scrollable-table-wrapper").height(theight);
             }
         </script>
@@ -26,46 +36,25 @@
         </style>
         <title>CMart - Cart</title>
     </head>
-    <body>
+    <body ng-cloak>
         <div class="off-canvas-wrap">
             <div class="inner-wrap">
-
-                <!-- Nav Bar -->
-                <nav class="tab-bar" data-magellan-expedition="fixed">
-                    <section class="left-small">
-                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-                    </section>
-
-                    <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">CMart</h1>
-                    </section>
-
-                    <section class="right-small text-center">
-                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
-                    </section>
-                </nav><!-- nav bar -->
-
-                <!-- Off Canvas Menu -->
-                <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
-                        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
-                        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
-                        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
-                        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
-                        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
-                        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
-                        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
-                        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
-                    </ul>
-                </aside><!--off canvas menu-->
-
+                
+                <cm-menu></cm-menu>
+                
                 <!-- Content -->
                 <section class="main-section">
                     <div class="row" >
                         <div class="small-12 columns">
-
                             <div ng-controller="productsController" ng-init="init()">
-                                <table><thead><tr><td><h3 class="text-center">My Cart</h3></td></tr></thead></table>
+                                <div class="content-header">
+                                    <br/>
+                                    <span><a href="index.html"><i class="fa fa-arrow-circle-o-left"></i> Back to Store</a></span>
+                                    <h1>
+                                        <i class="fa fa-shopping-cart"></i>
+                                        My Cart
+                                    </h1>
+                                </div>
                                 <div class="scrollable-table-wrapper">
                                     <table>
                                         <tbody>
@@ -165,9 +154,6 @@
                         </div>
                     </div>
                 </section><!--content-->
-
-                <!-- close the off-canvas menu -->
-                <a class="exit-off-canvas"></a>
 
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->

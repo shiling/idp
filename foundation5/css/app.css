@@ -15,6 +15,18 @@ html, body, .off-canvas-wrap, .inner-wrap, .left-off-canvas-menu{
     height: 100%;
 }
 
+.main-section{
+    margin-top: 45px;
+}
+
+/*
+    MENU
+*/
+.top-bar .fa, .off-canvas-list .fa{
+    width: 1.5rem;
+    text-align: center;
+}
+
 /*
     BUTTONS
 */
@@ -37,6 +49,9 @@ a.back-btn:hover{
 /*
     COLOURS
 */
+.bg-white{
+    background-color: white;
+}
 .white {
     color: white;
 }
@@ -225,10 +240,7 @@ tbody tr td{
     margin-bottom: 0 !important;
 }
 
-.off-canvas-list .fa{
-    width: 1.5rem;
-    text-align: center;
-}
+
 
 .selectedAddress{
     background-color: #008cba;

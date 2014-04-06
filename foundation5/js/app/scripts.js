@@ -6,6 +6,7 @@
 head.load("css/foundation.css");
 head.load("css/font-awesome.min.css");
 head.load("css/app.css");
+head.load("css/app.angular.css");
 
 //JS
 head.load("js/vendor/modernizr.js");

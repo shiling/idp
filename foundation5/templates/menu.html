@@ -1,0 +1,33 @@
+<!-- Nav Bar -->
+<div class="fixed">
+    <nav class="tab-bar">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+      </section>
+
+      <section class="middle tab-bar-section">
+          <a href="index.html"><h1 class="title">CMart</h1></a>
+      </section>
+
+      <section class="right-small text-center">
+          <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
+      </section>
+    </nav>
+</div><!-- nav bar -->
+
+<!-- Off Canvas Menu -->
+<aside class="left-off-canvas-menu">
+    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
+        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
+        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
+        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
+        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
+        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
+        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
+        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
+        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
+    </ul>
+</aside><!--off canvas menu-->
+
+<!-- close the off-canvas menu -->
+<a class="exit-off-canvas"></a>

@@ -7,38 +7,11 @@
         <script src="js/app/scripts.js"></script>
         <title>CMart - Subscriptions</title>
     </head>
-    <body>
+    <body ng-cloak>
         <div class="off-canvas-wrap">
             <div class="inner-wrap">
 
-                <!-- Nav Bar -->
-                <nav class="tab-bar" data-magellan-expedition="fixed">
-                    <section class="left-small">
-                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-                    </section>
-
-                    <section class="middle tab-bar-section">
-                        <h1 class="title" style="text-align:center;">CMart</h1>
-                    </section>
-
-                    <section class="right-small text-center">
-                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
-                    </section>
-                </nav><!-- nav bar -->
-
-                <!-- Off Canvas Menu -->
-                <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
-                        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
-                        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
-                        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
-                        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
-                        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
-                        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
-                        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
-                        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
-                    </ul>
-                </aside><!--off canvas menu-->
+                <cm-menu></cm-menu>
 
                 <!-- Content -->
                 <section class="main-section">
@@ -47,10 +20,11 @@
                             <div ng-controller="subscriptionsController" ng-init="init()">
                                 <br/>
                                 <h1>
+                                    <i class="fa fa-calendar"></i>
                                     My Subscriptions
                                 </h1>
                                 <h6 class="subheader">Subscribe to products to have them automatically billed and delivered to you at a discounted rate.</h6>
-                                
+
                                 <!--Subscriptions-->
                                 <br/>
                                 <table>
@@ -63,7 +37,10 @@
                                         </tr>
                                         <tr ng-show="ongoingSubscriptions.length === 0">
                                             <td class='text-center'>
-                                                <h5>You don't have any ongoing subscriptions.</h5>
+                                                <h5>
+                                                    You don't have any ongoing subscriptions. 
+                                                </h5>
+                                                <a class="button tiny round" data-reveal data-reveal-id="howToSubscribeModal">How do I subscribe?</a>
                                             </td>
                                         </tr>
                                         <tr ng-repeat="subscription in ongoingSubscriptions" class="selectable-tr">
@@ -89,14 +66,11 @@
                                     </tbody>
                                 </table>
                                 
-                                <!--Recommendations-->
-                                <br/>
-                                <div>
-                                    <h4>
-                                        Would you like to subscribe to: <br/>
-                                    </h4>
+                                <!--How To Subscribe Modal-->
+                                <div id="howToSubscribeModal" class="reveal-modal tiny text-center" data-reveal>
+                                    <h4>How to subscribe:</h4>
+                                    ...
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

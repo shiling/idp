@@ -29,96 +29,17 @@
         </script>
         <title>CMart</title>
     </head>
-    <body>
+    <body ng-cloak>
         <div class="off-canvas-wrap">
             <div class="inner-wrap">
 
-                <!-- Nav Bar -->
-                <nav class="tab-bar" data-magellan-expedition="fixed">
-                    <section class="left-small">
-                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-                    </section>
-                    <section class="middle tab-bar-section text-center">
-                        <h1 class="title">CMart</h1>
-                    </section>
-
-                    <section id="cart" class="right-small text-center">
-                        <a href="cart.html"><i class="fa fa-shopping-cart fa-lg white"></i></a>
-                    </section>
-                </nav><!-- nav bar -->
-
-                <!-- Off Canvas Menu -->
-                <aside class="left-off-canvas-menu">
-                    <ul class="off-canvas-list" ng-controller='identityController' ng-init="init()">
-                        <li><a href="login.html"><img ng-src="img/Guest.png" height="80" width="80"/> {{username()}}</a></li>
-                        <li><a href="index.html"><i class='fa fa-home'></i> Store</a></li>
-                        <li><a href="cart.html"><i class='fa fa-shopping-cart'></i> Cart</a></li>
-                        <li><a href="favourites.html"><i class='fa fa-heart'></i> Favourites</a></li>
-                        <li><a href="purchases.html"><i class='fa fa-dollar'></i> Purchases</a></li>
-                        <li><a href="subscriptions.html"><i class='fa fa-calendar'></i> Subscriptions</a></li>
-                        <li><a href="statistics.html"><i class='fa fa-bar-chart-o'></i> Statistics</a></li>
-                        <li><a href="settings.html"><i class='fa fa-gear'></i> Settings</a></li>
-                    </ul>
-                </aside><!--off canvas menu-->
+                <cm-menu></cm-menu>
 
                 <!-- Content -->
                 <section class="main-section">
-                    <header class="headroom">
-                        <!--categories-->
-                        <div ng-controller="categoriesController" ng-init="init()">
-                            <div class="cat-bar">
-                                <ul class='button-group'>
-                                    <li><a class="button" ng-class="{'cat-btn-active': isActiveCategory(null), 'cat-btn-inactive': !isActiveCategory(null)}" ng-click="selectCategory(null)">All</a></li>
-                                    <li ng-repeat="category in categories">
-                                        <a class="button" ng-class="{'cat-btn-active': isActiveCategory(category), 'cat-btn-inactive': !isActiveCategory(category)}" ng-click="selectCategory(category)">{{category.name}}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="cat-bar sub-cat-bar">
-                                <ul class='button-group' ng-hide="isActiveCategory(null) || subcategories.length === 0">
-                                    <li><a class="button" ng-class="{'cat-btn-active': isActiveSubcategory(null), 'cat-btn-inactive': !isActiveSubcategory(null)}" ng-click="selectSubcategory(null)">All</a></li>
-                                    <li ng-repeat="subcategory in subcategories">
-                                        <a class="button" ng-class="{'cat-btn-active': isActiveSubcategory(subcategory), 'cat-btn-inactive': !isActiveSubcategory(subcategory)}" ng-click="selectSubcategory(subcategory)">{{subcategory.name}}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> <!--categories-->
-                        <br/>
-                        <!--search-->
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <div id="searchControls" ng-controller="searchController" ng-init="init()">
-                                    <div class="row collapse">
-                                        <div class="small-8 large-10 columns">
-                                            <input ng-model="searchService.name" type="text" placeholder="e.g. tea biscuits #nutfree #halal" ng-change="dissect()">
-                                            <i class="fa fa-search" style="position: absolute; top: 25%; right: 1%;"></i>
-                                        </div>
-                                        <div class="small-4 large-2 columns">
-                                            <a class="button postfix radius" data-reveal-id="filterModal" data-reveal ng-class="{'success': getAppliedFilters().length > 0}">
-                                                <div>
-                                                    <span ng-show="getAppliedFilters().length === 0">Add</span>
-                                                    <span ng-show="getAppliedFilters().length > 0">{{getAppliedFilters().length}}</span>
-                                                    Filter <i class="fa fa-filter"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="filterModal" class="reveal-modal tiny text-center" data-reveal>
-                                        <h4>Apply Filters:</h4>
-                                        <table>
-                                            <tr ng-repeat="filter in filtersService.filters">
-                                                <td class="clickable" ng-click="toggleFilter(filter)" ng-class="{'appliedFilter': isApplied(filter)}">
-                                                    <span class="text-left"> {{filter}}</span>
-                                                    <i class="fa" ng-class="{'fa-check-square-o': isApplied(filter), 'fa-square-o': !isApplied(filter)}"></i>
-                                                </td> 
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--search-->
-
-                    </header>
+                    
+                    <cm-store-navigation></cm-store-navigation>
+                    
                     <br/>
                     <div class="row">
                         <div class="small-12 columns">
@@ -131,7 +52,7 @@
                                                 <div class="product-price">
                                                     <h6 class='white'>{{product.price| currency}}</h6>
                                                 </div>
-                                                <cm-product-image></cm-product-image>
+                                                <div class="bg-white"><cm-product-image></cm-product-image></div>
                                                 <div class="small-11 small-centered columns">
                                                     <h6>{{product.name}}<br/><small>{{product.unit}}</small></h6>
                                                 </div>

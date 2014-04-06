@@ -21,6 +21,13 @@
         <link rel="stylesheet" href="css/default.css" id="theme_base">
         <link rel="stylesheet" href="css/default.date.css" id="theme_date">
         <link rel="stylesheet" href="css/default.time.css" id="theme_time">
+        
+        <script src="js/date/picker.js"></script>
+        <script src="js/date/picker.date.js"></script>
+        <script src="js/date/picker.time.js"></script>
+        <script src="js/date/legacy.js"></script>
+        <script src="js/date/main.js"></script>
+        
         <script>
             $(function() {
                 Foundation.set_namespace = function() {
@@ -34,7 +41,7 @@
         <title>CMart</title>
     </head>
 
-    <body>
+    <body ng-cloak>
 
         <div class="off-canvas-wrap">
             <div class="inner-wrap">
@@ -142,12 +149,5 @@
 
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->
-
-        <script src="js/date/picker.js"></script>
-        <script src="js/date/picker.date.js"></script>
-        <script src="js/date/picker.time.js"></script>
-        <script src="js/date/legacy.js"></script>
-        <script src="js/date/main.js"></script>
     </body>
-
 </html>

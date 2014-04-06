@@ -28,6 +28,19 @@ app.directive('ngModelOnblur', function() {
         }
     };
 });
+app.directive('cmMenu', function() {
+    return{
+        restrict: 'E',
+        templateUrl: './templates/menu.html'
+    };
+});
+
+app.directive('cmStoreNavigation', function() {
+    return{
+        restrict: 'E',
+        templateUrl: './templates/storeNavigation.html'
+    };
+});
 app.directive('cmMasonry', ['$interval', function($interval) {
         return{
             restrict: 'A',
@@ -42,6 +55,7 @@ app.directive('cmMasonry', ['$interval', function($interval) {
             }
         };
     }]);
+
 app.directive('cmProductImage', function() {
     return{
         restrict: 'E',
