@@ -63,3 +63,35 @@ app.directive('cmProductImage', function() {
     };
 });
 
+app.directive('cmUpdateCartPopup', function(){
+    return{
+        restrict: 'E',
+        link: function(scope, element, attrs){
+            scope.$on('updateCart', function(event, data){
+                //update text
+                if(data.quantity > 0){
+                    var text = "<h5>{0} <small>{1}</small></h5>".format(data.quantity, data.product.name);
+                    $(element).find(".joyride-content").html(text);
+                    $(element).find(".joyride-tip-guide").removeClass('removed').addClass('added');
+                }else{
+                    var text = "<h5>Removed <small>{0}</small></h5>".format(data.product.name);
+                    $(element).find(".joyride-content").html(text);
+                    $(element).find(".joyride-tip-guide").removeClass('added').addClass('removed');
+                }
+                
+                //show popup
+                $(element).show();
+                
+                //fade away popup
+                setTimeout(function(){$(element).hide();}, 1500);
+                
+            });
+        },
+        template: "<div class='joyride-tip-guide' data-index='0'>"
+                    + "<span class='joyride-nub top'></span>"
+                    + "<div class='joyride-content-wrapper'>"
+                    + "<div class='joyride-content'></div>"
+                    + "</div>"
+                    + "</div>"
+    };
+});

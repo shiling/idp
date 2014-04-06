@@ -2513,7 +2513,8 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.4; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
     font-size: 60%;
-    color: #6f6f6f;
+    color: inherit;
+    opacity: 0.9;
     line-height: 0; }
 
 h1 {
@@ -3314,7 +3315,7 @@ dialog[open] {
   color: white; }
 
 .joyride-tip-guide p {
-  margin: 0 0 1.125rem 0;
+  margin: 0 0 0 0;
   font-size: 0.875rem;
   line-height: 1.3; }
 

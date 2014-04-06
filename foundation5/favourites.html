@@ -41,7 +41,6 @@
                     
                     <cm-store-navigation></cm-store-navigation>
                     
-                    <br/>
                     <div class="row">
                         <div class="small-12 columns">
                             <div class="content-header">
@@ -53,7 +52,6 @@
                                 </h1>
                             </div>
                             
-                            <br/>
                             <!--products-->
                             <div ng-controller="productsController" ng-init="init()">
                                 <div class="product-container" cm-masonry=".product-tile-wrapper">
@@ -97,14 +95,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <!--update cart popup-->
+                                <cm-update-cart-popup></cm-update-cart-popup>
+                                
                             </div><!--products-->
 
                         </div>
                     </div>
                 </section><!--content-->
-
-                <!-- close the off-canvas menu -->
-                <a class="exit-off-canvas"></a>
 
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->

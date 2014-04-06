@@ -220,6 +220,7 @@ app.controller('productsController', function($scope, webStorage, productsServic
     $scope.updateQuantity = function(product, quantity) {   //args[0] must be class Product, args[1] must be integer
         $scope.cart.updateQuantity(product, quantity);
         webStorage.add("cart", $scope.cart);   //update localstorage
+        $scope.$emit('updateCart', {product: product, quantity: quantity});
     };
 
     $scope.validateQuantity = function(product) {   //args[0] must be class Product

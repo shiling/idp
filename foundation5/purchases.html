@@ -9,7 +9,7 @@
             head.ready("jquery", function() {
                 $(function() {
                     head.ready("foundation", function() {
-                        
+
                     });
                 });
             });
@@ -29,7 +29,14 @@
                     <div class="row" >
                         <div class="small-12 columns">
                             <div ng-controller="purchaseHistoryController" ng-init="init()">
-                                <table><thead><tr><td><h3 class="text-center">My Purchases</h3></td></tr></thead></table>
+                                <div class="content-header">
+                                    <br/>
+                                    <span><a href="index.html"><i class="fa fa-arrow-circle-o-left"></i> Back to Store</a></span>
+                                    <h1>
+                                        <i class="fa fa-dollar"></i>
+                                        My Purchases
+                                    </h1>
+                                </div>
                                 <table>
                                     <tbody>
                                         <tr class='secondary'>
@@ -120,9 +127,6 @@
                         </div>
                     </div>
                 </section><!--content-->
-
-                <!-- close the off-canvas menu -->
-                <a class="exit-off-canvas"></a>
 
             </div><!--inner-wrap-->
         </div><!--off-canvas-wrap-->
