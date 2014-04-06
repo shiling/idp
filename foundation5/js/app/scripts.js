@@ -3,8 +3,8 @@
  */
 
 //CSS
-head.load("css/foundation.css");
 head.load("css/font-awesome.min.css");
+head.load("css/app.foundation.css");
 head.load("css/app.css");
 head.load("css/app.angular.css");
 
