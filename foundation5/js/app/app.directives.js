@@ -95,3 +95,21 @@ app.directive('cmUpdateCartPopup', function(){
                     + "</div>"
     };
 });
+app.directive('cmFavModal', function(){
+   return{
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            scope.$on('addFavourite', function(event, product){
+                $(element).find('p').html("<span class='green'>Added</span> {0} to favourites.".format(product.name));
+                $(element).foundation('reveal','open');
+            });
+            scope.$on('removeFavourite', function(event, product){
+                $(element).find('p').html("<span class='red'>Removed</span> {0} from favourites.".format(product.name));
+                $(element).foundation('reveal','open');
+            });
+        },
+        template: "<p></p>"
+                + "<a class='button tiny' href='favourites.html'>View Favourites</a>"
+                
+    }; 
+});

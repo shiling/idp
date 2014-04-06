@@ -42,11 +42,6 @@
 
                             <div ng-controller="productsController" ng-init="init()">
                                 <div ng-controller="viewProductController" ng-init="init()">
-                                    <!-- Favourites Modal -->
-                                    <div id="favModal" class="reveal-modal" data-reveal>
-                                        <b>{{product.name}}</b> is <span id="favModalAction"></span> your <a href="favourites.html">favourites</a>!
-                                    </div><!-- Favourites Modal -->
-
                                     <div class="row">
                                         <div class="small-12 columns">
                                             <span><a href="index.html"><i class="fa fa-arrow-circle-o-left"></i> Back to Store</a></span>
@@ -61,10 +56,10 @@
                                         <div class="small-2 columns">
                                             <h2>
                                                 <a ng-click="toggleFav()"> 
-                                                    <i class="fa fa-heart" ng-show="isInFav()" onclick="toggleFavBtn(this)"></i> 
-                                                    <i class="fa fa-heart-o" ng-show="!isInFav()" onclick="toggleFavBtn(this)"></i> 
+                                                    <i class="fa red" ng-class="{'fa-heart': isInFav(),'fa-heart-o': !isInFav()}" ></i>
                                                 </a>
                                             </h2>
+                                            <div id="favModal" class="reveal-modal small text-center" data-reveal cm-fav-modal></div>
                                         </div>
                                     </div>
 
@@ -104,6 +99,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             <div class="small-12 medium-6 columns">
                                                 <a class="button postfix expand" data-reveal-id="subscribeModal" data-reveal>Subscribe (Save 15%)</a>
                                             </div>
@@ -196,6 +192,9 @@
                                         </li>
                                     </ul>
                                 </div>
+                                
+                                 <!--update cart popup-->
+                                <cm-update-cart-popup></cm-update-cart-popup>
                             </div>
                         </div>
                     </div>

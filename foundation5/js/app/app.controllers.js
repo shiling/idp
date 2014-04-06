@@ -278,8 +278,10 @@ app.controller('viewProductController', function($scope, webStorage) {  //inheri
             var index = $scope.favourites.indexOf($scope.product.name);
             if (index === -1) { //add
                 $scope.favourites.push($scope.product.name);
+                $scope.$emit('addFavourite', $scope.product);
             } else {    //remove
                 $scope.favourites.splice(index, 1);
+                $scope.$emit('removeFavourite', $scope.product);
             }
             webStorage.add('favourites', $scope.favourites);
         }

@@ -55,6 +55,18 @@ a.back-btn:hover{
 .white {
     color: white;
 }
+.bg-red{
+    background-color: #ee2200;
+}
+.red {
+    color: #ee2200;
+}
+.bg-green{
+    background-color: #68c244
+}
+.green{
+    color: #68c244
+}
 
 /*
     HEADROOM
