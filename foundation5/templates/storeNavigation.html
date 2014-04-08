@@ -19,12 +19,12 @@
             </ul>
         </div>
     </div> <!--categories-->
-    
+
     <br/>
     <!--search-->
-    <div class="row">
-        <div class="small-12 columns">
-            <div id="searchControls" ng-controller="searchController" ng-init="init()">
+    <div id="searchControls" ng-controller="searchController" ng-init="init()">
+        <div class="row">
+            <div class="small-12 columns">
                 <div class="row collapse">
                     <div class="small-8 large-10 columns">
                         <input ng-model="searchService.name" type="text" placeholder="e.g. tea biscuits #nutfree #halal" ng-change="dissect()">
@@ -40,18 +40,20 @@
                         </a>
                     </div>
                 </div>
-                <div id="filterModal" class="reveal-modal tiny text-center" data-reveal>
-                    <h4>Apply Filters:</h4>
-                    <table>
-                        <tr ng-repeat="filter in filtersService.filters">
-                            <td class="clickable" ng-click="toggleFilter(filter)" ng-class="{'appliedFilter': isApplied(filter)}">
-                                <span class="text-left"> {{filter}}</span>
-                                <i class="fa" ng-class="{'fa-check-square-o': isApplied(filter), 'fa-square-o': !isApplied(filter)}"></i>
-                            </td> 
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
+
+        <div id="filterModal" class="reveal-modal tiny text-center" data-reveal>
+            <h4>Apply Filters:</h4>
+            <table>
+                <tr ng-repeat="filter in filtersService.filters">
+                    <td class="clickable" ng-click="toggleFilter(filter)" ng-class="{'appliedFilter': isApplied(filter)}">
+                        <span class="text-left"> {{filter}}</span>
+                        <i class="fa" ng-class="{'fa-check-square-o': isApplied(filter), 'fa-square-o': !isApplied(filter)}"></i>
+                    </td> 
+                </tr>
+            </table>
+        </div>
+        <script>$(document).foundation();</script>
     </div><!--search-->
 </header>
