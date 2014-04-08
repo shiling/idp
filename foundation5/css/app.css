@@ -67,6 +67,9 @@ a.back-btn:hover{
 .green{
     color: #68c244
 }
+.bg-gray{
+    background-color:  #ccc;
+}
 
 /*
     HEADROOM
@@ -196,15 +199,15 @@ cm-update-cart-popup{
 }
 cm-update-cart-popup .joyride-tip-guide{
     position: fixed;
-    width: 10rem;
     display: block;
+    width: 10rem;
+    margin-left: auto;
     top: 55px;
-    right:6px;
+    right: 5px;
     box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
 }
 cm-update-cart-popup .joyride-tip-guide .joyride-nub{
-    left:inherit;
-    right:5px
+    left: 8rem;
 }
 cm-update-cart-popup .joyride-tip-guide .joyride-content-wrapper{
     padding: .5rem;
@@ -257,6 +260,19 @@ tbody tr td{
 }
 .selected-tr{
     background-color: #c5e8f3;
+}
+
+/*
+    HEADER AND FOOTER
+*/
+.content-header{
+    
+}
+.content-footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 /*
